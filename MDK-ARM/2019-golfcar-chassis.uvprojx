@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F427xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc; ../Drivers/STM32F4xx_HAL_Driver/Inc; ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy; ../Middlewares/Third_Party/FreeRTOS/Source/include; ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS; ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F; ../Drivers/CMSIS/Device/ST/STM32F4xx/Include; ../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\bsp;..\usr_task;..\Personal</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -614,6 +614,16 @@
               <FileType>1</FileType>
               <FilePath>..\bsp\drv_uart.c</FilePath>
             </File>
+            <File>
+              <FileName>drv_robotservo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\drv_robotservo.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\drv_timer.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -623,6 +633,16 @@
               <FileName>usr_task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\usr_task\usr_task.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>individual_lib</GroupName>
+          <Files>
+            <File>
+              <FileName>STMGood.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Personal\STMGood.c</FilePath>
             </File>
           </Files>
         </Group>
