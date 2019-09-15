@@ -14,6 +14,7 @@
 #include "string.h"
 #include "stdbool.h"
 #include "STMGood.h"
+#include "drv_uart.h"
 
 //-----------------------------------变量保护区（以下变量不能改变）
 char Count=0;

@@ -24,6 +24,9 @@
 #include "cmsis_os.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "drv_uart.h"
+#include "usart.h"
+#include "drv_coloursensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -196,7 +199,7 @@ void DMA1_Stream5_IRQHandler(void)
   /* USER CODE END DMA1_Stream5_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart2_rx);
   /* USER CODE BEGIN DMA1_Stream5_IRQn 1 */
-
+	deal_coloursensor_data(Usart2buff);
   /* USER CODE END DMA1_Stream5_IRQn 1 */
 }
 
@@ -276,11 +279,12 @@ void USART1_IRQHandler(void)
 void USART2_IRQHandler(void)
 {
   /* USER CODE BEGIN USART2_IRQn 0 */
-
+#ifdef USART2IRQ
   /* USER CODE END USART2_IRQn 0 */
   HAL_UART_IRQHandler(&huart2);
   /* USER CODE BEGIN USART2_IRQn 1 */
-
+#endif
+	USART_IDLE_IRQ(&huart2,Usart2buff,11);
   /* USER CODE END USART2_IRQn 1 */
 }
 

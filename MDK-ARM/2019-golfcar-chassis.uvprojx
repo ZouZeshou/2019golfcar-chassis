@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F427xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\bsp;..\usr_task;..\Personal</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\zzsadd\algorithm;..\zzsadd\bsp;..\zzsadd\modules;..\zzsadd\Personal;..\zzsadd\usr_task</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -602,27 +602,32 @@
             <File>
               <FileName>drv_can.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bsp\drv_can.c</FilePath>
+              <FilePath>..\zzsadd\bsp\drv_can.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_coloursensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\zzsadd\bsp\drv_coloursensor.c</FilePath>
             </File>
             <File>
               <FileName>drv_io.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bsp\drv_io.c</FilePath>
-            </File>
-            <File>
-              <FileName>drv_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\bsp\drv_uart.c</FilePath>
+              <FilePath>..\zzsadd\bsp\drv_io.c</FilePath>
             </File>
             <File>
               <FileName>drv_robotservo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bsp\drv_robotservo.c</FilePath>
+              <FilePath>..\zzsadd\bsp\drv_robotservo.c</FilePath>
             </File>
             <File>
               <FileName>drv_timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bsp\drv_timer.c</FilePath>
+              <FilePath>..\zzsadd\bsp\drv_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\zzsadd\bsp\drv_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -632,7 +637,7 @@
             <File>
               <FileName>usr_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\usr_task\usr_task.c</FilePath>
+              <FilePath>..\zzsadd\usr_task\usr_task.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -642,7 +647,27 @@
             <File>
               <FileName>STMGood.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Personal\STMGood.c</FilePath>
+              <FilePath>..\zzsadd\Personal\STMGood.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>modules</GroupName>
+          <Files>
+            <File>
+              <FileName>chassis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\zzsadd\modules\chassis.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>algorithm</GroupName>
+          <Files>
+            <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\zzsadd\algorithm\pid.c</FilePath>
             </File>
           </Files>
         </Group>

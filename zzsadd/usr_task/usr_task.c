@@ -5,16 +5,15 @@
 #include "drv_robotservo.h"
 #include "STMGood.h"
 #include "drv_uart.h"
+#include "drv_can.h"
+#include "can.h"
 /**
 * @brief Function implementing the myTask02 thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartTask02 */
 void StartTask02(void const * argument)
 {
-  /* USER CODE BEGIN StartTask02 */
-  /* Infinite loop */
   for(;;)
   {
 		static int angle;
@@ -33,5 +32,17 @@ void StartTask02(void const * argument)
 		printf("P %.1f I %.1f D %.1f\r\n",P,I,D);
     osDelay(1000);
   }
-  /* USER CODE END StartTask02 */
+}
+/**
+* @brief Function implementing the myTask03 thread.
+* @param argument: Not used
+* @retval None
+*/
+void StartTask03(void const * argument)
+{
+  for(;;)
+  {
+		Can_SendMsg(&hcan1,0x200,1000,500,0,0);
+    osDelay(2);
+  }
 }

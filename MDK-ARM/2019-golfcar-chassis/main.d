@@ -51,8 +51,8 @@
 2019-golfcar-chassis\main.o: ../Inc/tim.h
 2019-golfcar-chassis\main.o: ../Inc/usart.h
 2019-golfcar-chassis\main.o: ../Inc/gpio.h
-2019-golfcar-chassis\main.o: ..\bsp\drv_uart.h
-2019-golfcar-chassis\main.o: ..\bsp\drv_can.h
-2019-golfcar-chassis\main.o: ..\bsp\drv_io.h
-2019-golfcar-chassis\main.o: ..\bsp\drv_robotservo.h
-2019-golfcar-chassis\main.o: ..\bsp\drv_timer.h
+2019-golfcar-chassis\main.o: ..\zzsadd\bsp\drv_uart.h
+2019-golfcar-chassis\main.o: ..\zzsadd\bsp\drv_can.h
+2019-golfcar-chassis\main.o: ..\zzsadd\bsp\drv_io.h
+2019-golfcar-chassis\main.o: ..\zzsadd\bsp\drv_robotservo.h
+2019-golfcar-chassis\main.o: ..\zzsadd\bsp\drv_timer.h

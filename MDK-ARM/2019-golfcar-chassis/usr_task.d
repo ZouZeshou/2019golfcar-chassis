@@ -1,5 +1,5 @@
-2019-golfcar-chassis\usr_task.o: ..\usr_task\usr_task.c
-2019-golfcar-chassis\usr_task.o: ..\usr_task\usr_task.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\usr_task\usr_task.c
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\usr_task\usr_task.h
 2019-golfcar-chassis\usr_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/freertos.h
 2019-golfcar-chassis\usr_task.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
 2019-golfcar-chassis\usr_task.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -48,6 +48,8 @@
 2019-golfcar-chassis\usr_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 2019-golfcar-chassis\usr_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 2019-golfcar-chassis\usr_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-2019-golfcar-chassis\usr_task.o: ..\bsp\drv_robotservo.h
-2019-golfcar-chassis\usr_task.o: ..\Personal\STMGood.h
-2019-golfcar-chassis\usr_task.o: ..\bsp\drv_uart.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_robotservo.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\Personal\STMGood.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_uart.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_can.h
+2019-golfcar-chassis\usr_task.o: ../Inc/can.h

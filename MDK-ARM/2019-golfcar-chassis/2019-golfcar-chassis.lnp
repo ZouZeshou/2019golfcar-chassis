@@ -39,12 +39,15 @@
 "2019-golfcar-chassis\heap_4.o"
 "2019-golfcar-chassis\port.o"
 "2019-golfcar-chassis\drv_can.o"
+"2019-golfcar-chassis\drv_coloursensor.o"
 "2019-golfcar-chassis\drv_io.o"
-"2019-golfcar-chassis\drv_uart.o"
 "2019-golfcar-chassis\drv_robotservo.o"
 "2019-golfcar-chassis\drv_timer.o"
+"2019-golfcar-chassis\drv_uart.o"
 "2019-golfcar-chassis\usr_task.o"
 "2019-golfcar-chassis\stmgood.o"
+"2019-golfcar-chassis\chassis.o"
+"2019-golfcar-chassis\pid.o"
 --library_type=microlib --strict --scatter "2019-golfcar-chassis\2019-golfcar-chassis.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

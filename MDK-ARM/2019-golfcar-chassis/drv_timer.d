@@ -1,5 +1,5 @@
-2019-golfcar-chassis\drv_timer.o: ..\bsp\drv_timer.c
-2019-golfcar-chassis\drv_timer.o: ..\bsp\drv_timer.h
+2019-golfcar-chassis\drv_timer.o: ..\zzsadd\bsp\drv_timer.c
+2019-golfcar-chassis\drv_timer.o: ..\zzsadd\bsp\drv_timer.h
 2019-golfcar-chassis\drv_timer.o: ../Inc/tim.h
 2019-golfcar-chassis\drv_timer.o: ../Inc/main.h
 2019-golfcar-chassis\drv_timer.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h

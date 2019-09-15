@@ -1,5 +1,5 @@
-2019-golfcar-chassis\drv_robotservo.o: ..\bsp\drv_robotservo.c
-2019-golfcar-chassis\drv_robotservo.o: ..\bsp\drv_robotservo.h
+2019-golfcar-chassis\drv_robotservo.o: ..\zzsadd\bsp\drv_robotservo.c
+2019-golfcar-chassis\drv_robotservo.o: ..\zzsadd\bsp\drv_robotservo.h
 2019-golfcar-chassis\drv_robotservo.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
 2019-golfcar-chassis\drv_robotservo.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h
 2019-golfcar-chassis\drv_robotservo.o: ../Drivers/CMSIS/Include/core_cm4.h
@@ -34,4 +34,4 @@
 2019-golfcar-chassis\drv_robotservo.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 2019-golfcar-chassis\drv_robotservo.o: ../Inc/usart.h
 2019-golfcar-chassis\drv_robotservo.o: ../Inc/main.h
-2019-golfcar-chassis\drv_robotservo.o: ..\bsp\drv_uart.h
+2019-golfcar-chassis\drv_robotservo.o: ..\zzsadd\bsp\drv_uart.h
