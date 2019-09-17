@@ -51,5 +51,7 @@
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_robotservo.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\Personal\STMGood.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_uart.h
+2019-golfcar-chassis\usr_task.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_can.h
 2019-golfcar-chassis\usr_task.o: ../Inc/can.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\modules\chassis.h

@@ -1,5 +1,6 @@
 #include "drv_can.h"
 #include "can.h"
+#include "chassis.h"
 
 /**
  * @brief Enable Can1 and Can2(对can1和can2进行初始化)
@@ -30,9 +31,26 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	{
 		HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0,&Can1Header,RxData1 );//从FIFO邮箱中读取消息至RxData1
 		//判断can总线ID，对应电机
-		if(Can1Header.StdId==0x202)
+		switch(Can1Header.StdId)
 		{
-			
+			case 0x201:
+			{
+				s_leftmotor.back_position = RxData1[0]<<8|RxData1[1];
+				s_leftmotor.back_speed = RxData1[2]<<8|RxData1[3];
+				break;
+			}
+			case 0x202:
+			{
+				s_rightmotor.back_position = RxData1[0]<<8|RxData1[1];
+				s_rightmotor.back_speed = RxData1[2]<<8|RxData1[3];
+				break;
+			}
+			case 0x203:
+			{
+				s_trans_motor.back_position = RxData1[0]<<8|RxData1[1];
+				s_trans_motor.back_speed = RxData1[2]<<8|RxData1[3];
+				break;
+			}
 		}
 	}
 	//如果是can2
@@ -42,8 +60,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 		
 		if(Can2Header.StdId==0x202)
 		{
-		}
-		
+		}	
 	}
 }
 /**

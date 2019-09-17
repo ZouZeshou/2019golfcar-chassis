@@ -39,6 +39,7 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 extern DMA_HandleTypeDef hdma_usart2_rx;
+extern DMA_HandleTypeDef hdma_usart6_rx;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -111,7 +112,7 @@ int main(void)
 	USART_Enable(&huart1,Usart1buff);
 	USART_DMA_Enable(&huart2,&hdma_usart2_rx,Usart2buff,11);
 	USART_Enable(&huart3,Usart3buff);
-	USART_Enable(&huart6,Usart6buff);
+	USART_DMA_Enable(&huart6,&hdma_usart6_rx,Usart6buff,28);
 	CAN_Enable(&hcan1);
 	CAN_Enable(&hcan2);
   /* USER CODE END 2 */

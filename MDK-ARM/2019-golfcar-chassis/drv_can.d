@@ -34,3 +34,4 @@
 2019-golfcar-chassis\drv_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 2019-golfcar-chassis\drv_can.o: ../Inc/can.h
 2019-golfcar-chassis\drv_can.o: ../Inc/main.h
+2019-golfcar-chassis\drv_can.o: ..\zzsadd\modules\chassis.h

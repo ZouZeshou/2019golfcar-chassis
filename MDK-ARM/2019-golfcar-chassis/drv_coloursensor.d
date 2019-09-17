@@ -33,5 +33,6 @@
 2019-golfcar-chassis\drv_coloursensor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 2019-golfcar-chassis\drv_coloursensor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 2019-golfcar-chassis\drv_coloursensor.o: ..\zzsadd\bsp\drv_uart.h
+2019-golfcar-chassis\drv_coloursensor.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 2019-golfcar-chassis\drv_coloursensor.o: ../Inc/usart.h
 2019-golfcar-chassis\drv_coloursensor.o: ../Inc/main.h

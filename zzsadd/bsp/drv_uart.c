@@ -1,7 +1,6 @@
 #include "drv_uart.h"
 #include "usart.h"
 #include "STMGood.h"
-#include "stdio.h"
 uint8_t Usart1buff[100]={0};
 uint8_t Usart2buff[100]={0};
 uint8_t Usart3buff[100]={0};

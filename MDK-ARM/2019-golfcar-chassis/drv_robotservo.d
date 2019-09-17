@@ -35,3 +35,4 @@
 2019-golfcar-chassis\drv_robotservo.o: ../Inc/usart.h
 2019-golfcar-chassis\drv_robotservo.o: ../Inc/main.h
 2019-golfcar-chassis\drv_robotservo.o: ..\zzsadd\bsp\drv_uart.h
+2019-golfcar-chassis\drv_robotservo.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h

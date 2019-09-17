@@ -48,5 +48,7 @@
 2019-golfcar-chassis\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 2019-golfcar-chassis\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 2019-golfcar-chassis\stm32f4xx_it.o: ..\zzsadd\bsp\drv_uart.h
+2019-golfcar-chassis\stm32f4xx_it.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 2019-golfcar-chassis\stm32f4xx_it.o: ../Inc/usart.h
 2019-golfcar-chassis\stm32f4xx_it.o: ..\zzsadd\bsp\drv_coloursensor.h
+2019-golfcar-chassis\stm32f4xx_it.o: ..\zzsadd\bsp\drv_locationsystem.h

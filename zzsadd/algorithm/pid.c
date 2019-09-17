@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include "pid.h"
-
+#include "math.h"
 void abs_limit(float *a, float ABS_MAX)
 {
   if (*a > ABS_MAX)
