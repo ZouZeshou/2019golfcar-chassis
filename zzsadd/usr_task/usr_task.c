@@ -9,6 +9,16 @@
 #include "can.h"
 #include "chassis.h"
 #include "drv_uart.h"
+#include "drv_locationsystem.h"
+#include "route.h"
+#include "math.h"
+#include "drv_coloursensor.h"
+static int init_ok;
+static int start_signal = 1;
+static int calculate_init;
+static int step = 1;
+int point_num = 24;
+int now_point = 0; 
 /**
 * @brief Function implementing the myTask02 thread.
 * @param argument: Not used
@@ -18,8 +28,46 @@ void StartTask02(void const * argument)
 {
   for(;;)
   {
-
-    osDelay(1000);
+		if(init_ok)
+		{
+			if(start_signal)
+			{
+				switch(step)
+				{
+					case 1://ÅÜÈ¦
+					{
+							if(calculate_init==0)
+							{
+								design_point_of_route(&s_route,0,point_num,1600,1300,1000);
+								calculate_init = 1;
+							}
+							else
+							{
+								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,300,10000/2,point_num);
+								calculate_motor_current(&s_leftmotor_pid,&s_rightmotor_pid,&s_angle_pid,s_route.x[now_point],
+									s_route.y[now_point],s_posture.pos_x,s_posture.pos_y,s_posture.zangle,2000,&s_leftmotor,&s_rightmotor);
+								if(now_point>=point_num)
+								{
+									s_leftmotor.out_current = 0;
+									s_rightmotor.out_current = 0;
+									step++;
+								}
+							}
+							break;
+					}
+					case 2:
+					{
+						
+						
+						
+							break;
+					}
+				}
+					
+				
+			}
+		}
+    osDelay(2);
   }
 }
 /**
@@ -31,7 +79,10 @@ void StartTask03(void const * argument)
 {
   for(;;)
   {
-		Can_SendMsg(&hcan1,0x200,0,0,0,0);
+		if(init_ok)
+		{
+			Can_SendMsg(&hcan1,0x200,0,0,0,0);
+		}
     osDelay(2);
   }
 }
@@ -42,15 +93,19 @@ void StartTask03(void const * argument)
 */
 void StartTask04(void const * argument)
 {
-	static int init_ok;
+	static int init_counter;
   for(;;)
   {
 		if(init_ok==0)
 		{
 			chassis_para_init();
-			init_ok = 1;
+			route_init();
+			if(init_counter++ >= 400)
+			{
+				init_ok = 1;
+			}
 		}
-    osDelay(5);
+    osDelay(50);
   }
 }
 /**
@@ -62,22 +117,32 @@ void StartTask05(void const * argument)
 {
   for(;;)
   {
-				static int angle;
-		HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_7);
-		HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14);
-		printf("rightpos %d spd %d\r\n",s_rightmotor.back_position,s_rightmotor.back_speed);
-		printf("leftpos %d spd %d\r\n",s_leftmotor.back_position,s_leftmotor.back_speed);
-//		if(angle==160)
-//		{
-//			angle = 82;
-//		}
-//		else
-//		{
-//			angle = 160;
-//		}
-//		
-//		Set_Num_Speed((uint8_t)0,(uint32_t)angle);
-//		printf("P %.1f I %.1f D %.1f\r\n",P,I,D);
+		static int angle;
+		if(init_ok)
+		{
+			HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_7);
+			HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14);
+			printf("type %d lux %d ct%d color %d\r\n",s_color_data.Start,s_color_data.Lux,s_color_data.CT,s_color_data.color);
+//			for(int i=0;i<24;i++)
+//			{
+//				printf("num %d x %d y %d \r\n",i,s_route.x[i],s_route.y[i]);
+//			}
+//			printf("atan %.2f\r\n",atan2f(P,I)*180/3.14);
+//			printf("rightpos %d spd %d\r\n",s_rightmotor.back_position,s_rightmotor.back_speed);
+//			printf("leftpos %d spd %d\r\n",s_leftmotor.back_position,s_leftmotor.back_speed);
+//			printf("ang %.2f x %.2f y %.2f \r\n",s_posture.zangle,s_posture.pos_x,s_posture.pos_y);
+	//		if(angle==160)
+	//		{
+	//			angle = 82;
+	//		}
+	//		else
+	//		{
+	//			angle = 160;
+	//		}
+	//		
+	//		Set_Num_Speed((uint8_t)0,(uint32_t)angle);
+	//		printf("P %.1f I %.1f D %.1f\r\n",P,I,D);
+		}
     osDelay(50);
   }
 }

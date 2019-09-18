@@ -16,7 +16,7 @@ int motor_pid_debug = 0;
  */
 void route_init(void)
 {
-	pid_struct_init(&s_angle_pid,1000,200,0,0,0);
+	pid_struct_init(&s_angle_pid,3000,200,20,0,0);
 }
 /**
  * @brief design every point of route 以出发点为原点计算路径上各点的x,y坐标
@@ -81,7 +81,7 @@ void update_point(struct route_point *s_route,int *point_addr,int pos_x,int pos_
 							+(s_route->y[*point_addr]-pos_y)*(s_route->y[*point_addr]-pos_y));
 	if(distance <= accuracy)
 	{
-		point_addr++;
+		*point_addr = *point_addr + 1;
 	}
 	if(jam_counter++ >= jam_time)
 	{
@@ -114,7 +114,7 @@ void calculate_motor_current(struct pid *s_left_pid,struct pid *s_right_pid,stru
 		struct s_motor_data *s_left,struct s_motor_data *s_right)
 {
 	static float aim_angle,angle_out;
-	aim_angle = atan2f((aim_point_x-pos_x),(aim_point_y-pos_y))*180/PI;
+	aim_angle = -atan2f((aim_point_x-pos_x),(aim_point_y-pos_y))*180/PI;
 	if(angle_pid_debug==1)
 	{
 		pid_struct_init(s_ang_pid,V1,200,P,I,D);
@@ -125,8 +125,8 @@ void calculate_motor_current(struct pid *s_left_pid,struct pid *s_right_pid,stru
 		pid_struct_init(s_left_pid,V1,200,P,I,D);
 		pid_struct_init(s_right_pid,V1,200,P,I,D);
 	}
-	s_left->target_speed = speed + angle_out;
-	s_right->target_speed = speed - angle_out;
+	s_left->target_speed = speed - angle_out;
+	s_right->target_speed = -speed - angle_out;
 	s_left->out_current = (int)(pid_calculate(s_left_pid,s_left->back_speed,s_left->target_speed));
 	s_right->out_current = (int)(pid_calculate(s_right_pid,s_right->back_speed,s_right->target_speed));
 	

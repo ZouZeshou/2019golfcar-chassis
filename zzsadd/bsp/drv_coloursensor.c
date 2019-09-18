@@ -12,7 +12,7 @@ void colour_sensor_init(void)
 {
 	uint8_t senddata[3];
 	senddata[0]=0xA5;
-	senddata[1]=0x60;
+	senddata[1]=0x82;
 	senddata[2]=(senddata[0]+senddata[1]);
   USART_Send_Char(&huart2,senddata[0]);
 	USART_Send_Char(&huart2,senddata[1]);
@@ -27,9 +27,35 @@ void colour_sensor_init(void)
  */
 void deal_coloursensor_data(uint8_t * buffer)
 {
-	s_color_data.Start= buffer[0];
+	s_color_data.Start= buffer[2];
 	s_color_data.Lux=  ((buffer[4]<<8)|buffer[5]);
 	s_color_data.CT=   ((buffer[6]<<8)|buffer[7]);
 	s_color_data.color=((buffer[8]<<8)|buffer[9]);
   s_color_data.END =  buffer[10];
+}
+/**
+ * @brief detector the color of ball
+ * @param None
+ * @return None
+ * @attention None
+ */
+void detect_the_color(struct s_colour_sensor_data *s_color)
+{
+	if((s_color->Lux>0&&s_color->Lux<0)&&(s_color->CT>0&&s_color->CT<0))
+	{
+		s_color->ball_color = pink;
+	}
+	else if((s_color->Lux>0&&s_color->Lux<0)&&(s_color->CT>0&&s_color->CT<0))
+	{
+		s_color->ball_color = black;
+	}
+	else if((s_color->Lux>0&&s_color->Lux<0)&&(s_color->CT>0&&s_color->CT<0))
+	{
+		s_color->ball_color = white;
+	}
+	else
+	{
+		s_color->ball_color = enviroment;
+	}
+	
 }

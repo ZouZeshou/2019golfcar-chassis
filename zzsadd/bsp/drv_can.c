@@ -1,6 +1,7 @@
 #include "drv_can.h"
 #include "can.h"
 #include "chassis.h"
+#include "drv_uart.h"
 
 /**
  * @brief Enable Can1 and Can2(对can1和can2进行初始化)
@@ -24,7 +25,7 @@ void CAN_Enable(CAN_HandleTypeDef *hcan)
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
 
-	uint8_t RxData1[8],RxData2[8];//定义用于接收消息的数组
+	static uint8_t RxData1[8],RxData2[8];//定义用于接收消息的数组
 	CAN_RxHeaderTypeDef Can1Header,Can2Header;//定义接收函数需要用到的句柄
 	//如果是can1
 	if(hcan->Instance == CAN1)
@@ -47,6 +48,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 			}
 			case 0x203:
 			{
+				s_trans_motor.back_pos_last = s_trans_motor.back_position;
 				s_trans_motor.back_position = RxData1[0]<<8|RxData1[1];
 				s_trans_motor.back_speed = RxData1[2]<<8|RxData1[3];
 				break;

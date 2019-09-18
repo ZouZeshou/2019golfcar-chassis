@@ -16,6 +16,9 @@ void update_point(struct route_point *s_route,int *point_addr,int pos_x,int pos_
 void calculate_motor_current(struct pid *s_left_pid,struct pid *s_right_pid,struct pid *s_ang_pid,
 	int aim_point_x,int aim_point_y,int pos_x,int pos_y,float pos_angle,int speed,
 		struct s_motor_data *s_left,struct s_motor_data *s_right);
+	
+	
 extern struct route_point s_route;
+extern struct pid s_angle_pid;
 
 #endif

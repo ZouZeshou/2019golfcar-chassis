@@ -35,3 +35,5 @@
 2019-golfcar-chassis\drv_can.o: ../Inc/can.h
 2019-golfcar-chassis\drv_can.o: ../Inc/main.h
 2019-golfcar-chassis\drv_can.o: ..\zzsadd\modules\chassis.h
+2019-golfcar-chassis\drv_can.o: ..\zzsadd\bsp\drv_uart.h
+2019-golfcar-chassis\drv_can.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h

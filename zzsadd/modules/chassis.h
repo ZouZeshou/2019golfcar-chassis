@@ -3,9 +3,13 @@
 #include "stm32f4xx.h"
 struct s_motor_data 
 {
-	int back_speed;
-	int back_position;
+	int16_t back_speed;
+	int16_t back_position;
+	int16_t back_pos_last;
+	int circle_num;
 	int target_speed;
+	int64_t tol_pos;
+	int64_t target_pos;
 	int out_current;
 };
 

@@ -8,9 +8,12 @@ struct s_colour_sensor_data
 	int CT;
 	int color;
 	int END;
+	enum color ball_color;
 };
+enum color{pink,black,white,enviroment};
 extern struct s_colour_sensor_data s_color_data;
 void colour_sensor_init(void);
 void deal_coloursensor_data(uint8_t * buffer);
+void detect_the_color(struct s_colour_sensor_data *s_color);
 
 #endif
