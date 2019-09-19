@@ -8,7 +8,7 @@ struct s_colour_sensor_data
 	int CT;
 	int color;
 	int END;
-	enum color ball_color;
+	int ball_color;
 };
 enum color{pink,black,white,enviroment};
 extern struct s_colour_sensor_data s_color_data;

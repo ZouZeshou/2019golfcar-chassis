@@ -10,6 +10,10 @@ struct posture_data
 	float xangle;
 	float yangle;
 	float w_z;
+	
+	float ang_last;
+	float ang_tol;
+	int cir_num;
 };
 
 
@@ -17,4 +21,5 @@ extern struct posture_data s_posture;
 
 
 void get_loca_sys_data(uint8_t * buffer);
+void angle_to_continue(struct posture_data *s_pos);
 #endif

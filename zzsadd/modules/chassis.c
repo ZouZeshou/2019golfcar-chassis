@@ -17,8 +17,8 @@ struct pid s_trans_spd_pid;
  */
 void chassis_para_init(void)
 {
-	pid_struct_init(&s_leftmotor_pid,8000,2000,5,0,0);
-	pid_struct_init(&s_rightmotor_pid,8000,2000,5,0,0);
+	pid_struct_init(&s_leftmotor_pid,8000,2000,5,0.1,0);
+	pid_struct_init(&s_rightmotor_pid,8000,2000,5,0.1,0);
 	pid_struct_init(&s_trans_pos_pid,800,200,0,0,0);
 	pid_struct_init(&s_trans_spd_pid,8000,2000,0,0,0);
 }

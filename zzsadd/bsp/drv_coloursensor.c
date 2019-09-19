@@ -43,19 +43,19 @@ void detect_the_color(struct s_colour_sensor_data *s_color)
 {
 	if((s_color->Lux>0&&s_color->Lux<0)&&(s_color->CT>0&&s_color->CT<0))
 	{
-		s_color->ball_color = pink;
+		s_color->ball_color = 1;
 	}
 	else if((s_color->Lux>0&&s_color->Lux<0)&&(s_color->CT>0&&s_color->CT<0))
 	{
-		s_color->ball_color = black;
+		s_color->ball_color = 2;
 	}
 	else if((s_color->Lux>0&&s_color->Lux<0)&&(s_color->CT>0&&s_color->CT<0))
 	{
-		s_color->ball_color = white;
+		s_color->ball_color = 3;
 	}
 	else
 	{
-		s_color->ball_color = enviroment;
+		s_color->ball_color = 4;
 	}
 	
 }
