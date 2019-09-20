@@ -3,6 +3,7 @@
 #include "pid.h"
 #include "STMGood.h"
 #include "drv_uart.h"
+#include "usr_task.h"
 #define PI 3.1415926
 //以出发点为（0,0）建立坐标系 x(-2400,2400) y(0,4800)
 struct route_point s_route={0};

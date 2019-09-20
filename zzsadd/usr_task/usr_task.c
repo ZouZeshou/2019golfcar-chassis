@@ -13,10 +13,12 @@
 #include "route.h"
 #include "math.h"
 #include "drv_coloursensor.h"
+#include "chassis.h"
+#include "pid.h"
 static int init_ok;
 static int start_signal = 1;
 static int calculate_init;
-static int step = 1;
+int step = 1;
 int point_num = 36;
 int now_point = 0; 
 /**
@@ -38,26 +40,27 @@ void StartTask02(void const * argument)
 					{
 							if(calculate_init==0)
 							{
-								design_point_of_route(&s_route,0,point_num,1700,1400,1000);
+								design_point_of_route(&s_route,0,point_num,1600,1300,900);
 								calculate_init = 1;
 							}
 							else
 							{
-								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,400,3000/2,point_num);
+								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,400,4000/2,point_num);
 								calculate_motor_current(&s_leftmotor_pid,&s_rightmotor_pid,&s_angle_pid,s_route.x[now_point],
 									s_route.y[now_point],s_posture.pos_x,s_posture.pos_y,s_posture.ang_tol,6000,800/2,&s_leftmotor,&s_rightmotor);
-								if(now_point>=point_num)
-								{
-									s_leftmotor.out_current = 0;
-									s_rightmotor.out_current = 0;
-									step++;
-								}
+							}
+							if(now_point>=point_num)
+							{
+								step++;
 							}
 							break;
 					}
 					case 2:
 					{
-						
+						s_leftmotor.target_speed = 0;
+						s_rightmotor.target_speed = 0;
+						s_leftmotor.out_current = (int)(pid_calculate(&s_leftmotor_pid,s_leftmotor.back_speed,s_leftmotor.target_speed));
+						s_rightmotor.out_current = (int)(pid_calculate(&s_rightmotor_pid,s_rightmotor.back_speed,s_rightmotor.target_speed));
 						
 						
 							break;
@@ -132,6 +135,7 @@ void StartTask05(void const * argument)
 //			printf("leftpos %d spd %d\r\n",s_leftmotor.back_position,s_leftmotor.back_speed);
 //			printf("targetspad %d %d\r\n",s_leftmotor.target_speed,s_rightmotor.target_speed);
 			printf("now_point %d\r\n",now_point);
+			printf("step %d\r\n",step);
 			printf("ang %.2f x %.2f y %.2f \r\n",s_posture.zangle,s_posture.pos_x,s_posture.pos_y);
 //			printf("current %d %d \r\n",s_leftmotor.out_current,s_rightmotor.out_current);
 	//		if(angle==160)

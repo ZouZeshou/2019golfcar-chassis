@@ -2,7 +2,7 @@
 #include "can.h"
 #include "chassis.h"
 #include "drv_uart.h"
-
+#include "math.h"
 /**
  * @brief Enable Can1 and Can2(对can1和can2进行初始化)
  * @param None
@@ -38,12 +38,20 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 			{
 				s_leftmotor.back_position = RxData1[0]<<8|RxData1[1];
 				s_leftmotor.back_speed = RxData1[2]<<8|RxData1[3];
+				if(abs(s_leftmotor.back_speed)<=5)
+				{
+					s_leftmotor.back_speed = 0;
+				}
 				break;
 			}
 			case 0x202:
 			{
 				s_rightmotor.back_position = RxData1[0]<<8|RxData1[1];
 				s_rightmotor.back_speed = RxData1[2]<<8|RxData1[3];
+				if(abs(s_rightmotor.back_speed)<=5)
+				{
+					s_rightmotor.back_speed = 0;
+				}
 				break;
 			}
 			case 0x203:

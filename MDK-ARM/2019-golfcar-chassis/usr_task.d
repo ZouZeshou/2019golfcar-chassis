@@ -59,3 +59,4 @@
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\modules\route.h
 2019-golfcar-chassis\usr_task.o: D:\MDK5\ARM\ARMCC\Bin\..\include\math.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_coloursensor.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\algorithm\pid.h
