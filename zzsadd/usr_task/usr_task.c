@@ -45,9 +45,9 @@ void StartTask02(void const * argument)
 							}
 							else
 							{
-								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,400,4000/2,point_num);
+								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,300,4000/2,point_num);
 								calculate_motor_current(&s_leftmotor_pid,&s_rightmotor_pid,&s_angle_pid,s_route.x[now_point],
-									s_route.y[now_point],s_posture.pos_x,s_posture.pos_y,s_posture.ang_tol,6000,800/2,&s_leftmotor,&s_rightmotor);
+									s_route.y[now_point],s_route.angle[now_point],s_posture.pos_x,s_posture.pos_y,s_posture.zangle,6000,800/2,&s_leftmotor,&s_rightmotor);
 							}
 							if(now_point>=point_num)
 							{
@@ -60,14 +60,10 @@ void StartTask02(void const * argument)
 						s_leftmotor.target_speed = 0;
 						s_rightmotor.target_speed = 0;
 						s_leftmotor.out_current = (int)(pid_calculate(&s_leftmotor_pid,s_leftmotor.back_speed,s_leftmotor.target_speed));
-						s_rightmotor.out_current = (int)(pid_calculate(&s_rightmotor_pid,s_rightmotor.back_speed,s_rightmotor.target_speed));
-						
-						
+						s_rightmotor.out_current = (int)(pid_calculate(&s_rightmotor_pid,s_rightmotor.back_speed,s_rightmotor.target_speed));	
 							break;
 					}
 				}
-					
-				
 			}
 		}
     osDelay(2);

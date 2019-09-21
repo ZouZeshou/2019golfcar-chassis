@@ -4,6 +4,7 @@
 #include "STMGood.h"
 #include "drv_uart.h"
 #include "usr_task.h"
+#include "drv_locationsystem.h"
 #define PI 3.1415926
 //以出发点为（0,0）建立坐标系 x(-2400,2400) y(0,4800)
 struct route_point s_route={0};
@@ -19,7 +20,7 @@ int jam_back = 0;
  */
 void route_init(void)
 {
-	pid_struct_init(&s_angle_pid,3000,200,70,0,0);
+	pid_struct_init(&s_angle_pid,3500,200,80,0,0);
 }
 /**
  * @brief design every point of route 以出发点为原点计算路径上各点的x,y坐标
@@ -36,16 +37,19 @@ void design_point_of_route(struct route_point *s_route,int direction,int point_n
 		{
 			s_route->x[i] = radius_1 * cos(PI-2*PI/(point_num/3)*(i+1-point_num/12));
 			s_route->y[i] = radius_1 * sin(PI-2*PI/(point_num/3)*(i+1-point_num/12))+2200;
+			s_route->angle[i] = 360/(point_num/3)*(i+1-point_num/12) -90;
 		}
 		for(int i=point_num/3;i<= (2*point_num/3-1);i++)
 		{
 			s_route->x[i] = radius_2 * cos(PI-2*PI/(point_num/3)*(i+1-point_num/12));
 			s_route->y[i] = radius_2 * sin(PI-2*PI/(point_num/3)*(i+1-point_num/12))+2200;
+			s_route->angle[i] = 360/(point_num/3)*(i+1-point_num/12) -90;
 		}
 		for(int i=2*point_num/3;i<= (point_num-1);i++)
 		{
 			s_route->x[i] = radius_3 * cos(PI-2*PI/(point_num/3)*(i+1-point_num/12));
 			s_route->y[i] = radius_3 * sin(PI-2*PI/(point_num/3)*(i+1-point_num/12))+2200;
+			s_route->angle[i] = 360/(point_num/3)*(i+1-point_num/12) -90;
 		}
 	}
 	else
@@ -54,17 +58,26 @@ void design_point_of_route(struct route_point *s_route,int direction,int point_n
 		{
 			s_route->x[i] = radius_1 * cos(2*PI/(point_num/3)*(i+1-point_num/12));
 			s_route->y[i] = radius_1 * sin(2*PI/(point_num/3)*(i+1-point_num/12))+2200;
+			s_route->angle[i] = 360/(point_num/3)*(i+1-point_num/12) +90;
 		}
 		for(int i=point_num/3;i<= (2*point_num/3-1);i++)
 		{
 			s_route->x[i] = radius_2 * cos(2*PI/(point_num/3)*(i+1-point_num/12));
 			s_route->y[i] = radius_2 * sin(2*PI/(point_num/3)*(i+1-point_num/12))+2200;
+			s_route->angle[i] = 360/(point_num/3)*(i+1-point_num/12)+90 ;
 		}
 		for(int i=2*point_num/3;i<= (point_num-1);i++)
 		{
 			s_route->x[i] = radius_3 * cos(2*PI/(point_num/3)*(i+1-point_num/12));
 			s_route->y[i] = radius_3 * sin(2*PI/(point_num/3)*(i+1-point_num/12))+2200;
+			s_route->angle[i] = 360/(point_num/3)*(i+1-point_num/12)+90 ;
 		}
+	}
+	for(int j=0;j<=(point_num-1);j++)
+	{
+		s_route->angle[j] -= 90;
+		if (s_route->angle[j] >  180.0f)  s_route->angle[j] -= 360.0f;
+		if (s_route->angle[j] < -180.0f)  s_route->angle[j] += 360.0f;
 	}
 }
 /**
@@ -110,7 +123,7 @@ void update_point(struct route_point *s_route,int *point_addr,int pos_x,int pos_
 	{
 		*point_addr = point_num;
 	}
-//	printf("aim x %d y %d\r\n",s_route->x[*point_addr],s_route->y[*point_addr]);
+//	printf("aim x %d y %d ang %.2f\r\n",s_route->x[*point_addr],s_route->y[*point_addr],s_route->angle[*point_addr]);
 //	printf("now x %d y %d\r\n",pos_x,pos_y);
 //	printf("pointnum %d\r\n",*point_addr);
 }
@@ -121,36 +134,28 @@ void update_point(struct route_point *s_route,int *point_addr,int pos_x,int pos_
  * @attention None
  */
 void calculate_motor_current(struct pid *s_left_pid,struct pid *s_right_pid,struct pid *s_ang_pid,
-	int aim_point_x,int aim_point_y,int pos_x,int pos_y,float pos_angle,int speed,int jam_back_time,
+	int aim_point_x,int aim_point_y,float aim_point_angle,int pos_x,int pos_y,float pos_angle,int speed,int jam_back_time,
 		struct s_motor_data *s_left,struct s_motor_data *s_right)
 {
+	static ActLine2 now_point={0};
+	static ActLine2 aim_point={0};
 	static int jam_back_counter=0;
-	static int cir_num,init=0;
-	static float aim_angle,aim_ang_last,aim_ang_tol,angle_out;
-	aim_ang_last = aim_angle;  
-	aim_angle = -atan2f((aim_point_x-pos_x),(aim_point_y-pos_y))*180/PI;
-	if(init)
-	{
-		if(aim_angle - aim_ang_last > 300)
-		{
-			cir_num--;
-		}
-		else if(aim_angle - aim_ang_last < -300)
-		{
-			cir_num++;
-		}
-		aim_ang_tol = aim_angle + cir_num * 360;
-	}
-	else
-	{
-		init = 1;
-	}
+	static float aim_angle,aim_ang_tol,angle_out;
+	now_point.point.x = pos_x;
+	now_point.point.y = pos_y;
+	now_point.angle = pos_angle;
+	aim_point.point.x = aim_point_x;
+	aim_point.point.y = aim_point_y;
+	aim_point.angle = aim_point_angle;
+	aim_angle = MvByLine(now_point,aim_point) - 90;
+	aim_ang_tol = pos_angle + CcltAngleSub(aim_angle,pos_angle);
 	if(angle_pid_debug==1)
 	{
 		pid_struct_init(s_ang_pid,V1,200,P,I,D);
 	}
 	angle_out = pid_calculate(s_ang_pid,pos_angle,aim_ang_tol);
 //	printf("aimangle %.2f\r\n",aim_angle);
+//	printf("aimmidangle %.2f\r\n",aim_ang_tol);
 //	printf("totalang %.2f\r\n",pos_angle);
 //	printf("ang_out %.2f\r\n",angle_out);
 	if(motor_pid_debug==1)
