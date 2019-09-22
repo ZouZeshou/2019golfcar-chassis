@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F427xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;   ../Drivers/STM32F4xx_HAL_Driver/Inc;   ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;   ../Middlewares/Third_Party/FreeRTOS/Source/include;   ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;   ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;   ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;   ../Drivers/CMSIS/Include;   ..\zzsadd\algorithm;   ..\zzsadd\bsp;   ..\zzsadd\modules;   ..\zzsadd\Personal;   ..\zzsadd\usr_task</IncludePath>
+              <IncludePath>../Inc;    ../Drivers/STM32F4xx_HAL_Driver/Inc;    ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;    ../Middlewares/Third_Party/FreeRTOS/Source/include;    ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;    ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;    ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;    ../Drivers/CMSIS/Include;    ..\zzsadd\algorithm;    ..\zzsadd\bsp;    ..\zzsadd\modules;    ..\zzsadd\Personal;    ..\zzsadd\usr_task</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -669,6 +669,11 @@
               <FileType>1</FileType>
               <FilePath>..\zzsadd\modules\route.c</FilePath>
             </File>
+            <File>
+              <FileName>protocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\zzsadd\modules\protocol.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -678,6 +683,11 @@
               <FileName>pid.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\zzsadd\algorithm\pid.c</FilePath>
+            </File>
+            <File>
+              <FileName>CRC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\zzsadd\algorithm\CRC.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -4,6 +4,7 @@
 uint8_t Usart1buff[100]={0};
 uint8_t Usart2buff[100]={0};
 uint8_t Usart3buff[100]={0};
+uint8_t Uart4buff[100]={0};
 uint8_t Usart6buff[100]={0};
 /**
  * @brief Enable USART

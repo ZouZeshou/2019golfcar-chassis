@@ -10,6 +10,7 @@ void USART_IDLE_IRQ(UART_HandleTypeDef *huart,uint8_t * buffer_addr,uint8_t data
 extern uint8_t Usart1buff[100];
 extern uint8_t Usart2buff[100];
 extern uint8_t Usart3buff[100];
+extern uint8_t Uart4buff[100];
 extern uint8_t Usart6buff[100];
 extern int fputc(int ch, FILE *f);
 #endif

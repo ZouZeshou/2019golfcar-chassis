@@ -20,7 +20,7 @@ int jam_back = 0;
  */
 void route_init(void)
 {
-	pid_struct_init(&s_angle_pid,3500,200,80,0,0);
+	pid_struct_init(&s_angle_pid,8000,200,80,0,0);
 }
 /**
  * @brief design every point of route 以出发点为原点计算路径上各点的x,y坐标
@@ -31,7 +31,7 @@ void route_init(void)
 void design_point_of_route(struct route_point *s_route,int direction,int point_num,
 	int radius_1,int radius_2,int radius_3)
 {
-	if(direction==1)
+	if(direction==2)
 	{
 		for(int i=0;i<= (point_num/3-1);i++)
 		{
@@ -52,7 +52,7 @@ void design_point_of_route(struct route_point *s_route,int direction,int point_n
 			s_route->angle[i] = 360/(point_num/3)*(i+1-point_num/12) -90;
 		}
 	}
-	else
+	else if(direction==1)
 	{
 		for(int i=0;i<= (point_num/3-1);i++)
 		{
@@ -105,7 +105,7 @@ void update_point(struct route_point *s_route,int *point_addr,int pos_x,int pos_
 		if(jam_counter++ >= jam_time)
 		{
 			jam_back = 1;
-			for(int i=*point_addr-3;i<=*point_addr+3;i++)
+			for(int i=*point_addr-4;i<=*point_addr+4;i++)
 			{
 				jam_distance_now = sqrt((s_route->x[i]-pos_x)*(s_route->x[i]-pos_x)
 								+(s_route->y[i]-pos_y)*(s_route->y[i]-pos_y));

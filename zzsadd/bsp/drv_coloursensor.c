@@ -39,7 +39,7 @@ void deal_coloursensor_data(uint8_t * buffer)
  * @return None
  * @attention None
  */
-void detect_the_color(struct s_colour_sensor_data *s_color)
+int detect_the_color(struct s_colour_sensor_data *s_color)
 {
 	if((s_color->Lux>0&&s_color->Lux<0)&&(s_color->CT>0&&s_color->CT<0))
 	{
@@ -57,5 +57,5 @@ void detect_the_color(struct s_colour_sensor_data *s_color)
 	{
 		s_color->ball_color = 4;
 	}
-	
+	return s_color->ball_color;
 }

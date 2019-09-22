@@ -5,6 +5,7 @@
 #include "drv_robotservo.h"
 #include "STMGood.h"
 #include "drv_uart.h"
+#include "usart.h"
 #include "drv_can.h"
 #include "can.h"
 #include "chassis.h"
@@ -15,11 +16,13 @@
 #include "drv_coloursensor.h"
 #include "chassis.h"
 #include "pid.h"
+#include "drv_io.h"
+#include "protocol.h"
 static int init_ok;
 static int start_signal = 1;
 static int calculate_init;
-int step = 1;
-int point_num = 36;
+int step = 0;
+int point_num = 72;
 int now_point = 0; 
 /**
 * @brief Function implementing the myTask02 thread.
@@ -32,15 +35,20 @@ void StartTask02(void const * argument)
   {
 		if(init_ok)
 		{
-			if(start_signal)
+			calculate_trans_current(&s_trans_motor,&s_trans_pos_pid,&s_trans_spd_pid);
+			s_send_data.ball_color = detect_the_color(&s_color_data);
+			//if(s_receive_data.start_run && step == 0)
+			if(step == 0)
 			{
-				switch(step)
+				step=1;
+			}
+			switch(step)
 				{
 					case 1://ÅÜÈ¦
 					{
 							if(calculate_init==0)
 							{
-								design_point_of_route(&s_route,0,point_num,1600,1300,900);
+								design_point_of_route(&s_route,1,point_num,1600,1300,900);
 								calculate_init = 1;
 							}
 							else
@@ -57,14 +65,18 @@ void StartTask02(void const * argument)
 					}
 					case 2:
 					{
-						s_leftmotor.target_speed = 0;
-						s_rightmotor.target_speed = 0;
-						s_leftmotor.out_current = (int)(pid_calculate(&s_leftmotor_pid,s_leftmotor.back_speed,s_leftmotor.target_speed));
-						s_rightmotor.out_current = (int)(pid_calculate(&s_rightmotor_pid,s_rightmotor.back_speed,s_rightmotor.target_speed));	
+							s_send_data.finish_run = 1;
+							s_leftmotor.target_speed = 0;
+							s_rightmotor.target_speed = 0;
+							s_leftmotor.out_current = (int)(pid_calculate(&s_leftmotor_pid,s_leftmotor.back_speed,s_leftmotor.target_speed));
+							s_rightmotor.out_current = (int)(pid_calculate(&s_rightmotor_pid,s_rightmotor.back_speed,s_rightmotor.target_speed));
+							if(s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
+							{
+								transmit_a_ball(&s_trans_motor);
+							}
 							break;
 					}
 				}
-			}
 		}
     osDelay(2);
   }
@@ -95,6 +107,10 @@ void StartTask04(void const * argument)
 	static int init_counter;
   for(;;)
   {
+		s_send_data.pos_x.f = s_posture.pos_x;
+		s_send_data.pos_y.f = s_posture.pos_y;
+		s_send_data.angle.f = s_posture.zangle;
+		send_data_to_gimbal(&huart4);
 		if(init_ok==0)
 		{
 			chassis_para_init();
@@ -102,9 +118,10 @@ void StartTask04(void const * argument)
 			if(init_counter++ >= 400)
 			{
 				init_ok = 1;
+				PWM1 = 1300;
 			}
 		}
-    osDelay(50);
+    osDelay(40);
   }
 }
 /**
@@ -122,7 +139,7 @@ void StartTask05(void const * argument)
 			HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_7);
 			HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14);
 //			printf("type %d lux %d ct%d color %d\r\n",s_color_data.Start,s_color_data.Lux,s_color_data.CT,s_color_data.color);
-//			for(int i=0;i<24;i++)
+//			for(int i=0;i<36;i++)
 //			{
 //				printf("num %d x %d y %d \r\n",i,s_route.x[i],s_route.y[i]);
 //			}

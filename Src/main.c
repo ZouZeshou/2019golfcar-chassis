@@ -34,12 +34,14 @@
 #include "drv_io.h"
 #include "drv_robotservo.h"
 #include "drv_timer.h"
+#include "drv_io.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 extern DMA_HandleTypeDef hdma_usart2_rx;
 extern DMA_HandleTypeDef hdma_usart6_rx;
+extern DMA_HandleTypeDef hdma_uart4_rx;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -108,13 +110,16 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USART6_UART_Init();
   MX_USART1_UART_Init();
+  MX_UART4_Init();
   /* USER CODE BEGIN 2 */
 	USART_Enable(&huart1,Usart1buff);
 	USART_DMA_Enable(&huart2,&hdma_usart2_rx,Usart2buff,11);
 	USART_Enable(&huart3,Usart3buff);
+	USART_DMA_Enable(&huart4,&hdma_uart4_rx,Uart4buff,8);
 	USART_DMA_Enable(&huart6,&hdma_usart6_rx,Usart6buff,28);
 	CAN_Enable(&hcan1);
 	CAN_Enable(&hcan2);
+	PWM_Init(&htim4,TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

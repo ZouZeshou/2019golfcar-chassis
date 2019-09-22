@@ -52,3 +52,4 @@
 2019-golfcar-chassis\stm32f4xx_it.o: ../Inc/usart.h
 2019-golfcar-chassis\stm32f4xx_it.o: ..\zzsadd\bsp\drv_coloursensor.h
 2019-golfcar-chassis\stm32f4xx_it.o: ..\zzsadd\bsp\drv_locationsystem.h
+2019-golfcar-chassis\stm32f4xx_it.o: ..\zzsadd\modules\protocol.h

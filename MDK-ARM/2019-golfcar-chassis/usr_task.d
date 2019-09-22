@@ -52,11 +52,15 @@
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\Personal\STMGood.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_uart.h
 2019-golfcar-chassis\usr_task.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+2019-golfcar-chassis\usr_task.o: ../Inc/usart.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_can.h
 2019-golfcar-chassis\usr_task.o: ../Inc/can.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\modules\chassis.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\algorithm\pid.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_locationsystem.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\modules\route.h
 2019-golfcar-chassis\usr_task.o: D:\MDK5\ARM\ARMCC\Bin\..\include\math.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_coloursensor.h
-2019-golfcar-chassis\usr_task.o: ..\zzsadd\algorithm\pid.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\bsp\drv_io.h
+2019-golfcar-chassis\usr_task.o: ../Inc/tim.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\modules\protocol.h
