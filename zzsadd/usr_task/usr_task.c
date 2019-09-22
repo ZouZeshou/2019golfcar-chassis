@@ -22,7 +22,7 @@ static int init_ok;
 static int start_signal = 1;
 static int calculate_init;
 int step = 0;
-int point_num = 72;
+int point_num = 48;
 int now_point = 0; 
 /**
 * @brief Function implementing the myTask02 thread.
@@ -48,12 +48,12 @@ void StartTask02(void const * argument)
 					{
 							if(calculate_init==0)
 							{
-								design_point_of_route(&s_route,1,point_num,1600,1300,900);
+								design_point_of_route(&s_route,1,point_num,900,1300,1600);
 								calculate_init = 1;
 							}
 							else
 							{
-								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,300,4000/2,point_num);
+								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,500,4000/2,point_num);
 								calculate_motor_current(&s_leftmotor_pid,&s_rightmotor_pid,&s_angle_pid,s_route.x[now_point],
 									s_route.y[now_point],s_route.angle[now_point],s_posture.pos_x,s_posture.pos_y,s_posture.zangle,6000,800/2,&s_leftmotor,&s_rightmotor);
 							}

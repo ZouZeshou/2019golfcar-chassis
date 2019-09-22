@@ -81,6 +81,46 @@ void design_point_of_route(struct route_point *s_route,int direction,int point_n
 	}
 }
 /**
+ * @brief design every point of route 以出发点为原点计算路径上各点的x,y坐标
+ * @param direction 向左为1向右为0 point_num 点的个数 radius_1 第一圈半径 radius_2 第二圈半径
+ * @return None
+ * @attention None
+ */
+void design_point_of_helix_route(struct route_point *s_route,int direction,int point_num,
+	int alpha,int beta)
+{
+	static float coef;
+	static float theta;
+	if(direction==2)
+	{
+		for(int i=0;i<= (point_num-1);i++)
+		{
+			theta = PI-2*PI/(point_num/3)*(i+1-point_num/12);
+			coef = alpha + beta * theta;
+			s_route->x[i] = coef * cos(theta);
+			s_route->y[i] = coef * sin(theta) + 2200;
+			s_route->angle[i] = 360/(point_num/3)*(i+1-point_num/12) -90;
+		}	
+	}
+	else if(direction==1)
+	{
+		for(int i=0;i<= (point_num/3-1);i++)
+		{
+			theta = 2*PI/(point_num/3)*(i+1-point_num/12);
+			coef = alpha + beta * theta;
+			s_route->x[i] = coef * cos(theta);
+			s_route->y[i] = coef * sin(theta) + 2200;
+			s_route->angle[i] = 360/(point_num/3)*(i+1-point_num/12) +90;
+		}
+	}
+	for(int j=0;j<=(point_num-1);j++)
+	{
+		s_route->angle[j] -= 90;
+		if (s_route->angle[j] >  180.0f)  s_route->angle[j] -= 360.0f;
+		if (s_route->angle[j] < -180.0f)  s_route->angle[j] += 360.0f;
+	}
+}
+/**
  * @brief updata the point 
  * @param 
  * @return None
