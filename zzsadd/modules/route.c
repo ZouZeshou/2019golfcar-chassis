@@ -89,27 +89,27 @@ void design_point_of_route(struct route_point *s_route,int direction,int point_n
 void design_point_of_helix_route(struct route_point *s_route,int direction,int point_num,
 	int alpha,int beta)
 {
-	static float coef;
+	static float radius;
 	static float theta;
 	if(direction==2)
 	{
 		for(int i=0;i<= (point_num-1);i++)
 		{
 			theta = PI-2*PI/(point_num/3)*(i+1-point_num/12);
-			coef = alpha + beta * theta;
-			s_route->x[i] = coef * cos(theta);
-			s_route->y[i] = coef * sin(theta) + 2200;
+			radius = alpha - beta * theta;
+			s_route->x[i] = radius * cos(theta);
+			s_route->y[i] = radius * sin(theta) + 2200;
 			s_route->angle[i] = 360/(point_num/3)*(i+1-point_num/12) -90;
 		}	
 	}
 	else if(direction==1)
 	{
-		for(int i=0;i<= (point_num/3-1);i++)
+		for(int i=0;i<= (point_num-1);i++)
 		{
 			theta = 2*PI/(point_num/3)*(i+1-point_num/12);
-			coef = alpha + beta * theta;
-			s_route->x[i] = coef * cos(theta);
-			s_route->y[i] = coef * sin(theta) + 2200;
+			radius = alpha + beta * theta;
+			s_route->x[i] = radius * cos(theta);
+			s_route->y[i] = radius * sin(theta) + 2200;
 			s_route->angle[i] = 360/(point_num/3)*(i+1-point_num/12) +90;
 		}
 	}

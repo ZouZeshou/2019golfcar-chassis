@@ -48,7 +48,8 @@ void StartTask02(void const * argument)
 					{
 							if(calculate_init==0)
 							{
-								design_point_of_route(&s_route,1,point_num,900,1300,1600);
+								//design_point_of_route(&s_route,1,point_num,900,1300,1600);
+								design_point_of_helix_route(&s_route,1,point_num,950,45);
 								calculate_init = 1;
 							}
 							else
@@ -139,10 +140,10 @@ void StartTask05(void const * argument)
 			HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_7);
 			HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14);
 //			printf("type %d lux %d ct%d color %d\r\n",s_color_data.Start,s_color_data.Lux,s_color_data.CT,s_color_data.color);
-//			for(int i=0;i<36;i++)
-//			{
-//				printf("num %d x %d y %d \r\n",i,s_route.x[i],s_route.y[i]);
-//			}
+			for(int i=0;i<48;i++)
+			{
+				printf("num %d x %d y %d \r\n",i,s_route.x[i],s_route.y[i]);
+			}
 //			printf("atan %.2f\r\n",atan2f(P,I)*180/3.14);
 //			printf("rightpos %d spd %d\r\n",s_rightmotor.back_position,s_rightmotor.back_speed);
 //			printf("leftpos %d spd %d\r\n",s_leftmotor.back_position,s_leftmotor.back_speed);

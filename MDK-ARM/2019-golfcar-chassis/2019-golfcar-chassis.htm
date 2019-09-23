@@ -3,7 +3,7 @@
 <title>Static Call Graph - [2019-golfcar-chassis\2019-golfcar-chassis.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image 2019-golfcar-chassis\2019-golfcar-chassis.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Sun Sep 22 21:31:48 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Mon Sep 23 14:28:08 2019
 <BR><P>
 <H3>Maximum Stack Usage =        456 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -452,7 +452,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cmd
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StrToFloat
-<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_route
+<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_helix_route
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_tan
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
@@ -480,7 +480,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_route
+<BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_helix_route
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_tan
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
@@ -493,7 +493,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StrToFloat
-<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_route
+<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_helix_route
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calculate_trans_current
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_tan
@@ -509,7 +509,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_route
+<BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_helix_route
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_tan
 <LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
 <LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
@@ -522,7 +522,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StrToFloat
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_point
-<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_route
+<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_helix_route
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_tan
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 </UL>
@@ -540,7 +540,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_route
+<BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_helix_route
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_tan
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 <LI><a href="#[137]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
@@ -548,6 +548,7 @@ Global Symbols
 
 <P><STRONG><a name="[9b]"></a>__aeabi_f2d</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, f2d.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DealStr
+<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_helix_route
 <LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartTask05
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CcltTwoLineIntersection2
 </UL>
@@ -559,6 +560,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StrToFloat
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_point
+<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_helix_route
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calculate_trans_current
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calculate_motor_current
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CcltTwoLineIntersection2
@@ -1604,14 +1606,14 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.constdata)
 </UL>
-<P><STRONG><a name="[70]"></a>StartTask02</STRONG> (Thumb, 344 bytes, Stack size 32 bytes, usr_task.o(i.StartTask02))
+<P><STRONG><a name="[70]"></a>StartTask02</STRONG> (Thumb, 336 bytes, Stack size 32 bytes, usr_task.o(i.StartTask02))
 <BR><BR>[Stack]<UL><LI>Max Depth = 456<LI>Call Chain = StartTask02 &rArr; calculate_motor_current &rArr; MvByLine &rArr; CcltTwoLineIntersection2 &rArr; __hardfp_tan &rArr; __kernel_tan &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_point
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;transmit_a_ball
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pid_calculate
-<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_route
+<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_helix_route
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calculate_trans_current
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calculate_motor_current
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;detect_the_color
@@ -1636,7 +1638,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.constdata)
 </UL>
-<P><STRONG><a name="[73]"></a>StartTask05</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, usr_task.o(i.StartTask05))
+<P><STRONG><a name="[73]"></a>StartTask05</STRONG> (Thumb, 144 bytes, Stack size 24 bytes, usr_task.o(i.StartTask05))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = StartTask05 &rArr; osDelay &rArr; vTaskDelay &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
@@ -1906,7 +1908,7 @@ Global Symbols
 <LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan
 <LI><a href="#[137]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_route
+<BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_helix_route
 </UL>
 
 <P><STRONG><a name="[138]"></a>__hardfp_sin</STRONG> (Thumb, 180 bytes, Stack size 32 bytes, sin.o(i.__hardfp_sin))
@@ -1919,7 +1921,7 @@ Global Symbols
 <LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan
 <LI><a href="#[137]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_route
+<BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;design_point_of_helix_route
 </UL>
 
 <P><STRONG><a name="[139]"></a>__hardfp_sqrt</STRONG> (Thumb, 122 bytes, Stack size 32 bytes, sqrt.o(i.__hardfp_sqrt))
@@ -2131,10 +2133,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Stream2_IRQHandler
 </UL>
 
-<P><STRONG><a name="[11c]"></a>design_point_of_route</STRONG> (Thumb, 1600 bytes, Stack size 96 bytes, route.o(i.design_point_of_route))
-<BR><BR>[Stack]<UL><LI>Max Depth = 336<LI>Call Chain = design_point_of_route &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_drsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<P><STRONG><a name="[11c]"></a>design_point_of_helix_route</STRONG> (Thumb, 622 bytes, Stack size 72 bytes, route.o(i.design_point_of_helix_route))
+<BR><BR>[Stack]<UL><LI>Max Depth = 312<LI>Call Chain = design_point_of_helix_route &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_drsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sin
+<BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
+<LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sin
 <LI><a href="#[131]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
