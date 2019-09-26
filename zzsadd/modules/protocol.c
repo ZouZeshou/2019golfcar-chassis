@@ -16,7 +16,8 @@ void deal_receive_data(uint8_t *buffer)
 	{
 		s_receive_data.start_run = buffer[2];
 		s_receive_data.ready_to_shoot_last = s_receive_data.ready_to_shoot;
-		s_receive_data.ready_to_shoot = buffer[3];	
+		s_receive_data.ready_to_shoot = buffer[3];
+		s_receive_data.black_or_white = buffer[4];
 	}
 }
 /**

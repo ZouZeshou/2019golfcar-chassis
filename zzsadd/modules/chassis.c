@@ -7,7 +7,7 @@ struct pid s_leftmotor_pid;
 struct pid s_rightmotor_pid;
 struct pid s_trans_pos_pid;
 struct pid s_trans_spd_pid;
-#define TRAVEL 10000
+#define TRAVEL 4096
 #define ENCODE_ANGLE 0.0439506776 //360/8191
 #define RPM_DPS 6 //1/60*360
 /**
@@ -44,13 +44,16 @@ void continue_motor_pos(struct s_motor_data *s_motor)
 }
 /**
  * @brief transmit a ball
- * @param None
+* @param direction:拨球的方向 1为向上 -1为向下
  * @return None
  * @attention None
  */
-void transmit_a_ball(struct s_motor_data *s_motor)
+void transmit_a_ball(int direction,struct s_motor_data *s_motor)
 {
-	s_motor->target_pos += TRAVEL;
+	if(direction==1)
+		s_motor->target_pos += TRAVEL;
+	else if(direction==-1)
+		s_motor->target_pos -= TRAVEL;
 }
 /**
  * @brief calculate the current of trans_motor

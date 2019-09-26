@@ -120,6 +120,7 @@ int main(void)
 	CAN_Enable(&hcan1);
 	CAN_Enable(&hcan2);
 	PWM_Init(&htim4,TIM_CHANNEL_1);
+	PWM_Init(&htim4,TIM_CHANNEL_2);
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [2019-golfcar-chassis\2019-golfcar-chassis.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image 2019-golfcar-chassis\2019-golfcar-chassis.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Mon Sep 23 14:28:08 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Thu Sep 26 18:10:04 2019
 <BR><P>
 <H3>Maximum Stack Usage =        456 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1478,7 +1478,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[109]"></a>MX_TIM4_Init</STRONG> (Thumb, 156 bytes, Stack size 48 bytes, tim.o(i.MX_TIM4_Init))
+<P><STRONG><a name="[109]"></a>MX_TIM4_Init</STRONG> (Thumb, 152 bytes, Stack size 48 bytes, tim.o(i.MX_TIM4_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = MX_TIM4_Init &rArr; HAL_TIM_MspPostInit &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PWM_Init
@@ -1577,8 +1577,8 @@ Global Symbols
 <P><STRONG><a name="[2]"></a>NMI_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.NMI_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f427xx.o(RESET)
 </UL>
-<P><STRONG><a name="[114]"></a>PWM_Init</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, drv_io.o(i.PWM_Init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = PWM_Init &rArr; HAL_TIM_PWM_Start &rArr; TIM_CCxChannelCmd
+<P><STRONG><a name="[114]"></a>PWM_Init</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, drv_io.o(i.PWM_Init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = PWM_Init &rArr; HAL_TIM_PWM_Start &rArr; TIM_CCxChannelCmd
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PWM_Start
 </UL>
@@ -1606,7 +1606,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.constdata)
 </UL>
-<P><STRONG><a name="[70]"></a>StartTask02</STRONG> (Thumb, 336 bytes, Stack size 32 bytes, usr_task.o(i.StartTask02))
+<P><STRONG><a name="[70]"></a>StartTask02</STRONG> (Thumb, 406 bytes, Stack size 32 bytes, usr_task.o(i.StartTask02))
 <BR><BR>[Stack]<UL><LI>Max Depth = 456<LI>Call Chain = StartTask02 &rArr; calculate_motor_current &rArr; MvByLine &rArr; CcltTwoLineIntersection2 &rArr; __hardfp_tan &rArr; __kernel_tan &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
@@ -1628,7 +1628,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.constdata)
 </UL>
-<P><STRONG><a name="[72]"></a>StartTask04</STRONG> (Thumb, 92 bytes, Stack size 0 bytes, usr_task.o(i.StartTask04))
+<P><STRONG><a name="[72]"></a>StartTask04</STRONG> (Thumb, 80 bytes, Stack size 0 bytes, usr_task.o(i.StartTask04))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = StartTask04 &rArr; osDelay &rArr; vTaskDelay &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
@@ -1638,7 +1638,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.constdata)
 </UL>
-<P><STRONG><a name="[73]"></a>StartTask05</STRONG> (Thumb, 144 bytes, Stack size 24 bytes, usr_task.o(i.StartTask05))
+<P><STRONG><a name="[73]"></a>StartTask05</STRONG> (Thumb, 160 bytes, Stack size 24 bytes, usr_task.o(i.StartTask05))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = StartTask05 &rArr; osDelay &rArr; vTaskDelay &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
@@ -2125,7 +2125,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Stream5_IRQHandler
 </UL>
 
-<P><STRONG><a name="[a7]"></a>deal_receive_data</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, protocol.o(i.deal_receive_data))
+<P><STRONG><a name="[a7]"></a>deal_receive_data</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, protocol.o(i.deal_receive_data))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = deal_receive_data &rArr; Verify_CRC8_Check_Sum &rArr; Get_CRC8_Check_Sum
 </UL>
 <BR>[Calls]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Verify_CRC8_Check_Sum
@@ -2176,7 +2176,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Command
 </UL>
 
-<P><STRONG><a name="[63]"></a>main</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, main.o(i.main))
+<P><STRONG><a name="[63]"></a>main</STRONG> (Thumb, 146 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 312<LI>Call Chain = main &rArr; MX_FREERTOS_Init &rArr; osThreadCreate &rArr; xTaskCreate &rArr; pvPortMalloc &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelStart
@@ -2328,7 +2328,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartTask04
 </UL>
 
-<P><STRONG><a name="[11e]"></a>transmit_a_ball</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, chassis.o(i.transmit_a_ball))
+<P><STRONG><a name="[11e]"></a>transmit_a_ball</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, chassis.o(i.transmit_a_ball))
 <BR><BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartTask02
 </UL>
 

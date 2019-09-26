@@ -21,6 +21,7 @@ struct data_receive
 	uint8_t start_run;//1-run from right 2-run from left
 	uint8_t ready_to_shoot;//0-not ready 1-ready 
 	uint8_t ready_to_shoot_last;
+	uint8_t black_or_white;//0-black 1-white
 };
 void deal_receive_data(uint8_t *buffer);
 void send_data_to_gimbal(UART_HandleTypeDef *huart);

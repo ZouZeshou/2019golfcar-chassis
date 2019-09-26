@@ -16,7 +16,7 @@ struct s_motor_data
 
 void chassis_para_init(void);
 void continue_motor_pos(struct s_motor_data *s_motor);
-void transmit_a_ball(struct s_motor_data *s_motor);
+void transmit_a_ball(int direction,struct s_motor_data *s_motor);
 void calculate_trans_current(struct s_motor_data *s_motor,struct pid *s_pos_pid,struct pid *s_spd_pid);
 extern struct pid s_leftmotor_pid;
 extern struct pid s_rightmotor_pid;

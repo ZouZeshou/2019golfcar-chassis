@@ -71,11 +71,37 @@ void StartTask02(void const * argument)
 							s_rightmotor.target_speed = 0;
 							s_leftmotor.out_current = (int)(pid_calculate(&s_leftmotor_pid,s_leftmotor.back_speed,s_leftmotor.target_speed));
 							s_rightmotor.out_current = (int)(pid_calculate(&s_rightmotor_pid,s_rightmotor.back_speed,s_rightmotor.target_speed));
-							if(s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
-							{
-								transmit_a_ball(&s_trans_motor);
+							switch(s_send_data.ball_color)
+								{
+									case BLACK:
+									{
+										if(s_receive_data.black_or_white==0&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
+											transmit_a_ball(1,&s_trans_motor);
+										else
+											transmit_a_ball(-1,&s_trans_motor);
+										break;
+									}
+									case WHITE:
+									{
+										if(s_receive_data.black_or_white==1&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
+											transmit_a_ball(1,&s_trans_motor);
+										else
+											transmit_a_ball(-1,&s_trans_motor);
+										break;
+									}
+									case PINK:
+									{
+										if(s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
+											transmit_a_ball(1,&s_trans_motor);
+										break;
+									}
+									case ENVIRONMENT:
+									{
+										transmit_a_ball(-1,&s_trans_motor);
+										break;
+									}
 							}
-							break;
+						break;
 					}
 				}
 		}
@@ -119,7 +145,8 @@ void StartTask04(void const * argument)
 			if(init_counter++ >= 400)
 			{
 				init_ok = 1;
-				PWM1 = 1300;
+//				PWM1 = 1250;
+//				PWM2 = 1250;
 			}
 		}
     osDelay(40);
@@ -139,14 +166,14 @@ void StartTask05(void const * argument)
 		{
 			HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_7);
 			HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14);
-//			printf("type %d lux %d ct%d color %d\r\n",s_color_data.Start,s_color_data.Lux,s_color_data.CT,s_color_data.color);
-			for(int i=0;i<48;i++)
-			{
-				printf("num %d x %d y %d \r\n",i,s_route.x[i],s_route.y[i]);
-			}
+			printf("type %d lux %d ct%d color %d\r\n",s_color_data.Start,s_color_data.Lux,s_color_data.CT,s_color_data.color);
+//			for(int i=0;i<48;i++)
+//			{
+//				printf("num %d x %d y %d \r\n",i,s_route.x[i],s_route.y[i]);
+//			}
 //			printf("atan %.2f\r\n",atan2f(P,I)*180/3.14);
-//			printf("rightpos %d spd %d\r\n",s_rightmotor.back_position,s_rightmotor.back_speed);
-//			printf("leftpos %d spd %d\r\n",s_leftmotor.back_position,s_leftmotor.back_speed);
+			printf("rightpos %d spd %d\r\n",s_rightmotor.back_position,s_rightmotor.back_speed);
+			printf("leftpos %d spd %d\r\n",s_leftmotor.back_position,s_leftmotor.back_speed);
 //			printf("targetspad %d %d\r\n",s_leftmotor.target_speed,s_rightmotor.target_speed);
 			printf("now_point %d\r\n",now_point);
 			printf("step %d\r\n",step);
