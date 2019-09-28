@@ -119,7 +119,7 @@ void StartTask03(void const * argument)
   {
 		if(calculate_init)
 		{
-			Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,0,0);
+			//Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
 		}
     osDelay(2);
   }
@@ -145,8 +145,8 @@ void StartTask04(void const * argument)
 			if(init_counter++ >= 400)
 			{
 				init_ok = 1;
-//				PWM1 = 1250;
-//				PWM2 = 1250;
+				PWM1 = 1250;
+				PWM2 = 1250;
 			}
 		}
     osDelay(40);
@@ -167,17 +167,20 @@ void StartTask05(void const * argument)
 			HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_7);
 			HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14);
 			printf("type %d lux %d ct%d color %d\r\n",s_color_data.Start,s_color_data.Lux,s_color_data.CT,s_color_data.color);
+			printf("ballcolor %d\r\n",s_send_data.ball_color);
 //			for(int i=0;i<48;i++)
 //			{
 //				printf("num %d x %d y %d \r\n",i,s_route.x[i],s_route.y[i]);
 //			}
 //			printf("atan %.2f\r\n",atan2f(P,I)*180/3.14);
-			printf("rightpos %d spd %d\r\n",s_rightmotor.back_position,s_rightmotor.back_speed);
-			printf("leftpos %d spd %d\r\n",s_leftmotor.back_position,s_leftmotor.back_speed);
+//			printf("rightpos %d spd %d\r\n",s_rightmotor.back_position,s_rightmotor.back_speed);
+//			printf("leftpos %d spd %d\r\n",s_leftmotor.back_position,s_leftmotor.back_speed);
+			printf("trans spd %d pos %lld target %lld\r\n",s_trans_motor.back_speed,s_trans_motor.tol_pos,s_trans_motor.target_pos);
+			printf("pospid err %.2f out %.2f spdpid err %.2f out %.2f\r\n",s_trans_pos_pid.err,s_trans_pos_pid.out,s_trans_spd_pid.err,s_trans_spd_pid.out);
 //			printf("targetspad %d %d\r\n",s_leftmotor.target_speed,s_rightmotor.target_speed);
 			printf("now_point %d\r\n",now_point);
 			printf("step %d\r\n",step);
-			printf("ang %.2f x %.2f y %.2f \r\n",s_posture.zangle,s_posture.pos_x,s_posture.pos_y);
+//			printf("ang %.2f x %.2f y %.2f \r\n",s_posture.zangle,s_posture.pos_x,s_posture.pos_y);
 //			printf("current %d %d \r\n",s_leftmotor.out_current,s_rightmotor.out_current);
 	//		if(angle==160)
 	//		{
@@ -190,6 +193,7 @@ void StartTask05(void const * argument)
 	//		
 	//		Set_Num_Speed((uint8_t)0,(uint32_t)angle);
 	//		printf("P %.1f I %.1f D %.1f\r\n",P,I,D);
+	//		transmit_a_ball(1,&s_trans_motor);
 		}
     osDelay(200);
   }

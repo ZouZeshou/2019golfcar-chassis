@@ -2,6 +2,7 @@
 #include "drv_uart.h"
 #include "usart.h"
 struct s_colour_sensor_data s_color_data;
+//
 /**
  * @brief set the parameter of color sensor
  * @param None
@@ -41,21 +42,21 @@ void deal_coloursensor_data(uint8_t * buffer)
  */
 int detect_the_color(struct s_colour_sensor_data *s_color)
 {
-	if((s_color->Lux>0&&s_color->Lux<0)&&(s_color->CT>0&&s_color->CT<0))
+	if((s_color->Lux>15&&s_color->Lux<40)&&(s_color->CT>5500&&s_color->CT<6700))
 	{
-		s_color->ball_color = BLACK;
+		s_color->ball_color = BLACK;//15-40 5500-6700
 	}
-	else if((s_color->Lux>0&&s_color->Lux<0)&&(s_color->CT>0&&s_color->CT<0))
+	else if((s_color->Lux>150&&s_color->Lux<250)&&(s_color->CT>4500&&s_color->CT<6000))
 	{
-		s_color->ball_color = WHITE;
+		s_color->ball_color = WHITE;//150-250 4500-6000
 	}
-	else if((s_color->Lux>0&&s_color->Lux<0)&&(s_color->CT>0&&s_color->CT<0))
+	else if((s_color->Lux>50&&s_color->Lux<120)&&(s_color->CT>3500&&s_color->CT<4200))
 	{
-		s_color->ball_color = PINK;
+		s_color->ball_color = PINK;//50-120 3500-4200
 	}
 	else
 	{
-		s_color->ball_color = ENVIRONMENT;
+		s_color->ball_color = ENVIRONMENT;//15-70 5000-7500 22 7000
 	}
 	return s_color->ball_color;
 }
