@@ -1,6 +1,7 @@
 #include "chassis.h"
 #include "pid.h"
 #include "STMGood.h"
+#include "math.h"
 struct s_motor_data s_trans_motor={0};
 struct s_motor_data s_leftmotor={0};
 struct s_motor_data s_rightmotor={0};
@@ -22,8 +23,8 @@ void chassis_para_init(void)
 {
 	pid_struct_init(&s_leftmotor_pid,8000,2000,5,0.1,0);
 	pid_struct_init(&s_rightmotor_pid,8000,2000,5,0.1,0);
-	pid_struct_init(&s_trans_pos_pid,600,200,30,0,0);
-	pid_struct_init(&s_trans_spd_pid,16000,4000,50,0.1,0);
+	pid_struct_init(&s_trans_pos_pid,300,100,40,0,0);
+	pid_struct_init(&s_trans_spd_pid,16000,4000,80,0.5,0);
 	s_trans_motor.target_pos = s_trans_motor.back_position;
 }
 /**
@@ -52,9 +53,9 @@ void continue_motor_pos(struct s_motor_data *s_motor)
  */
 void transmit_a_ball(int direction,struct s_motor_data *s_motor)
 {
-	if(direction==1)
+	if(direction==1&&(abs(s_motor->target_pos-s_motor->tol_pos)<=500))
 		s_motor->target_pos += TRAVEL;
-	else if(direction==-1)
+	else if(direction==-1&&(abs(s_motor->target_pos-s_motor->tol_pos)<=500))
 		s_motor->target_pos -= TRAVEL;
 }
 /**

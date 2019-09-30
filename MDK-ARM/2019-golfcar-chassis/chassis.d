@@ -34,3 +34,4 @@
 2019-golfcar-chassis\chassis.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 2019-golfcar-chassis\chassis.o: ..\zzsadd\algorithm\pid.h
 2019-golfcar-chassis\chassis.o: ..\zzsadd\Personal\STMGood.h
+2019-golfcar-chassis\chassis.o: D:\MDK5\ARM\ARMCC\Bin\..\include\math.h
