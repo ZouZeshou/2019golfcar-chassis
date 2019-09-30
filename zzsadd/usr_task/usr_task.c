@@ -54,7 +54,7 @@ void StartTask02(void const * argument)
 							}
 							else
 							{
-								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,300,3000/2,point_num);
+								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,400,3000/2,point_num);
 								calculate_motor_current(&s_leftmotor_pid,&s_rightmotor_pid,&s_angle_pid,s_route.x[now_point],
 									s_route.y[now_point],s_route.angle[now_point],s_posture.pos_x,s_posture.pos_y,s_posture.zangle,6000,800/2,&s_leftmotor,&s_rightmotor);
 							}

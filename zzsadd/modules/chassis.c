@@ -9,7 +9,7 @@ struct pid s_leftmotor_pid;
 struct pid s_rightmotor_pid;
 struct pid s_trans_pos_pid;
 struct pid s_trans_spd_pid;
-#define TRAVEL 4096
+#define TRAVEL 147456  //4096*36=147456
 #define ENCODE_ANGLE 0.0439506776 //360/8191
 #define RPM_DPS 6 //1/60*360
 int trans_pid_debug=0;
@@ -23,8 +23,8 @@ void chassis_para_init(void)
 {
 	pid_struct_init(&s_leftmotor_pid,8000,2000,5,0.1,0);
 	pid_struct_init(&s_rightmotor_pid,8000,2000,5,0.1,0);
-	pid_struct_init(&s_trans_pos_pid,300,100,40,0,0);
-	pid_struct_init(&s_trans_spd_pid,16000,4000,80,0.5,0);
+	pid_struct_init(&s_trans_pos_pid,300,100,10,0,0);
+	pid_struct_init(&s_trans_spd_pid,8000,3000,40,0,0);
 	s_trans_motor.target_pos = s_trans_motor.back_position;
 }
 /**
@@ -71,6 +71,6 @@ void calculate_trans_current(struct s_motor_data *s_motor,struct pid *s_pos_pid,
 		pid_struct_init(&s_trans_pos_pid,V1,100,P,I,D);
 		pid_struct_init(&s_trans_spd_pid,V2,4000,p,i,d);
 	}
-	s_motor->target_speed = pid_calculate(s_pos_pid,s_motor->tol_pos*ENCODE_ANGLE,s_motor->target_pos*ENCODE_ANGLE);
+	s_motor->target_speed = pid_calculate(s_pos_pid,s_motor->tol_pos*ENCODE_ANGLE/36,s_motor->target_pos*ENCODE_ANGLE/36);
 	s_motor->out_current = pid_calculate(s_spd_pid,s_motor->back_speed*RPM_DPS,s_motor->target_speed);
 }
