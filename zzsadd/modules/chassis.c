@@ -72,5 +72,5 @@ void calculate_trans_current(struct s_motor_data *s_motor,struct pid *s_pos_pid,
 		pid_struct_init(&s_trans_spd_pid,V2,4000,p,i,d);
 	}
 	s_motor->target_speed = pid_calculate(s_pos_pid,s_motor->tol_pos*ENCODE_ANGLE/36,s_motor->target_pos*ENCODE_ANGLE/36);
-	s_motor->out_current = pid_calculate(s_spd_pid,s_motor->back_speed*RPM_DPS,s_motor->target_speed);
+	s_motor->out_current = pid_calculate(s_spd_pid,s_motor->back_speed*RPM_DPS/36,s_motor->target_speed);
 }
