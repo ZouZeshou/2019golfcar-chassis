@@ -13,6 +13,7 @@ struct pid s_trans_spd_pid;
 #define ENCODE_ANGLE 0.0439506776 //360/8191
 #define RPM_DPS 6 //1/60*360
 int trans_pid_debug=0;
+int trans_motor_jam=0;
 /**
  * @brief Initialize of chassis
  * @param None
@@ -23,8 +24,8 @@ void chassis_para_init(void)
 {
 	pid_struct_init(&s_leftmotor_pid,8000,2000,5,0.1,0);
 	pid_struct_init(&s_rightmotor_pid,8000,2000,5,0.1,0);
-	pid_struct_init(&s_trans_pos_pid,300,100,10,0,0);
-	pid_struct_init(&s_trans_spd_pid,8000,3000,40,0,0);
+	pid_struct_init(&s_trans_pos_pid,500,100,20,0,0);
+	pid_struct_init(&s_trans_spd_pid,8000,3000,30,0,0);
 	s_trans_motor.target_pos = s_trans_motor.back_position;
 }
 /**
@@ -47,16 +48,42 @@ void continue_motor_pos(struct s_motor_data *s_motor)
 }
 /**
  * @brief transmit a ball
-* @param direction:拨球的方向 1为向上 -1为向下
+* @param direction:拨球的方向 -1为向上 1为向下
  * @return None
  * @attention None
  */
 void transmit_a_ball(int direction,struct s_motor_data *s_motor)
 {
-	if(direction==1&&(abs(s_motor->target_pos-s_motor->tol_pos)<=500))
-		s_motor->target_pos += TRAVEL;
-	else if(direction==-1&&(abs(s_motor->target_pos-s_motor->tol_pos)<=500))
-		s_motor->target_pos -= TRAVEL;
+	if(trans_motor_jam==0)
+	{
+		if(direction==1&&(abs(s_motor->target_pos-s_motor->tol_pos)<=5000))
+			s_motor->target_pos += TRAVEL;
+		else if(direction==-1&&(abs(s_motor->target_pos-s_motor->tol_pos)<=5000))
+			s_motor->target_pos -= TRAVEL;
+	}
+}
+/**
+ * @brief 检测卡球,如果卡球，停止
+* @param s_motor_data
+ * @return None
+ * @attention None
+ */
+void deal_motor_jam(struct s_motor_data *s_motor,int time_out)
+{
+	static int jam_counter=0;
+	if(abs(s_motor->target_pos - s_motor->tol_pos)>=5000)
+	{
+		if(jam_counter++>=time_out)
+		{
+			jam_counter = 0;
+			s_motor->target_pos += TRAVEL;
+		}
+	}
+	else
+	{
+		jam_counter = 0;
+	}
+	
 }
 /**
  * @brief calculate the current of trans_motor

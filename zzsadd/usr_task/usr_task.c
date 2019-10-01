@@ -21,7 +21,7 @@
 static int init_ok;
 static int start_signal = 1;
 static int calculate_init;
-int step = 0;
+int step = 2;
 int point_num = 48;
 int now_point = 0; 
 /**
@@ -36,6 +36,7 @@ void StartTask02(void const * argument)
   {
 		if(init_ok)
 		{
+			deal_motor_jam(&s_trans_motor,1000/2);
 			calculate_trans_current(&s_trans_motor,&s_trans_pos_pid,&s_trans_spd_pid);
 			s_send_data.ball_color = detect_the_color(&s_color_data);
 			if((s_receive_data.start_run==1||s_receive_data.start_run==2) && step == 0)
@@ -79,43 +80,43 @@ void StartTask02(void const * argument)
 			}
 				
 				
-			if(shoot_count++>=500)
-				{
-						shoot_count = 0;
-						switch(s_send_data.ball_color)
-								{
-									case BLACK:
-									{
-										if(s_receive_data.black_or_white==0&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
-											transmit_a_ball(1,&s_trans_motor);
-										else if(s_receive_data.black_or_white==1)
-											transmit_a_ball(-1,&s_trans_motor);
-										break;
-									}
-									case WHITE:
-									{
-										if(s_receive_data.black_or_white==1&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
-											transmit_a_ball(1,&s_trans_motor);
-										else if(s_receive_data.black_or_white==0)
-											transmit_a_ball(-1,&s_trans_motor);
-										break;
-									}
-									case PINK:
-									{
-										if(s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
-											transmit_a_ball(1,&s_trans_motor);
-										break;
-									}
-									case ENVIRONMENT:
-									{
-										//transmit_a_ball(-1,&s_trans_motor);
-										break;
-									}
-									default:
-										break;
-							}
+//			if(shoot_count++>=500)
+//				{
+//						shoot_count = 0;
+//						switch(s_send_data.ball_color)
+//								{
+//									case BLACK:
+//									{
+//										if(s_receive_data.black_or_white==0&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
+//											transmit_a_ball(-1,&s_trans_motor);
+//										else if(s_receive_data.black_or_white==1)
+//											transmit_a_ball(1,&s_trans_motor);
+//										break;
+//									}
+//									case WHITE:
+//									{
+//										if(s_receive_data.black_or_white==1&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
+//											transmit_a_ball(-1,&s_trans_motor);
+//										else if(s_receive_data.black_or_white==0)
+//											transmit_a_ball(1,&s_trans_motor);
+//										break;
+//									}
+//									case PINK:
+//									{
+//										if(s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
+//											transmit_a_ball(-1,&s_trans_motor);
+//										break;
+//									}
+//									case ENVIRONMENT:
+//									{
+//										transmit_a_ball(1,&s_trans_motor);
+//										break;
+//									}
+//									default:
+//										break;
+//							}
 						
-				}
+//				}
 		}
     osDelay(2);
   }
@@ -133,6 +134,7 @@ void StartTask03(void const * argument)
 		{
 			Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
 		}
+		Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
     osDelay(2);
   }
 }
@@ -176,8 +178,11 @@ void StartTask05(void const * argument)
 		static int angle;
 		if(init_ok)
 		{
-			HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_7);
-			HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14);
+			if(trans_motor_jam==0)
+			{
+				HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_7);
+				HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14);
+			}
 			printf("type %d lux %d ct%d color %d\r\n",s_color_data.Start,s_color_data.Lux,s_color_data.CT,s_color_data.color);
 			printf("ballcolor %d\r\n",s_send_data.ball_color);
 //			for(int i=0;i<72;i++)
@@ -206,8 +211,8 @@ void StartTask05(void const * argument)
 	//		
 	//		Set_Num_Speed((uint8_t)0,(uint32_t)angle);
 	//		printf("P %.1f I %.1f D %.1f\r\n",P,I,D);
-	//		transmit_a_ball(1,&s_trans_motor);
+			transmit_a_ball(-1,&s_trans_motor);
 		}
-    osDelay(200);
+    osDelay(2000);
   }
 }
