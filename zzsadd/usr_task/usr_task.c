@@ -21,7 +21,7 @@
 static int init_ok;
 static int start_signal = 1;
 static int calculate_init;
-int step = 2;
+int step = 0;
 int point_num = 48;
 int now_point = 0; 
 /**
@@ -78,45 +78,46 @@ void StartTask02(void const * argument)
 					default:
 						break;
 			}
-				
-				
-//			if(shoot_count++>=500)
-//				{
-//						shoot_count = 0;
-//						switch(s_send_data.ball_color)
-//								{
-//									case BLACK:
-//									{
-//										if(s_receive_data.black_or_white==0&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
-//											transmit_a_ball(-1,&s_trans_motor);
+			
+			if(abs(s_trans_motor.target_pos - s_trans_motor.tol_pos)<=5000)
+			{
+				switch(s_send_data.ball_color)
+								{
+									case BLACK:
+									{
+										if(s_receive_data.black_or_white==0&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
+											transmit_a_ball(-1,&s_trans_motor);
 //										else if(s_receive_data.black_or_white==1)
 //											transmit_a_ball(1,&s_trans_motor);
-//										break;
-//									}
-//									case WHITE:
-//									{
-//										if(s_receive_data.black_or_white==1&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
-//											transmit_a_ball(-1,&s_trans_motor);
+										break;
+									}
+									case WHITE:
+									{
+										if(s_receive_data.black_or_white==1&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
+											transmit_a_ball(-1,&s_trans_motor);
 //										else if(s_receive_data.black_or_white==0)
 //											transmit_a_ball(1,&s_trans_motor);
-//										break;
-//									}
-//									case PINK:
-//									{
-//										if(s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
-//											transmit_a_ball(-1,&s_trans_motor);
-//										break;
-//									}
-//									case ENVIRONMENT:
-//									{
-//										transmit_a_ball(1,&s_trans_motor);
-//										break;
-//									}
-//									default:
-//										break;
-//							}
-						
-//				}
+										break;
+									}
+									case PINK:
+									{
+										if(s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
+											transmit_a_ball(-1,&s_trans_motor);
+										break;
+									}
+									case ENVIRONMENT:
+									{
+										if(shoot_count++>=500)
+										{
+												shoot_count = 0;
+												transmit_a_ball(-1,&s_trans_motor);
+										}
+										break;
+									}
+									default:
+										break;
+								}
+			}		
 		}
     osDelay(2);
   }
@@ -134,7 +135,7 @@ void StartTask03(void const * argument)
 		{
 			Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
 		}
-		Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
+//		Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
     osDelay(2);
   }
 }
@@ -211,8 +212,8 @@ void StartTask05(void const * argument)
 	//		
 	//		Set_Num_Speed((uint8_t)0,(uint32_t)angle);
 	//		printf("P %.1f I %.1f D %.1f\r\n",P,I,D);
-			transmit_a_ball(-1,&s_trans_motor);
+	//		transmit_a_ball(-1,&s_trans_motor);
 		}
-    osDelay(2000);
+    osDelay(200);
   }
 }

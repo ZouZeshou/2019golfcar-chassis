@@ -22,21 +22,21 @@ Dialog DLL:      TCM.DLL V1.14.14.0
  
 <h2>Project:</h2>
 E:\Some repositories\2019golfcar-chassis\MDK-ARM\2019-golfcar-chassis.uvprojx
-Project File Date:  09/22/2019
+Project File Date:  10/01/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 3 (build 300)', folder: 'D:\MDK5\ARM\ARMCC\Bin'
 Build target '2019-golfcar-chassis'
 compiling usr_task.c...
-..\zzsadd\usr_task\usr_task.c(34): warning:  #177-D: variable "shoot_count" was declared but never referenced
-  	static int shoot_count=0;
-..\zzsadd\usr_task\usr_task.c(178): warning:  #177-D: variable "angle" was declared but never referenced
+..\zzsadd\usr_task\usr_task.c(82): warning:  #223-D: function "abs" declared implicitly
+  			if(abs(s_trans_motor.target_pos - s_trans_motor.tol_pos)<=5000)
+..\zzsadd\usr_task\usr_task.c(179): warning:  #177-D: variable "angle" was declared but never referenced
   		static int angle;
 ..\zzsadd\usr_task\usr_task.c(22): warning:  #177-D: variable "start_signal" was declared but never referenced
   static int start_signal = 1;
 ..\zzsadd\usr_task\usr_task.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=31948 RO-data=1872 RW-data=400 ZI-data=21344  
+Program Size: Code=31988 RO-data=1872 RW-data=408 ZI-data=21344  
 FromELF: creating hex file...
 "2019-golfcar-chassis\2019-golfcar-chassis.axf" - 0 Error(s), 3 Warning(s).
 
@@ -56,7 +56,7 @@ Package Vendor: ARM
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:4.3.0
-Build Time Elapsed:  00:00:06
+Build Time Elapsed:  00:00:05
 </pre>
 </body>
 </html>
