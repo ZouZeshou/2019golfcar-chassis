@@ -49,6 +49,7 @@ void send_data_to_gimbal(UART_HandleTypeDef *huart)
 	
 	data[14] = s_send_data.finish_run;
 	data[15] = s_send_data.ball_color;
+	data[16] = s_send_data.colorsensor_ready;
 	
 	Append_CRC8_Check_Sum(data,20);
 	HAL_UART_Transmit(huart,data,20,0xff);

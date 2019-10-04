@@ -14,6 +14,8 @@ struct pid s_trans_spd_pid;
 #define RPM_DPS 6 //1/60*360
 int trans_pid_debug=0;
 int trans_motor_jam=0;
+int step1_finish = 0;
+int64_t step1_position=0;
 /**
  * @brief Initialize of chassis
  * @param None
@@ -56,14 +58,60 @@ void transmit_a_ball(int direction,struct s_motor_data *s_motor)
 {
 	if(trans_motor_jam==0)
 	{
-		if(direction==1&&(abs(s_motor->target_pos-s_motor->tol_pos)<=5000))
+		if(direction==1)
 			s_motor->target_pos += TRAVEL;
-		else if(direction==-1&&(abs(s_motor->target_pos-s_motor->tol_pos)<=5000))
+		else if(direction==-1)
 			s_motor->target_pos -= TRAVEL;
 	}
 }
 /**
- * @brief ¼ì²â¿¨Çò,Èç¹û¿¨Çò£¬Í£Ö¹
+ * @brief transmit a ball by step
+* @param 
+ * @return None
+ * @attention None
+ */
+void transmit_a_ball_by_step_a(struct s_motor_data *s_motor,float step1_size,int time_out)
+{
+	static int count = 0;
+	if(trans_motor_jam==0)
+	{
+		if(step1_finish==0)
+		{
+			if(count++ >= time_out)
+			{
+				s_motor->target_pos += (int)(TRAVEL * step1_size);
+				step1_finish = 1;
+				count = 0;
+			}
+		}
+		else
+		{
+		count = 0;
+		}
+	}
+}
+void transmit_a_ball_by_step_b(struct s_motor_data *s_motor,float step2_size,int time_out)
+{
+		static int count=0;
+		if(trans_motor_jam==0)
+		{
+			if(step1_finish==1)
+			{
+				if(count++>=time_out)
+				{
+					step1_finish = 0;
+					s_motor->target_pos += (int)(TRAVEL * step2_size);
+					count =0;
+				}
+			}
+			else
+			{
+				count = 0;
+			}
+		}
+}
+/**
+ * @brief ¼ì²â¿¨Çò,Èç¹û¿¨Çò£¬·´×ª
 * @param s_motor_data
  * @return None
  * @attention None

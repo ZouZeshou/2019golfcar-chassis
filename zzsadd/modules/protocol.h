@@ -14,6 +14,7 @@ struct data_to_send
 	
 	uint8_t finish_run;//0-notfinish  1-fininsh
 	uint8_t ball_color;//1-black 2-white 3-pink 4-environment
+	uint8_t colorsensor_ready;//0-notready  1-ready
 
 };
 struct data_receive
