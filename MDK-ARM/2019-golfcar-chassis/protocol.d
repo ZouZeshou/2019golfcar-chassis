@@ -37,3 +37,5 @@
 2019-golfcar-chassis\protocol.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 2019-golfcar-chassis\protocol.o: ../Inc/usart.h
 2019-golfcar-chassis\protocol.o: ../Inc/main.h
+2019-golfcar-chassis\protocol.o: ..\zzsadd\modules\detect.h
+2019-golfcar-chassis\protocol.o: ..\zzsadd\bsp\drv_can.h

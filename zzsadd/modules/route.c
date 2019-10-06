@@ -5,9 +5,12 @@
 #include "drv_uart.h"
 #include "usr_task.h"
 #include "drv_locationsystem.h"
+#include "drv_coloursensor.h"
+#include "protocol.h"
 #define PI 3.1415926
 //以出发点为（0,0）建立坐标系 x(-2400,2400) y(0,4800)
 struct route_point s_route={0};
+struct point_coordinate s_destination = {0};
 struct pid s_angle_pid;
 int angle_pid_debug = 0;
 int motor_pid_debug = 0;
@@ -21,6 +24,221 @@ int jam_back = 0;
 void route_init(void)
 {
 	pid_struct_init(&s_angle_pid,8000,200,60,0,0);
+}
+/**
+ * @brief design the destination
+ * @param left_right从左、右启动 black_white蓝-BLACK，红-WHITE bucket_num桶的编号 radius目标点半径
+ * @return 目标点的坐标
+ * @attention None
+ */
+float choose_detination_by_circle(uint8_t left_right,uint8_t black_white,uint8_t bucket_num)
+{
+	switch(bucket_num)
+	{
+		case 12:
+		{
+			if(black_white==BLACK)
+			{
+				return 2.0;
+			}
+			else if(black_white==WHITE)
+			{
+				return 2.5;
+			}
+			break;
+		}
+		case 23:
+		{
+			if((left_right==RIGHT&&black_white==WHITE)||(left_right==LEFT&&black_white==BLACK))
+			{
+				return 2.25;
+			}
+			else if((left_right==RIGHT&&black_white==BLACK)||(left_right==LEFT&&black_white==WHITE))
+			{
+				return 2.75;
+			}
+			break;
+		}
+		case 34:
+		{
+			if(black_white==BLACK)
+			{
+				return 2.5;
+			}
+			else if(black_white==WHITE)
+			{
+				return 2.0;
+			}
+			break;
+		}
+		case 14:
+		{
+			if((left_right==RIGHT&&black_white==WHITE)||(left_right==LEFT&&black_white==BLACK))
+			{
+				return 2.75;
+			}
+			else if((left_right==RIGHT&&black_white==BLACK)||(left_right==LEFT&&black_white==WHITE))
+			{
+				return 2.25;
+			}
+			break;
+		}
+		case 13:
+		{
+			if((left_right==RIGHT&&black_white==WHITE)||(left_right==LEFT&&black_white==BLACK))
+			{
+				return 2.38;
+			}
+			else if((left_right==RIGHT&&black_white==BLACK)||(left_right==LEFT&&black_white==WHITE))
+			{
+				return 2.125;
+			}
+			break;
+		}
+		case 24:
+		{
+			if((left_right==RIGHT&&black_white==WHITE)||(left_right==LEFT&&black_white==BLACK))
+			{
+				return 2.125;
+			}
+			else if((left_right==RIGHT&&black_white==BLACK)||(left_right==LEFT&&black_white==WHITE))
+			{
+				return 2.38;
+			}
+			break;
+		}
+		default:
+			break;
+		
+	}
+	return 0;
+}
+/**
+ * @brief design the destination
+ * @param left_right从左、右启动 black_white蓝-BLACK，红-WHITE bucket_num桶的编号 radius目标点半径
+ * @return 目标点的坐标
+ * @attention None
+ */
+struct point_coordinate choose_destination(uint8_t left_right,uint8_t black_white,uint8_t bucket_num,int radius)
+{
+	static struct point_coordinate s_desti={0};
+	
+	switch(bucket_num)
+	{
+		case 12:
+		{
+			switch(black_white)
+			{
+				case BLACK:
+				{
+					s_desti.x = radius * cos(-90*PI/180);
+					s_desti.y = radius * sin(-90*PI/180) + 2200;
+					break;
+				}
+				case WHITE:
+				{
+					s_desti.x = radius * cos(90*PI/180);
+					s_desti.y = radius * sin(90*PI/180) + 2200;
+					break;
+				}
+				default:
+					break;
+			}
+			break;
+		}
+		case 23:
+		{
+			switch(black_white)
+			{
+				case BLACK:
+				{
+					s_desti.x = radius * cos(180*PI/180);
+					s_desti.y = radius * sin(180*PI/180) + 2200;
+					break;
+				}
+				case WHITE:
+				{
+					s_desti.x = radius * cos(0*PI/180);
+					s_desti.y = radius * sin(0*PI/180) + 2200;
+					break;
+				}
+				default:
+					break;
+			}
+			break;
+		}
+		case 34:
+		{
+			switch(black_white)
+			{
+				case BLACK:
+				{
+					s_desti.x = radius * cos(90*PI/180);
+					s_desti.y = radius * sin(90*PI/180) + 2200;
+					break;
+				}
+				case WHITE:
+				{
+					s_desti.x = radius * cos(-90*PI/180);
+					s_desti.y = radius * sin(-90*PI/180) + 2200;
+					break;
+				}
+				default:
+					break;
+			}
+			break;
+		}
+		case 14:
+		{
+			switch(black_white)
+			{
+				case BLACK:
+				{
+					s_desti.x = radius * cos(0*PI/180);
+					s_desti.y = radius * sin(0*PI/180) + 2200;
+					break;
+				}
+				case WHITE:
+				{
+					s_desti.x = radius * cos(180*PI/180);
+					s_desti.y = radius * sin(180*PI/180) + 2200;
+					break;
+				}
+				default:
+					break;
+			}
+			break;
+		}
+		case 13:
+		{
+				if(left_right==RIGHT)
+				{
+					s_desti.x = radius * cos(45*PI/180);
+					s_desti.y = radius * sin(45*PI/180) + 2200;
+				}
+				else if(left_right==LEFT)
+				{
+					s_desti.x = radius * cos(225*PI/180);
+					s_desti.y = radius * sin(225*PI/180) + 2200;
+				}
+		}
+		case 24:
+		{
+			if(left_right==RIGHT)
+			{
+				s_desti.x = radius * cos(135*PI/180);
+				s_desti.y = radius * sin(135*PI/180) + 2200;
+			}
+			else if(left_right==LEFT)
+			{
+				s_desti.x = radius * cos(-45*PI/180);
+				s_desti.y = radius * sin(-45*PI/180) + 2200;
+			}
+		}
+		default:
+			break;
+	}
+	return s_desti;
 }
 /**
  * @brief design every point of route 以出发点为原点计算路径上各点的x,y坐标
@@ -87,7 +305,7 @@ void design_point_of_route(struct route_point *s_route,int direction,int point_n
  * @attention None
  */
 void design_point_of_helix_route(struct route_point *s_route,int direction,int point_num,
-	int alpha,int beta)
+	int alpha,int beta,float circle_num)
 {
 	static float radius;
 	static float theta;
@@ -95,22 +313,22 @@ void design_point_of_helix_route(struct route_point *s_route,int direction,int p
 	{
 		for(int i=0;i<= (point_num-1);i++)
 		{
-			theta = PI-2*PI/(point_num/3)*(i-point_num/24);
+			theta = PI-2*PI/(point_num/circle_num)*(i-point_num/24);
 			radius = alpha - beta * theta;
 			s_route->x[i] = radius * cos(theta);
 			s_route->y[i] = radius * sin(theta) + 2200;
-			s_route->angle[i] = 180-360/(point_num/3)*(i-point_num/24) -90;
+			s_route->angle[i] = 180-360/(point_num/circle_num)*(i-point_num/24) -90;
 		}	
 	}
 	else if(direction==1)
 	{
 		for(int i=0;i<= (point_num-1);i++)
 		{
-			theta = 2*PI/(point_num/3)*(i-point_num/24);
+			theta = 2*PI/(point_num/circle_num)*(i-point_num/24);
 			radius = alpha + beta * theta;
 			s_route->x[i] = radius * cos(theta);
 			s_route->y[i] = radius * sin(theta) + 2200;
-			s_route->angle[i] = 360/(point_num/3)*(i-point_num/24) +90;
+			s_route->angle[i] = 360/(point_num/circle_num)*(i-point_num/24) +90;
 		}
 	}
 	for(int j=0;j<=(point_num-1);j++)

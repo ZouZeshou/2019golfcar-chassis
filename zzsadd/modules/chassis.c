@@ -15,6 +15,7 @@ struct pid s_trans_spd_pid;
 int trans_pid_debug=0;
 int trans_motor_jam=0;
 int step1_finish = 0;
+int back_count = 0;
 int64_t step1_position=0;
 /**
  * @brief Initialize of chassis
@@ -24,8 +25,8 @@ int64_t step1_position=0;
  */
 void chassis_para_init(void)
 {
-	pid_struct_init(&s_leftmotor_pid,8000,2000,5,0.1,0);
-	pid_struct_init(&s_rightmotor_pid,8000,2000,5,0.1,0);
+	pid_struct_init(&s_leftmotor_pid,8000,2000,6,0.15,0);
+	pid_struct_init(&s_rightmotor_pid,8000,2000,6,0.15,0);
 	pid_struct_init(&s_trans_pos_pid,500,100,20,0,0);
 	pid_struct_init(&s_trans_spd_pid,8000,3000,30,0,0);
 	s_trans_motor.target_pos = s_trans_motor.back_position;
@@ -124,7 +125,8 @@ void deal_motor_jam(struct s_motor_data *s_motor,int time_out)
 		if(jam_counter++>=time_out)
 		{
 			jam_counter = 0;
-			s_motor->target_pos += TRAVEL;
+			//s_motor->target_pos += TRAVEL;
+			back_count++;
 		}
 	}
 	else

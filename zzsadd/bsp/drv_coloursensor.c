@@ -42,9 +42,12 @@ void deal_coloursensor_data(uint8_t * buffer)
  */
 int detect_the_color(struct s_colour_sensor_data *s_color)
 {
-	s_color->ball_color_last = s_color->ball_color;
+	static int color_count=0;
+	static int temp = 0;
 	
-	if((s_color->Lux>20&&s_color->Lux<40)&&(s_color->CT>5500&&s_color->CT<6800))
+	temp = s_color->ball_color;
+	
+	if((s_color->Lux>20&&s_color->Lux<40)&&(s_color->CT>5500&&s_color->CT<6600))
 	{
 		s_color->ball_color = BLACK;//15-40 5500-6700
 	}
@@ -60,5 +63,24 @@ int detect_the_color(struct s_colour_sensor_data *s_color)
 	{
 		s_color->ball_color = ENVIRONMENT;//15-70 5000-7500 22 7000
 	}
-	return s_color->ball_color;
+	
+	if(temp == s_color->ball_color)
+	{
+		if(color_count++>=10)
+		{
+				color_count =0;
+				s_color->ball_color_last = s_color->ball_color;
+				return s_color->ball_color;
+		}
+		else
+		{
+			return s_color->ball_color_last;
+		}
+	}
+	else
+	{
+		color_count = 0;
+		return s_color->ball_color_last;
+	}
+	
 }

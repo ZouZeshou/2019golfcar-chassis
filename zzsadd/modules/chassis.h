@@ -30,5 +30,6 @@ extern struct s_motor_data s_rightmotor;
 extern struct s_motor_data s_trans_motor;
 extern int trans_motor_jam;
 extern int step1_finish;
+extern int back_count;
 extern int64_t step1_position;
 #endif

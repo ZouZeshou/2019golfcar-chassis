@@ -3,6 +3,7 @@
 #include "chassis.h"
 #include "drv_uart.h"
 #include "math.h"
+struct s_FPS s_fps;
 /**
  * @brief Enable Can1 and Can2(对can1和can2进行初始化)
  * @param None
@@ -42,6 +43,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 				{
 					s_leftmotor.back_speed = 0;
 				}
+				s_fps.chassis_1++;
 				break;
 			}
 			case 0x202:
@@ -52,6 +54,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 				{
 					s_rightmotor.back_speed = 0;
 				}
+				s_fps.chassis_2++;
 				break;
 			}
 			case 0x203:
@@ -60,6 +63,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 				s_trans_motor.back_position = RxData1[0]<<8|RxData1[1];
 				s_trans_motor.back_speed = RxData1[2]<<8|RxData1[3];
 				continue_motor_pos(&s_trans_motor);
+				s_fps.trans++;
 				break;
 			}
 		}

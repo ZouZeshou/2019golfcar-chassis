@@ -47,6 +47,7 @@
 "2019-golfcar-chassis\drv_locationsystem.o"
 "2019-golfcar-chassis\usr_task.o"
 "2019-golfcar-chassis\stmgood.o"
+"2019-golfcar-chassis\detect.o"
 "2019-golfcar-chassis\chassis.o"
 "2019-golfcar-chassis\route.o"
 "2019-golfcar-chassis\protocol.o"

@@ -40,3 +40,5 @@
 2019-golfcar-chassis\route.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 2019-golfcar-chassis\route.o: ..\zzsadd\usr_task\usr_task.h
 2019-golfcar-chassis\route.o: ..\zzsadd\bsp\drv_locationsystem.h
+2019-golfcar-chassis\route.o: ..\zzsadd\bsp\drv_coloursensor.h
+2019-golfcar-chassis\route.o: ..\zzsadd\modules\protocol.h

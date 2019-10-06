@@ -2,8 +2,11 @@
 #include "CRC.h"
 #include "drv_uart.h"
 #include "usart.h"
+#include "detect.h"
 struct data_to_send s_send_data={0};
 struct data_receive s_receive_data={0};
+int64_t gimbal_data_fps=0;
+int gimbal_data_state = 0;
 /**
  * @brief get the data from gimbal
  * @param 
@@ -18,6 +21,9 @@ void deal_receive_data(uint8_t *buffer)
 		s_receive_data.ready_to_shoot_last = s_receive_data.ready_to_shoot;
 		s_receive_data.ready_to_shoot = buffer[3];
 		s_receive_data.black_or_white = buffer[4];
+		s_receive_data.bucket_num = buffer[5];
+		gimbal_data_fps ++;
+		gimbal_data_state = JudgeDeviceState(gimbal_data_fps,4);
 	}
 }
 /**
