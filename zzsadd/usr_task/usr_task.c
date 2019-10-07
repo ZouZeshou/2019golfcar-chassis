@@ -22,7 +22,7 @@
 static int init_ok;
 static int start_signal = 1;
 static int calculate_init;
-int step = 0;
+int step = 2;
 int point_num = 48;
 int now_point = 0; 
 int trans_motor_off = 0;
@@ -45,14 +45,14 @@ void StartTask02(void const * argument)
 			deal_motor_jam(&s_trans_motor,1500/2);
 			calculate_trans_current(&s_trans_motor,&s_trans_pos_pid,&s_trans_spd_pid);
 			
-			if(((s_receive_data.start_run==1||s_receive_data.start_run==2)&&(step==0))||start_next_step==1)
-			{
-				step = 1;
-				start_next_step = 0;
-				calculate_init = 0;
-				now_point = 0;
-				s_send_data.finish_run = 0;
-			}
+//			if(((s_receive_data.start_run==1||s_receive_data.start_run==2)&&(step==0))||start_next_step==1)
+//			{
+//				step = 1;
+//				start_next_step = 0;
+//				calculate_init = 0;
+//				now_point = 0;
+//				s_send_data.finish_run = 0;
+//			}
 			switch(step)
 			{
 					case 1://ÅÜÈ¦
@@ -104,8 +104,8 @@ void StartTask02(void const * argument)
 							s_send_data.finish_run = 1;
 							s_leftmotor.target_speed = 0;
 							s_rightmotor.target_speed = 0;
-							s_leftmotor.out_current = (int)(pid_calculate(&s_leftmotor_pid,s_leftmotor.back_speed,s_leftmotor.target_speed));
-							s_rightmotor.out_current = (int)(pid_calculate(&s_rightmotor_pid,s_rightmotor.back_speed,s_rightmotor.target_speed));					
+	//						s_leftmotor.out_current = (int)(pid_calculate(&s_leftmotor_pid,s_leftmotor.back_speed,s_leftmotor.target_speed));
+	//						s_rightmotor.out_current = (int)(pid_calculate(&s_rightmotor_pid,s_rightmotor.back_speed,s_rightmotor.target_speed));					
 							break;
 					}
 					default:
@@ -132,56 +132,58 @@ void StartTask06(void const * argument)
 				s_send_data.ball_color=detect_the_color(&s_color_data);	
 				s_send_data.colorsensor_ready = 1;
 				gimbal_data_state = JudgeDeviceState(gimbal_data_fps,4);
-				switch(s_send_data.ball_color)
-				{
-					case BLACK:
-					{
-						if(s_receive_data.black_or_white==2&&s_send_data.finish_run==0)
-							transmit_a_ball(-1,&s_trans_motor);
-						else if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
-							transmit_a_ball(-1,&s_trans_motor);
-						break;
-					}
-					case WHITE:
-					{
-						if(s_receive_data.black_or_white==1&&s_send_data.finish_run==0)
-							transmit_a_ball(-1,&s_trans_motor);
-						else if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
-							transmit_a_ball(-1,&s_trans_motor);
-						break;
-					}
-					case PINK:
-					{
-						if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
-							transmit_a_ball(-1,&s_trans_motor);
-						break;
-					}
-					case ENVIRONMENT:
-					{
-						if(shoot_count++>=500)
-						{
-							shoot_count = 0;
-							if(s_send_data.finish_run==1)
-								transmit_a_ball(-1,&s_trans_motor);
-							
-							if(s_send_data.finish_run==1)
-							{
-								if(start_next_path_count++ >= 3)
-								{
-									start_next_step = 1;
-									start_next_path_count = 0;
-								}
-							}
-							else
-							{
-								start_next_path_count = 0;
-							}
-						}
-						break;
-					}
-					default:
-						break;
-				}
+				if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
+					transmit_a_ball(-1,&s_trans_motor);
+//				switch(s_send_data.ball_color)
+//				{
+//					case BLACK:
+//					{
+//						if(s_receive_data.black_or_white==2&&s_send_data.finish_run==0)
+//							transmit_a_ball(-1,&s_trans_motor);
+//						else if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
+//							transmit_a_ball(-1,&s_trans_motor);
+//						break;
+//					}
+//					case WHITE:
+//					{
+//						if(s_receive_data.black_or_white==1&&s_send_data.finish_run==0)
+//							transmit_a_ball(-1,&s_trans_motor);
+//						else if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
+//							transmit_a_ball(-1,&s_trans_motor);
+//						break;
+//					}
+//					case PINK:
+//					{
+//						if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
+//							transmit_a_ball(-1,&s_trans_motor);
+//						break;
+//					}
+//					case ENVIRONMENT:
+//					{
+//						if(shoot_count++>=500)
+//						{
+//							shoot_count = 0;
+//							if(s_send_data.finish_run==1)
+//								transmit_a_ball(-1,&s_trans_motor);
+//							
+//							if(s_send_data.finish_run==1)
+//							{
+//								if(start_next_path_count++ >= 3)
+//								{
+//									start_next_step = 1;
+//									start_next_path_count = 0;
+//								}
+//							}
+//							else
+//							{
+//								start_next_path_count = 0;
+//							}
+//						}
+//						break;
+//					}
+//					default:
+//						break;
+//				}
 			}
 			else
 			{
@@ -226,11 +228,11 @@ void StartTask03(void const * argument)
 //	  {
 //		s_trans_motor.out_current = 0;
 //	  }
-	  if(calculate_init)
-	  {
-			Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
-	  }
-//		Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
+//	  if(calculate_init)
+//	  {
+//			Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
+//	  }
+		Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
     osDelay(2);
   }
 }
