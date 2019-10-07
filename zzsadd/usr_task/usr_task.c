@@ -44,7 +44,6 @@ void StartTask02(void const * argument)
 		{
 			deal_motor_jam(&s_trans_motor,1500/2);
 			calculate_trans_current(&s_trans_motor,&s_trans_pos_pid,&s_trans_spd_pid);
-			s_send_data.ball_color=detect_the_color(&s_color_data);	
 			
 			if(((s_receive_data.start_run==1||s_receive_data.start_run==2)&&(step==0))||start_next_step==1)
 			{
@@ -128,64 +127,66 @@ void StartTask06(void const * argument)
   {
 	  if(init_ok)
 	  {
-		if(abs(s_trans_motor.target_pos - s_trans_motor.tol_pos)<=3000)
-		{
-			s_send_data.colorsensor_ready = 1;
-			switch(s_send_data.ball_color)
+			if(abs(s_trans_motor.target_pos - s_trans_motor.tol_pos)<=3000)
 			{
-				case BLACK:
+				s_send_data.ball_color=detect_the_color(&s_color_data);	
+				s_send_data.colorsensor_ready = 1;
+				gimbal_data_state = JudgeDeviceState(gimbal_data_fps,4);
+				switch(s_send_data.ball_color)
 				{
-					if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
-						transmit_a_ball(-1,&s_trans_motor);
-					else if(s_receive_data.black_or_white==2&&s_send_data.finish_run==0)
-						transmit_a_ball(-1,&s_trans_motor);
-					break;
-				}
-				case WHITE:
-				{
-					if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
-						transmit_a_ball(-1,&s_trans_motor);
-					else if(s_receive_data.black_or_white==1&&s_send_data.finish_run==0)
-						transmit_a_ball(-1,&s_trans_motor);
-					break;
-				}
-				case PINK:
-				{
-					if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
-						transmit_a_ball(-1,&s_trans_motor);
-					break;
-				}
-				case ENVIRONMENT:
-				{
-					if(shoot_count++>=500)
+					case BLACK:
 					{
-						shoot_count = 0;
-						if(s_send_data.finish_run==1)
+						if(s_receive_data.black_or_white==2&&s_send_data.finish_run==0)
 							transmit_a_ball(-1,&s_trans_motor);
-						
-						if(s_send_data.finish_run==1)
+						else if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
+							transmit_a_ball(-1,&s_trans_motor);
+						break;
+					}
+					case WHITE:
+					{
+						if(s_receive_data.black_or_white==1&&s_send_data.finish_run==0)
+							transmit_a_ball(-1,&s_trans_motor);
+						else if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
+							transmit_a_ball(-1,&s_trans_motor);
+						break;
+					}
+					case PINK:
+					{
+						if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
+							transmit_a_ball(-1,&s_trans_motor);
+						break;
+					}
+					case ENVIRONMENT:
+					{
+						if(shoot_count++>=500)
 						{
-							if(start_next_path_count++ >= 2)
+							shoot_count = 0;
+							if(s_send_data.finish_run==1)
+								transmit_a_ball(-1,&s_trans_motor);
+							
+							if(s_send_data.finish_run==1)
 							{
-								start_next_step = 1;
+								if(start_next_path_count++ >= 3)
+								{
+									start_next_step = 1;
+									start_next_path_count = 0;
+								}
+							}
+							else
+							{
 								start_next_path_count = 0;
 							}
 						}
-						else
-						{
-							start_next_path_count = 0;
-						}
+						break;
 					}
-					break;
+					default:
+						break;
 				}
-				default:
-					break;
 			}
-		}
-		else
-		{
-			s_send_data.colorsensor_ready = 0;
-		}
+			else
+			{
+				s_send_data.colorsensor_ready = 0;
+			}
 
 	}
     osDelay(2);

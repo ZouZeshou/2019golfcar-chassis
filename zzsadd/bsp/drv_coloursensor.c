@@ -66,7 +66,7 @@ int detect_the_color(struct s_colour_sensor_data *s_color)
 	
 	if(temp == s_color->ball_color)
 	{
-		if(color_count++>=10)
+		if(color_count++>=50)
 		{
 				color_count =0;
 				s_color->ball_color_last = s_color->ball_color;

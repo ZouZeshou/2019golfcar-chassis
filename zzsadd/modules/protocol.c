@@ -23,7 +23,6 @@ void deal_receive_data(uint8_t *buffer)
 		s_receive_data.black_or_white = buffer[4];
 		s_receive_data.bucket_num = buffer[5];
 		gimbal_data_fps ++;
-		gimbal_data_state = JudgeDeviceState(gimbal_data_fps,4);
 	}
 }
 /**
