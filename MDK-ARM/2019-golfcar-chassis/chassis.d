@@ -35,3 +35,5 @@
 2019-golfcar-chassis\chassis.o: ..\zzsadd\algorithm\pid.h
 2019-golfcar-chassis\chassis.o: ..\zzsadd\Personal\STMGood.h
 2019-golfcar-chassis\chassis.o: D:\MDK5\ARM\ARMCC\Bin\..\include\math.h
+2019-golfcar-chassis\chassis.o: ..\zzsadd\bsp\drv_uart.h
+2019-golfcar-chassis\chassis.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h

@@ -47,21 +47,21 @@ int detect_the_color(struct s_colour_sensor_data *s_color)
 	
 	temp = s_color->ball_color;
 	
-	if((s_color->Lux>20&&s_color->Lux<40)&&(s_color->CT>5500&&s_color->CT<6600))
+	if((s_color->Lux>15&&s_color->Lux<100)&&(s_color->CT>4500&&s_color->CT<7100))
 	{
-		s_color->ball_color = BLACK;//15-40 5500-6700
+		s_color->ball_color = BLACK;//15-40 5500-6700 57 5127 29 6133
 	}
-	else if((s_color->Lux>100&&s_color->Lux<250)&&(s_color->CT>4500&&s_color->CT<6000))
+	else if((s_color->Lux>100&&s_color->Lux<800)&&(s_color->CT>4500&&s_color->CT<6000))
 	{
-		s_color->ball_color = WHITE;//100-250 4500-6000
+		s_color->ball_color = WHITE;//100-250 4500-6000 610 5500 410 5300 140 5300
 	}
-	else if((s_color->Lux>50&&s_color->Lux<120)&&(s_color->CT>3500&&s_color->CT<4200))
+	else if((s_color->Lux>100&&s_color->Lux<300)&&(s_color->CT>3400&&s_color->CT<4200))
 	{
-		s_color->ball_color = PINK;//50-120 3500-4200
+		s_color->ball_color = PINK;//50-120 3500-4200 223 3583 183 3600  234 3583
 	}
 	else
 	{
-		s_color->ball_color = ENVIRONMENT;//15-70 5000-7500 22 7000
+		s_color->ball_color = ENVIRONMENT;//15-70 5000-7500 22 7000 19 7334 
 	}
 	
 	if(temp == s_color->ball_color)

@@ -15,6 +15,7 @@ int gimbal_data_state = 0;
  */
 void deal_receive_data(uint8_t *buffer)
 {
+//	printf("receiveoutok\r\n");
 	if(buffer[0]==0xA5&&buffer[1]==0x5A&&Verify_CRC8_Check_Sum(buffer,8))
 	{
 		s_receive_data.start_run = buffer[2];
@@ -23,6 +24,7 @@ void deal_receive_data(uint8_t *buffer)
 		s_receive_data.black_or_white = buffer[4];
 		s_receive_data.bucket_num = buffer[5];
 		gimbal_data_fps ++;
+//		printf("receive\r\n");
 	}
 }
 /**
