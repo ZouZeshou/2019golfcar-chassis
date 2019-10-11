@@ -30,6 +30,7 @@ int start_next_path_count = 0;
 int start_next_step = 0;
 int calculate_path = 0;
  float circle_num = 0;
+ int ball_color=0;
 /**
 * @brief Function implementing the myTask02 thread.
 * @param argument: Not used
@@ -126,65 +127,67 @@ void StartTask03(void const * argument)
 	  {
 			deal_motor_jam(&s_trans_motor,1500/2);
 			calculate_trans_current(&s_trans_motor,&s_trans_pos_pid,&s_trans_spd_pid);
-			
+			ball_color = detect_the_color(&s_color_data);
+			gimbal_data_state = JudgeDeviceState(gimbal_data_fps,4);
 //			printf("taskok\r\n");
 //			if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
 //				{
 //					transmit_a_ball(-1,&s_trans_motor);
 //				}
-			if(abs(s_trans_motor.target_pos - s_trans_motor.tol_pos)<=3000)
-			{
-				s_send_data.ball_color=detect_the_color(&s_color_data);	
+			if(abs(s_trans_motor.target_pos - s_trans_motor.tol_pos)<=2000)
+			{	
 				s_send_data.colorsensor_ready = 1;
-
-				gimbal_data_state = JudgeDeviceState(gimbal_data_fps,4);
 				
-				switch(s_send_data.ball_color)
+				switch(ball_color)
 				{
 					case BLACK:
 					{
-						if(s_receive_data.black_or_white==2&&s_send_data.finish_run==0)
+						shoot_count = 0;
+						s_send_data.ball_color = BLACK;
+						if((s_receive_data.black_or_white == WHITE && s_send_data.finish_run == 0)||
+							(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0))
 						{
 							transmit_a_ball(-1,&s_trans_motor);
-						}
-						else if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
-						{
-							transmit_a_ball(-1,&s_trans_motor);
+							//printf("black\r\n");
+
 						}
 						break;
 					}
 					case WHITE:
 					{
-						if(s_receive_data.black_or_white==1&&s_send_data.finish_run==0)
+						shoot_count = 0;
+						s_send_data.ball_color = WHITE;
+						if((s_receive_data.black_or_white == BLACK && s_send_data.finish_run == 0)||
+							(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0))
 						{
 							transmit_a_ball(-1,&s_trans_motor);
-						}
-						else if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
-						{
-							transmit_a_ball(-1,&s_trans_motor);
+							//printf("white\r\n");
+
 						}
 						break;
 					}
 					case PINK:
 					{
+						shoot_count = 0;
+						s_send_data.ball_color = PINK;
 						if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
 						{
 							transmit_a_ball(-1,&s_trans_motor);
+							//printf("pink\r\n");
+
 						}
 						break;
 					}
 					case ENVIRONMENT:
 					{
-						if(shoot_count++>=500)
+						s_send_data.ball_color = ENVIRONMENT;
+						if(shoot_count++>=1000)
 						{
 							shoot_count = 0;
 							if(s_send_data.finish_run==1)
 							{
 								transmit_a_ball(-1,&s_trans_motor);
-							}
-							
-							if(s_send_data.finish_run==1)
-							{
+								//printf("envir\r\n");
 								if(start_next_path_count++ >= 3)
 								{
 									start_next_step = 1;
@@ -199,6 +202,7 @@ void StartTask03(void const * argument)
 						break;
 					}
 					default:
+						shoot_count = 0;
 						break;
 				}
 			}
@@ -271,14 +275,14 @@ void StartTask05(void const * argument)
 		{
 			chassis_para_init();
 			route_init();
-			if(init_counter++ >= 6000)
+			if(init_counter++ >= 600)
 			{
 				init_ok = 1;
 				PWM1 = 1250;
 				PWM2 = 1250;
 			}
 		}
-    osDelay(2);
+    osDelay(20);
   }
 }
 /**
@@ -300,7 +304,7 @@ void StartTask06(void const * argument)
 			}
 			printf("type %d lux %d ct%d color %d\r\n",s_color_data.Start,s_color_data.Lux,s_color_data.CT,s_color_data.color);
 			printf("ballcolor %d\r\n",s_send_data.ball_color);
-		printf("back_count %d \r\n",back_count);
+//		printf("back_count %d \r\n",back_count);
 //			printf("Offline a %d b %d c %d\r\n",Offline[0],Offline[1],Offline[2]);
 //			for(int i=0;i<48;i++)
 //			{
@@ -310,11 +314,11 @@ void StartTask06(void const * argument)
 //			printf("rightpos %d spd %d\r\n",s_rightmotor.back_position,s_rightmotor.back_speed);
 //			printf("leftpos %d spd %d\r\n",s_leftmotor.back_position,s_leftmotor.back_speed);
 			printf("trans spd %d pos %lld target %lld\r\n",s_trans_motor.back_speed,s_trans_motor.tol_pos,s_trans_motor.target_pos);
-			printf("pospid err %.2f out %.2f spdpid err %.2f out %.2f\r\n",s_trans_pos_pid.err,s_trans_pos_pid.out,s_trans_spd_pid.err,s_trans_spd_pid.out);
+//			printf("pospid err %.2f out %.2f spdpid err %.2f out %.2f\r\n",s_trans_pos_pid.err,s_trans_pos_pid.out,s_trans_spd_pid.err,s_trans_spd_pid.out);
 //			printf("targetspad %d %d\r\n",s_leftmotor.target_speed,s_rightmotor.target_speed);
 //			printf("circle_num %.2f\r\n",circle_num);
 //			printf("now_point %d\r\n",now_point);
-			printf("step %d\r\n",step);
+//			printf("step %d\r\n",step);
 			printf("receive B_W %d ready %d last %d start %d bucket %d\r\n",s_receive_data.black_or_white,s_receive_data.ready_to_shoot,s_receive_data.ready_to_shoot_last,s_receive_data.start_run,s_receive_data.bucket_num);
 //			printf("ang %.2f x %.2f y %.2f \r\n",s_posture.zangle,s_posture.pos_x,s_posture.pos_y);
 //			printf("current %d %d \r\n",s_leftmotor.out_current,s_rightmotor.out_current);

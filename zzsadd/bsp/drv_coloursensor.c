@@ -47,11 +47,11 @@ int detect_the_color(struct s_colour_sensor_data *s_color)
 	
 	temp = s_color->ball_color;
 	
-	if((s_color->Lux>15&&s_color->Lux<100)&&(s_color->CT>4500&&s_color->CT<7100))
+	if((s_color->Lux>15&&s_color->Lux<100)&&(s_color->CT>4800&&s_color->CT<6800))
 	{
 		s_color->ball_color = BLACK;//15-40 5500-6700 57 5127 29 6133
 	}
-	else if((s_color->Lux>100&&s_color->Lux<800)&&(s_color->CT>4500&&s_color->CT<6000))
+	else if((s_color->Lux>150&&s_color->Lux<800)&&(s_color->CT>4500&&s_color->CT<6000))
 	{
 		s_color->ball_color = WHITE;//100-250 4500-6000 610 5500 410 5300 140 5300
 	}
@@ -66,7 +66,7 @@ int detect_the_color(struct s_colour_sensor_data *s_color)
 	
 	if(temp == s_color->ball_color)
 	{
-		if(color_count++>=50)
+		if(color_count++>=1)
 		{
 				color_count =0;
 				s_color->ball_color_last = s_color->ball_color;
