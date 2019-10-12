@@ -19,6 +19,7 @@
 #include "drv_io.h"
 #include "protocol.h"
 #include "detect.h"
+#include "ANO_DT.h"
 static int init_ok;
 static int start_signal = 1;
 static int calculate_init;
@@ -129,13 +130,10 @@ void StartTask03(void const * argument)
 			calculate_trans_current(&s_trans_motor,&s_trans_pos_pid,&s_trans_spd_pid);
 			ball_color = detect_the_color(&s_color_data);
 			gimbal_data_state = JudgeDeviceState(gimbal_data_fps,4);
-//			printf("taskok\r\n");
-//			if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
-//				{
-//					transmit_a_ball(-1,&s_trans_motor);
-//				}
-			if(abs(s_trans_motor.target_pos - s_trans_motor.tol_pos)<=2000)
+			
+			if((abs(s_trans_motor.target_pos - s_trans_motor.tol_pos)<=2000)&&(step1_finish==0))
 			{	
+				transmit_a_ball_by_step_b(&s_trans_motor,0.5,1000/5,1);
 				s_send_data.colorsensor_ready = 1;
 				
 				switch(ball_color)
@@ -144,12 +142,14 @@ void StartTask03(void const * argument)
 					{
 						shoot_count = 0;
 						s_send_data.ball_color = BLACK;
-						if((s_receive_data.black_or_white == WHITE && s_send_data.finish_run == 0)||
-							(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0))
+						if(s_receive_data.black_or_white == WHITE && s_send_data.finish_run==0)
+						{
+							//transmit_a_ball_by_step_a(&s_trans_motor,0.3,600/5,0);
+							transmit_a_ball(-1,&s_trans_motor);
+						}
+						else if	(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
 						{
 							transmit_a_ball(-1,&s_trans_motor);
-							//printf("black\r\n");
-
 						}
 						break;
 					}
@@ -157,12 +157,14 @@ void StartTask03(void const * argument)
 					{
 						shoot_count = 0;
 						s_send_data.ball_color = WHITE;
-						if((s_receive_data.black_or_white == BLACK && s_send_data.finish_run == 0)||
-							(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0))
+						if(s_receive_data.black_or_white == BLACK && s_send_data.finish_run==0)
+						{
+							//transmit_a_ball_by_step_a(&s_trans_motor,0.3,600/5,0);
+							transmit_a_ball(-1,&s_trans_motor);
+						}
+						else if	(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
 						{
 							transmit_a_ball(-1,&s_trans_motor);
-							//printf("white\r\n");
-
 						}
 						break;
 					}
@@ -173,22 +175,19 @@ void StartTask03(void const * argument)
 						if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
 						{
 							transmit_a_ball(-1,&s_trans_motor);
-							//printf("pink\r\n");
-
 						}
 						break;
 					}
 					case ENVIRONMENT:
 					{
 						s_send_data.ball_color = ENVIRONMENT;
-						if(shoot_count++>=1000)
+						if(shoot_count++>=200)
 						{
 							shoot_count = 0;
 							if(s_send_data.finish_run==1)
 							{
 								transmit_a_ball(-1,&s_trans_motor);
-								//printf("envir\r\n");
-								if(start_next_path_count++ >= 3)
+								if(start_next_path_count++ > 2)
 								{
 									start_next_step = 1;
 									start_next_path_count = 0;
@@ -208,13 +207,21 @@ void StartTask03(void const * argument)
 			}
 			else
 			{
+				//对标志位进行重置
+				transmit_a_ball_by_step_a(&s_trans_motor,0.5,1000/5,1);
+				
+				if(step1_finish==1)
+				{
+					transmit_a_ball_by_step_b(&s_trans_motor,0.7,1000/5,0);
+				}
 				s_send_data.colorsensor_ready = 0;
 			}
 
 	}
-    osDelay(2);
+    osDelay(5);
   }
 }
+
 /**
 * @brief 
 * @param argument: Not used
@@ -233,6 +240,7 @@ void StartTask07(void const * argument)
 			trans_motor_off = 1;
 		}
 	}
+	ANO_DT_Data_Exchange();
     osDelay(5);
   }
 }
@@ -253,7 +261,7 @@ void StartTask04(void const * argument)
 //	  {
 //			Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
 //	  }
-		Can_SendMsg(&hcan1,0x200,0,0,s_trans_motor.out_current,0);
+		Can_SendMsg(&hcan1,0x200,500,0,s_trans_motor.out_current,0);
     osDelay(2);
   }
 }
@@ -322,7 +330,7 @@ void StartTask06(void const * argument)
 			printf("receive B_W %d ready %d last %d start %d bucket %d\r\n",s_receive_data.black_or_white,s_receive_data.ready_to_shoot,s_receive_data.ready_to_shoot_last,s_receive_data.start_run,s_receive_data.bucket_num);
 //			printf("ang %.2f x %.2f y %.2f \r\n",s_posture.zangle,s_posture.pos_x,s_posture.pos_y);
 //			printf("current %d %d \r\n",s_leftmotor.out_current,s_rightmotor.out_current);
-//		    transmit_a_ball(-1,&s_trans_motor);
+//		    transmit_a_ball(1,&s_trans_motor);
 //			transmit_a_ball_by_step_a(&s_trans_motor,0.6,1000/200);
 		}
     osDelay(200);

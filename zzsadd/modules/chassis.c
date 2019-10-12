@@ -28,8 +28,8 @@ void chassis_para_init(void)
 {
 	pid_struct_init(&s_leftmotor_pid,8000,2000,6,0.15,0);
 	pid_struct_init(&s_rightmotor_pid,8000,2000,6,0.15,0);
-	pid_struct_init(&s_trans_pos_pid,400,100,15,0,0);
-	pid_struct_init(&s_trans_spd_pid,8000,3000,20,0,0);
+	pid_struct_init(&s_trans_pos_pid,500,100,20,0.1,0);
+	pid_struct_init(&s_trans_spd_pid,10000,3000,20,0,0);
 	s_trans_motor.target_pos = s_trans_motor.back_position;
 }
 /**
@@ -73,13 +73,19 @@ void transmit_a_ball(int direction,struct s_motor_data *s_motor)
 }
 /**
  * @brief transmit a ball by step
-* @param 
+* @param  *s_motor 储存驱动电机信息的结构体 step1_size 行程（单位：半圈）
+time_out（延迟执行的时间） cnt_reset 是否重置记时标志位（1为重置，0为不重置）
  * @return None
  * @attention None
  */
-void transmit_a_ball_by_step_a(struct s_motor_data *s_motor,float step1_size,int time_out)
+void transmit_a_ball_by_step_a(struct s_motor_data *s_motor,float step1_size,int time_out,int cnt_reset)
 {
 	static int count = 0;
+	
+	if(cnt_reset==1)
+		{
+			count = 0;
+		}
 	if(trans_motor_jam==0)
 	{
 		if(step1_finish==0)
@@ -97,9 +103,14 @@ void transmit_a_ball_by_step_a(struct s_motor_data *s_motor,float step1_size,int
 		}
 	}
 }
-void transmit_a_ball_by_step_b(struct s_motor_data *s_motor,float step2_size,int time_out)
+void transmit_a_ball_by_step_b(struct s_motor_data *s_motor,float step2_size,int time_out,int cnt_reset)
 {
 		static int count=0;
+	
+		if(cnt_reset==1)
+		{
+			count = 0;
+		}
 		if(trans_motor_jam==0)
 		{
 			if(step1_finish==1)

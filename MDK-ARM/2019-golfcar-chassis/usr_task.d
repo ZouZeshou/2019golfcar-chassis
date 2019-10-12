@@ -65,3 +65,4 @@
 2019-golfcar-chassis\usr_task.o: ../Inc/tim.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\modules\protocol.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\modules\detect.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\Personal\ANO_DT.h

@@ -8,15 +8,9 @@
 **********************************************************************************/
 
 #include "usart.h"
-#include "drv_imu.h"
 #include "ANO_DT.h"
-#include "GimbalControl.h"
-#include "ShootControl.h"
-#include "BSP_can.h"
-#include "detect.h"
-#include "DBUS.h"
-#include "camera.h"
-#include "Judge.h"
+#include "protocol.h"
+#include "chassis.h"
 /////////////////////////////////////////////////////////////////////////////////////
 //数据拆分宏定义，在发送大于1字节的数据类型时，比如int16、float等，需要把数据拆分成单独字节进行发送
 #define BYTE0(dwTemp)       ( *( (char *)(&dwTemp)		) )
@@ -24,7 +18,7 @@
 #define BYTE2(dwTemp)       ( *( (char *)(&dwTemp) + 2) )
 #define BYTE3(dwTemp)       ( *( (char *)(&dwTemp) + 3) )
 
-#define ANO_DT_USE_USART2
+#define ANO_DT_USE_USART3
 
 dt_flag_t f;					//需要发送数据的标志
 uint8_t data_to_send[50];	//发送数据缓存
@@ -35,8 +29,8 @@ uint8_t data_to_send[50];	//发送数据缓存
 void ANO_DT_Data_Exchange(void)
 {
 	static uint8_t cnt = 0;
-	static uint8_t senser_cnt 	= 2;
-	static uint8_t status_cnt 	= 3;
+	static uint8_t senser_cnt 	= 1;
+	static uint8_t status_cnt 	= 2;
 	static uint8_t rcdata_cnt 	= 20;
 	static uint8_t motopwm_cnt	= 4;
 	static uint8_t power_cnt		=	50;
@@ -67,14 +61,14 @@ void ANO_DT_Data_Exchange(void)
 	else if(f.send_status)
 	{
 		f.send_status = 0;
-		ANO_DT_Send_Status(YawOuter.errNow,PitchOuter.errNow,Judge_ShootData.bullet_speed,0,0,0);
+		ANO_DT_Send_Status(s_trans_motor.target_pos/1000,s_trans_motor.tol_pos/1000,0,0,0,0);
 	}	
 /////////////////////////////////////////////////////////////////////////////////////
 	else if(f.send_senser)
 	{
 		f.send_senser = 0;
-		ANO_DT_Send_Senser((int16_t)fric_l_data.BackSpeed,(int16_t)-fric_r_data.BackSpeed,(int16_t)Judge_ShootData.bullet_speed,
-		(int16_t)YawOuter.errNow,(int16_t)PitchOuter.errNow,(int16_t)RC_Ctl.rc.ch1,(int16_t)pcParam.pcCenterX.f,(int16_t)pcParam.pcCenterY.f,pcParam.pcCenterZ.f,0);
+		ANO_DT_Send_Senser(s_receive_data.ready_to_shoot,gimbal_data_state,0,
+		s_send_data.finish_run,s_send_data.ball_color,s_send_data.colorsensor_ready,0,0,0,0);
 	}	
 /////////////////////////////////////////////////////////////////////////////////////
 	else if(f.send_rcdata)
@@ -86,7 +80,7 @@ void ANO_DT_Data_Exchange(void)
 	else if(f.send_motopwm)
 	{
 		f.send_motopwm = 0;
-		ANO_DT_Send_MotoPWM(Devicestate[4],Devicestate[5],Devicestate[6],Devicestate[10],Devicestate[11],Devicestate[12],RC_Ctl.rc.ch1,RC_Ctl.rc.ch2);
+//		ANO_DT_Send_MotoPWM(Devicestate[4],Devicestate[5],Devicestate[6],Devicestate[10],Devicestate[11],Devicestate[12],RC_Ctl.rc.ch1,RC_Ctl.rc.ch2);
 	}	
 /////////////////////////////////////////////////////////////////////////////////////
 	else if(f.send_power)
@@ -134,8 +128,8 @@ void ANO_DT_Send_Data(uint8_t*dataToSend , uint8_t length)
 #ifdef ANO_DT_USE_USB_HID
 	Usb_Hid_Adddata(data_to_send,length);
 #endif
-#ifdef ANO_DT_USE_USART2
-	HAL_UART_Transmit_IT(&huart2,data_to_send,length);
+#ifdef ANO_DT_USE_USART3
+	HAL_UART_Transmit_IT(&huart3,data_to_send,length);
 #endif
 }
 
