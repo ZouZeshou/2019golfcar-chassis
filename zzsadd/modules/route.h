@@ -2,6 +2,7 @@
 #define __ROUTE_H
 #include "stm32f4xx.h"
 #include "chassis.h"
+#include "ramp.h"
 struct route_point
 {
 	int x[100];
@@ -30,5 +31,6 @@ float choose_detination_by_circle(uint8_t left_right,uint8_t black_white,uint8_t
 extern struct route_point s_route;
 extern struct pid s_angle_pid;
 extern struct point_coordinate s_destination;
-
+extern ramp_t s_left_ramp;
+extern ramp_t s_right_ramp;
 #endif

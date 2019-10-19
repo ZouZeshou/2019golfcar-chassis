@@ -23,6 +23,7 @@
 #include "cmsis_os.h"
 #include "can.h"
 #include "dma.h"
+#include "spi.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -35,6 +36,7 @@
 #include "drv_robotservo.h"
 #include "drv_timer.h"
 #include "drv_io.h"
+#include "drv_imu.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -111,6 +113,7 @@ int main(void)
   MX_USART6_UART_Init();
   MX_USART1_UART_Init();
   MX_UART4_Init();
+  MX_SPI5_Init();
   /* USER CODE BEGIN 2 */
 	USART_Enable(&huart1,Usart1buff);
 	USART_DMA_Enable(&huart2,&hdma_usart2_rx,Usart2buff,11);
@@ -121,6 +124,7 @@ int main(void)
 	CAN_Enable(&hcan2);
 	PWM_Init(&htim4,TIM_CHANNEL_1);
 	PWM_Init(&htim4,TIM_CHANNEL_2);
+	mpu_device_init();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

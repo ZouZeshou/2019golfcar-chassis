@@ -12,6 +12,8 @@
 struct route_point s_route={0};
 struct point_coordinate s_destination = {0};
 struct pid s_angle_pid;
+ramp_t s_left_ramp = RAMP_DEFAULT_INIT;
+ramp_t s_right_ramp = RAMP_DEFAULT_INIT;
 int angle_pid_debug = 0;
 int motor_pid_debug = 0;
 int jam_back = 0;
@@ -49,13 +51,21 @@ float choose_detination_by_circle(uint8_t left_right,uint8_t black_white,uint8_t
 		}
 		case 23:
 		{
-			if((left_right==RIGHT&&black_white==WHITE)||(left_right==LEFT&&black_white==BLACK))
+			if((left_right==RIGHT&&black_white==WHITE))
 			{
-				return 2.25;
+				return 2.375;
 			}
-			else if((left_right==RIGHT&&black_white==BLACK)||(left_right==LEFT&&black_white==WHITE))
+			else if((left_right==LEFT&&black_white==WHITE))
 			{
-				return 2.75;
+				return 2.675;
+			}
+			else if((left_right==RIGHT&&black_white==BLACK))
+			{
+				return 2.875;
+			}
+			else if((left_right==LEFT&&black_white==BLACK))
+			{
+				return 2.125;
 			}
 			break;
 		}
@@ -73,23 +83,39 @@ float choose_detination_by_circle(uint8_t left_right,uint8_t black_white,uint8_t
 		}
 		case 14:
 		{
-			if((left_right==RIGHT&&black_white==WHITE)||(left_right==LEFT&&black_white==BLACK))
+			if((left_right==RIGHT&&black_white==WHITE))
 			{
-				return 2.75;
+				return 2.625;
 			}
-			else if((left_right==RIGHT&&black_white==BLACK)||(left_right==LEFT&&black_white==WHITE))
+			else if((left_right==LEFT&&black_white==WHITE))
 			{
-				return 2.25;
+				return 2.375;
+			}
+			else if((left_right==RIGHT&&black_white==BLACK))
+			{
+				return 2.125;
+			}
+			else if((left_right==LEFT&&black_white==BLACK))
+			{
+				return 2.875;
 			}
 			break;
 		}
 		case 13:
 		{
-			if((left_right==RIGHT&&black_white==WHITE)||(left_right==LEFT&&black_white==BLACK))
+			if((left_right==RIGHT&&black_white==WHITE))
 			{
-				return 2.38;
+				return 2.375;
 			}
-			else if((left_right==RIGHT&&black_white==BLACK)||(left_right==LEFT&&black_white==WHITE))
+			else if((left_right==LEFT&&black_white==WHITE))
+			{
+				return 2.675;
+			}
+			else if((left_right==RIGHT&&black_white==BLACK))
+			{
+				return 2.875;
+			}
+			else if((left_right==LEFT&&black_white==BLACK))
 			{
 				return 2.125;
 			}
@@ -97,13 +123,21 @@ float choose_detination_by_circle(uint8_t left_right,uint8_t black_white,uint8_t
 		}
 		case 24:
 		{
-			if((left_right==RIGHT&&black_white==WHITE)||(left_right==LEFT&&black_white==BLACK))
+			if((left_right==RIGHT&&black_white==WHITE))
+			{
+				return 2.625;
+			}
+			else if((left_right==LEFT&&black_white==WHITE))
+			{
+				return 2.375;
+			}
+			else if((left_right==RIGHT&&black_white==BLACK))
 			{
 				return 2.125;
 			}
-			else if((left_right==RIGHT&&black_white==BLACK)||(left_right==LEFT&&black_white==WHITE))
+			else if((left_right==LEFT&&black_white==BLACK))
 			{
-				return 2.38;
+				return 2.875;
 			}
 			break;
 		}
@@ -363,7 +397,7 @@ void update_point(struct route_point *s_route,int *point_addr,int pos_x,int pos_
 		if(jam_counter++ >= jam_time)
 		{
 			jam_back = 1;
-			for(int i=*point_addr-4;i<=*point_addr+4;i++)
+			for(int i=*point_addr-5;i<=*point_addr+5;i++)
 			{
 				jam_distance_now = sqrt((s_route->x[i]-pos_x)*(s_route->x[i]-pos_x)
 								+(s_route->y[i]-pos_y)*(s_route->y[i]-pos_y));
@@ -433,8 +467,8 @@ void calculate_motor_current(struct pid *s_left_pid,struct pid *s_right_pid,stru
 	}
 	else
 	{
-		s_left->target_speed = speed - angle_out;
-		s_right->target_speed = -speed - angle_out;
+		s_left->target_speed = (speed - angle_out)*ramp_cal(&s_left_ramp);
+		s_right->target_speed = (-speed - angle_out)*ramp_cal(&s_right_ramp);
 	}
 	
 	s_left->out_current = (int)(pid_calculate(s_left_pid,s_left->back_speed,s_left->target_speed));

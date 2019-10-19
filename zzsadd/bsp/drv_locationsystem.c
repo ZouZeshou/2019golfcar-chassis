@@ -23,7 +23,7 @@ void get_loca_sys_data(uint8_t * buffer)
 		{
 			posture.data[i]=buffer[i+2];
 		}	
-		s_posture.zangle=posture.ActVal[0];
+//		s_posture.zangle=posture.ActVal[0];
 		s_posture.xangle=posture.ActVal[1];
 		s_posture.yangle=posture.ActVal[2];
 		s_posture.pos_x =-posture.ActVal[3];

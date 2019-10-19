@@ -21,7 +21,7 @@ void xdelay_ms(unsigned int t)
 	int i;
 	for( i=0;i<t;i++)
 	{
-		int a=42000;
+		int a=90000;
 		while(a--);
 	}
 }

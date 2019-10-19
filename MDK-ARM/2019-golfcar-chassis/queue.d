@@ -1,9 +1,9 @@
 2019-golfcar-chassis\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/queue.c
-2019-golfcar-chassis\queue.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
-2019-golfcar-chassis\queue.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
+2019-golfcar-chassis\queue.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+2019-golfcar-chassis\queue.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 2019-golfcar-chassis\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-2019-golfcar-chassis\queue.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
-2019-golfcar-chassis\queue.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+2019-golfcar-chassis\queue.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+2019-golfcar-chassis\queue.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 2019-golfcar-chassis\queue.o: ../Inc/FreeRTOSConfig.h
 2019-golfcar-chassis\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 2019-golfcar-chassis\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

@@ -1,7 +1,7 @@
 2019-golfcar-chassis\freertos.o: ../Src/freertos.c
 2019-golfcar-chassis\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-2019-golfcar-chassis\freertos.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
-2019-golfcar-chassis\freertos.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+2019-golfcar-chassis\freertos.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+2019-golfcar-chassis\freertos.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 2019-golfcar-chassis\freertos.o: ../Inc/FreeRTOSConfig.h
 2019-golfcar-chassis\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 2019-golfcar-chassis\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
@@ -38,6 +38,7 @@
 2019-golfcar-chassis\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
 2019-golfcar-chassis\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 2019-golfcar-chassis\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+2019-golfcar-chassis\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 2019-golfcar-chassis\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 2019-golfcar-chassis\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 2019-golfcar-chassis\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h

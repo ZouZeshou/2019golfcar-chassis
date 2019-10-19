@@ -1,16 +1,18 @@
---cpu Cortex-M4.fp
+--cpu=Cortex-M4.fp
 "2019-golfcar-chassis\startup_stm32f427xx.o"
 "2019-golfcar-chassis\main.o"
 "2019-golfcar-chassis\gpio.o"
 "2019-golfcar-chassis\can.o"
 "2019-golfcar-chassis\dma.o"
 "2019-golfcar-chassis\freertos.o"
+"2019-golfcar-chassis\spi.o"
 "2019-golfcar-chassis\tim.o"
 "2019-golfcar-chassis\usart.o"
 "2019-golfcar-chassis\stm32f4xx_it.o"
 "2019-golfcar-chassis\stm32f4xx_hal_msp.o"
 "2019-golfcar-chassis\stm32f4xx_hal_timebase_tim.o"
 "2019-golfcar-chassis\stm32f4xx_hal_can.o"
+"2019-golfcar-chassis\stm32f4xx_hal_spi.o"
 "2019-golfcar-chassis\stm32f4xx_hal_tim.o"
 "2019-golfcar-chassis\stm32f4xx_hal_tim_ex.o"
 "2019-golfcar-chassis\stm32f4xx_hal_uart.o"
@@ -48,12 +50,21 @@
 "2019-golfcar-chassis\usr_task.o"
 "2019-golfcar-chassis\stmgood.o"
 "2019-golfcar-chassis\detect.o"
+"2019-golfcar-chassis\ano_dt.o"
+"2019-golfcar-chassis\delay.o"
 "2019-golfcar-chassis\chassis.o"
 "2019-golfcar-chassis\route.o"
 "2019-golfcar-chassis\protocol.o"
 "2019-golfcar-chassis\pid.o"
 "2019-golfcar-chassis\crc.o"
+"2019-golfcar-chassis\ramp.o"
+"..\zzsadd\DSP\arm_cortexM4lf_math.lib"
+"2019-golfcar-chassis\ahrs_middleware.o"
+"2019-golfcar-chassis\dataexchange.o"
+"2019-golfcar-chassis\drv_imu.o"
+"2019-golfcar-chassis\mahony_ahrs.o"
+"..\zzsadd\Imu\AHRS.lib"
 --library_type=microlib --strict --scatter "2019-golfcar-chassis\2019-golfcar-chassis.sct"
---summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "2019-golfcar-chassis.map" -o 2019-golfcar-chassis\2019-golfcar-chassis.axf
