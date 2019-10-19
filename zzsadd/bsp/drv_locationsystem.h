@@ -34,7 +34,7 @@ typedef struct
 	float    angle;
 }ActLine2;
 
-
+void calibrate_yaw_angle(float real_angle);
 float CcltAngleSub(float minuend, float subtrahend);
 float MvByLine(ActLine2 presentLine, ActLine2 targetLine);
 //外部接口函数，电机速度控制

@@ -38,3 +38,4 @@
 2019-golfcar-chassis\ano_dt.o: ..\zzsadd\modules\protocol.h
 2019-golfcar-chassis\ano_dt.o: ..\zzsadd\modules\chassis.h
 2019-golfcar-chassis\ano_dt.o: ..\zzsadd\algorithm\pid.h
+2019-golfcar-chassis\ano_dt.o: ..\zzsadd\bsp\drv_locationsystem.h

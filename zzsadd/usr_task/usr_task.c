@@ -238,7 +238,7 @@ void StartTask05(void const * argument)
 	UpdateIMU(&sensor);
 //		mahony_ahrs_update(&sensor,&atti);
 //	imu_temp_keep();
-//	ANO_DT_Data_Exchange();
+
     osDelay(1);
   }
 }
@@ -300,6 +300,8 @@ void StartTask07(void const * argument)
 				PWM2 = 1280;
 			}
 		}
+
+		ANO_DT_Data_Exchange();
     osDelay(5);
   }
 }
@@ -343,6 +345,7 @@ void StartTask06(void const * argument)
 //			printf("current %d %d \r\n",s_leftmotor.out_current,s_rightmotor.out_current);
 //		    transmit_a_ball(1,&s_trans_motor);
 //			transmit_a_ball_by_step_a(&s_trans_motor,0.6,1000/200);
+			calibrate_yaw_angle(s_posture.zangle);
 		}
     osDelay(200);
   }

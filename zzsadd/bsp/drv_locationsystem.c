@@ -1,7 +1,32 @@
 #include "drv_locationsystem.h"
 #include "math.h"
+#include "usart.h"
 struct posture_data s_posture={0};
-
+/**
+ * @brief get the locationsystem data
+ * @param None
+ * @return None
+ * @attention None
+ */
+void calibrate_yaw_angle(float real_angle)
+{
+	static uint8_t data_to_send[8];
+	static union
+	{
+		uint8_t u[4];
+		float f;
+	}angle;
+	angle.f = real_angle;
+	data_to_send[0] = 'A';
+	data_to_send[1] = 'C';
+	data_to_send[2] = 'T';
+	data_to_send[3] = 'J';
+	data_to_send[4] = angle.u[0];
+	data_to_send[5] = angle.u[1];
+	data_to_send[6] = angle.u[2];
+	data_to_send[7] = angle.u[3];
+	HAL_UART_Transmit(&huart6,data_to_send,8,0xff);
+}
 /**
  * @brief get the locationsystem data
  * @param None
@@ -24,7 +49,7 @@ void get_loca_sys_data(uint8_t * buffer)
 			posture.data[i]=buffer[i+2];
 		}	
 //		s_posture.zangle=posture.ActVal[0];
-		s_posture.xangle=posture.ActVal[1];
+		s_posture.xangle=posture.ActVal[0];
 		s_posture.yangle=posture.ActVal[2];
 		s_posture.pos_x =-posture.ActVal[3];
 		s_posture.pos_y =-posture.ActVal[4];

@@ -34,3 +34,5 @@
 2019-golfcar-chassis\drv_locationsystem.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 2019-golfcar-chassis\drv_locationsystem.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 2019-golfcar-chassis\drv_locationsystem.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+2019-golfcar-chassis\drv_locationsystem.o: ../Inc/usart.h
+2019-golfcar-chassis\drv_locationsystem.o: ../Inc/main.h
