@@ -53,19 +53,19 @@ float choose_detination_by_circle(uint8_t left_right,uint8_t black_white,uint8_t
 		{
 			if((left_right==RIGHT&&black_white==WHITE))
 			{
-				return 2.375;
+				return 2.25;
 			}
 			else if((left_right==LEFT&&black_white==WHITE))
 			{
-				return 2.675;
+				return 2.75;
 			}
 			else if((left_right==RIGHT&&black_white==BLACK))
 			{
-				return 2.875;
+				return 2.75;
 			}
 			else if((left_right==LEFT&&black_white==BLACK))
 			{
-				return 2.125;
+				return 2.25;
 			}
 			break;
 		}
@@ -85,19 +85,19 @@ float choose_detination_by_circle(uint8_t left_right,uint8_t black_white,uint8_t
 		{
 			if((left_right==RIGHT&&black_white==WHITE))
 			{
-				return 2.625;
+				return 2.75;
 			}
 			else if((left_right==LEFT&&black_white==WHITE))
 			{
-				return 2.375;
+				return 2.25;
 			}
 			else if((left_right==RIGHT&&black_white==BLACK))
 			{
-				return 2.125;
+				return 2.25;
 			}
 			else if((left_right==LEFT&&black_white==BLACK))
 			{
-				return 2.875;
+				return 2.75;
 			}
 			break;
 		}
@@ -339,7 +339,7 @@ void design_point_of_route(struct route_point *s_route,int direction,int point_n
  * @attention None
  */
 void design_point_of_helix_route(struct route_point *s_route,int direction,int point_num,
-	int alpha,int beta,float circle_num)
+	int alpha,int beta,float circle_num,int max_radius,int min_radius)
 {
 	static float radius;
 	static float theta;
@@ -349,6 +349,14 @@ void design_point_of_helix_route(struct route_point *s_route,int direction,int p
 		{
 			theta = PI-2*PI/(point_num/circle_num)*(i-point_num/24);
 			radius = alpha - beta * theta;
+			if(radius >= max_radius)
+			{
+				radius = max_radius;
+			}
+			else if(radius <= min_radius)
+			{
+				radius = min_radius;
+			}
 			s_route->x[i] = radius * cos(theta);
 			s_route->y[i] = radius * sin(theta) + 2200;
 			s_route->angle[i] = 180-360/(point_num/circle_num)*(i-point_num/24) -90;
@@ -360,6 +368,14 @@ void design_point_of_helix_route(struct route_point *s_route,int direction,int p
 		{
 			theta = 2*PI/(point_num/circle_num)*(i-point_num/24);
 			radius = alpha + beta * theta;
+			if(radius >= max_radius)
+			{
+				radius = max_radius;
+			}
+			else if(radius <= min_radius)
+			{
+				radius = min_radius;
+			}
 			s_route->x[i] = radius * cos(theta);
 			s_route->y[i] = radius * sin(theta) + 2200;
 			s_route->angle[i] = 360/(point_num/circle_num)*(i-point_num/24) +90;

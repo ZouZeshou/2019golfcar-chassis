@@ -22,7 +22,7 @@
 #include "ANO_DT.h"
 #include "drv_imu.h"
 static int init_ok;
-static int start_signal = 1;
+//static int start_signal = 1;
 static int calculate_init;
 int step = 0;
 int point_num = 72;
@@ -66,20 +66,20 @@ void StartTask02(void const * argument)
 									case 0 :
 									{
 										circle_num = choose_detination_by_circle(s_receive_data.start_run,s_receive_data.black_or_white,s_receive_data.bucket_num)-0.1 ;
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,20,circle_num);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,25,circle_num,1200,900);
 										calculate_path++;
 										break;
 									}
 									case 1:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1600,20,circle_num);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1200,30,circle_num,1900,900);
 										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
 										calculate_path++;
 										break;
 									}
 									case 2:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,900,20,circle_num);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1500,-30,circle_num,1900,900);
 										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
 										calculate_path--;
 										break;
