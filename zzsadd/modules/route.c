@@ -41,7 +41,7 @@ float choose_detination_by_circle(uint8_t left_right,uint8_t black_white,uint8_t
 		{
 			if(black_white==BLACK)
 			{
-				return 2.0;
+				return 3.0;
 			}
 			else if(black_white==WHITE)
 			{
@@ -77,7 +77,7 @@ float choose_detination_by_circle(uint8_t left_right,uint8_t black_white,uint8_t
 			}
 			else if(black_white==WHITE)
 			{
-				return 2.0;
+				return 3.0;
 			}
 			break;
 		}
@@ -117,7 +117,7 @@ float choose_detination_by_circle(uint8_t left_right,uint8_t black_white,uint8_t
 			}
 			else if((left_right==LEFT&&black_white==BLACK))
 			{
-				return 2.125;
+				return 2.625;
 			}
 			break;
 		}
@@ -133,7 +133,7 @@ float choose_detination_by_circle(uint8_t left_right,uint8_t black_white,uint8_t
 			}
 			else if((left_right==RIGHT&&black_white==BLACK))
 			{
-				return 2.125;
+				return 2.625;
 			}
 			else if((left_right==LEFT&&black_white==BLACK))
 			{

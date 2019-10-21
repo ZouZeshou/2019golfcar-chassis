@@ -65,22 +65,22 @@ void StartTask02(void const * argument)
 								{
 									case 0 :
 									{
-										circle_num = choose_detination_by_circle(s_receive_data.start_run,s_receive_data.black_or_white,s_receive_data.bucket_num)-0.1 ;
+										circle_num = choose_detination_by_circle(s_receive_data.start_run,s_receive_data.black_or_white,s_receive_data.bucket_num)-1.1 ;
 										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,25,circle_num,1200,900);
 										calculate_path++;
 										break;
 									}
 									case 1:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1200,30,circle_num,1900,900);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1800,0,circle_num,2000,900);
+										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
 									}
 									case 2:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1500,-30,circle_num,1900,900);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,900,0,circle_num,1900,900);
+										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
 										calculate_path--;
 										break;
 									}
@@ -259,7 +259,7 @@ void StartTask04(void const * argument)
 	  {
 			Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
 	  }
-//		Can_SendMsg(&hcan1,0x200,500,0,s_trans_motor.out_current,0);
+//		Can_SendMsg(&hcan1,0x200,0,0,s_trans_motor.out_current,0);
     osDelay(2);
   }
 }
@@ -345,7 +345,7 @@ void StartTask06(void const * argument)
 //			printf("current %d %d \r\n",s_leftmotor.out_current,s_rightmotor.out_current);
 //		    transmit_a_ball(1,&s_trans_motor);
 //			transmit_a_ball_by_step_a(&s_trans_motor,0.6,1000/200);
-			calibrate_yaw_angle(s_posture.zangle);
+//			calibrate_yaw_angle(s_posture.zangle);
 		}
     osDelay(200);
   }
