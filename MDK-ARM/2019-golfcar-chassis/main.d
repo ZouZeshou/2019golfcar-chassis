@@ -7,7 +7,7 @@
 2019-golfcar-chassis\main.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
 2019-golfcar-chassis\main.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h
 2019-golfcar-chassis\main.o: ../Drivers/CMSIS/Include/core_cm4.h
-2019-golfcar-chassis\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+2019-golfcar-chassis\main.o: D:\program files\ARM\ARMCC\Bin\..\include\stdint.h
 2019-golfcar-chassis\main.o: ../Drivers/CMSIS/Include/cmsis_version.h
 2019-golfcar-chassis\main.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 2019-golfcar-chassis\main.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
@@ -15,7 +15,7 @@
 2019-golfcar-chassis\main.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
 2019-golfcar-chassis\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 2019-golfcar-chassis\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-2019-golfcar-chassis\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+2019-golfcar-chassis\main.o: D:\program files\ARM\ARMCC\Bin\..\include\stddef.h
 2019-golfcar-chassis\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
 2019-golfcar-chassis\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h
 2019-golfcar-chassis\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
@@ -54,7 +54,7 @@
 2019-golfcar-chassis\main.o: ../Inc/usart.h
 2019-golfcar-chassis\main.o: ../Inc/gpio.h
 2019-golfcar-chassis\main.o: ..\zzsadd\bsp\drv_uart.h
-2019-golfcar-chassis\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+2019-golfcar-chassis\main.o: D:\program files\ARM\ARMCC\Bin\..\include\stdio.h
 2019-golfcar-chassis\main.o: ..\zzsadd\bsp\drv_can.h
 2019-golfcar-chassis\main.o: ..\zzsadd\bsp\drv_io.h
 2019-golfcar-chassis\main.o: ..\zzsadd\bsp\drv_robotservo.h

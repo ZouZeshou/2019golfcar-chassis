@@ -1,4 +1,4 @@
---cpu=Cortex-M4.fp
+--cpu Cortex-M4.fp
 "2019-golfcar-chassis\startup_stm32f427xx.o"
 "2019-golfcar-chassis\main.o"
 "2019-golfcar-chassis\gpio.o"
@@ -65,6 +65,6 @@
 "2019-golfcar-chassis\mahony_ahrs.o"
 "..\zzsadd\Imu\AHRS.lib"
 --library_type=microlib --strict --scatter "2019-golfcar-chassis\2019-golfcar-chassis.sct"
---summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "2019-golfcar-chassis.map" -o 2019-golfcar-chassis\2019-golfcar-chassis.axf

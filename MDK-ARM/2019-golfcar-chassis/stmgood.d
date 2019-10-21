@@ -1,7 +1,7 @@
 2019-golfcar-chassis\stmgood.o: ..\zzsadd\Personal\STMGood.c
 2019-golfcar-chassis\stmgood.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-2019-golfcar-chassis\stmgood.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-2019-golfcar-chassis\stmgood.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+2019-golfcar-chassis\stmgood.o: D:\program files\ARM\ARMCC\Bin\..\include\stddef.h
+2019-golfcar-chassis\stmgood.o: D:\program files\ARM\ARMCC\Bin\..\include\stdint.h
 2019-golfcar-chassis\stmgood.o: ../Inc/FreeRTOSConfig.h
 2019-golfcar-chassis\stmgood.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 2019-golfcar-chassis\stmgood.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
@@ -51,9 +51,9 @@
 2019-golfcar-chassis\stmgood.o: ../Inc/dma.h
 2019-golfcar-chassis\stmgood.o: ../Inc/usart.h
 2019-golfcar-chassis\stmgood.o: ../Inc/can.h
-2019-golfcar-chassis\stmgood.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-2019-golfcar-chassis\stmgood.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-2019-golfcar-chassis\stmgood.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-2019-golfcar-chassis\stmgood.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+2019-golfcar-chassis\stmgood.o: D:\program files\ARM\ARMCC\Bin\..\include\stdio.h
+2019-golfcar-chassis\stmgood.o: D:\program files\ARM\ARMCC\Bin\..\include\math.h
+2019-golfcar-chassis\stmgood.o: D:\program files\ARM\ARMCC\Bin\..\include\string.h
+2019-golfcar-chassis\stmgood.o: D:\program files\ARM\ARMCC\Bin\..\include\stdbool.h
 2019-golfcar-chassis\stmgood.o: ..\zzsadd\Personal\STMGood.h
 2019-golfcar-chassis\stmgood.o: ..\zzsadd\bsp\drv_uart.h
