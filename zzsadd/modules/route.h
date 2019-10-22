@@ -19,7 +19,7 @@ void route_init(void);
 void design_point_of_route(struct route_point *s_route,int direction,int point_num,
 	int radius_1,int radius_2,int radius_3);
 void design_point_of_helix_route(struct route_point *s_route,int direction,int point_num,
-	int alpha,int beta,float circle_num,int max_radius,int min_radius);
+	int alpha,int beta,float circle_num,int max_radius,int min_radius,int desti_radius);
 void update_point(struct route_point *s_route,int *point_addr,int pos_x,int pos_y,
 	float accuracy,int jam_time,int point_num);
 void calculate_motor_current(struct pid *s_left_pid,struct pid *s_right_pid,struct pid *s_ang_pid,

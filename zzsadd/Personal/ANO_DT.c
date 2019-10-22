@@ -69,7 +69,7 @@ void ANO_DT_Data_Exchange(void)
 	{
 		f.send_senser = 0;
 		ANO_DT_Send_Senser(s_posture.xangle,s_posture.pos_x,s_posture.pos_y,
-		s_posture.zangle,s_send_data.finish_run,s_send_data.colorsensor_ready,0,0,0,0);
+		s_posture.zangle,s_send_data.finish_run,s_send_data.ball_color,s_send_data.colorsensor_ready,s_receive_data.ready_to_shoot,0,0);
 	}	
 /////////////////////////////////////////////////////////////////////////////////////
 	else if(f.send_rcdata)

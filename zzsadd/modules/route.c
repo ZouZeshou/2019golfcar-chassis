@@ -339,7 +339,7 @@ void design_point_of_route(struct route_point *s_route,int direction,int point_n
  * @attention None
  */
 void design_point_of_helix_route(struct route_point *s_route,int direction,int point_num,
-	int alpha,int beta,float circle_num,int max_radius,int min_radius)
+	int alpha,int beta,float circle_num,int max_radius,int min_radius,int desti_radius)
 {
 	static float radius;
 	static float theta;
@@ -357,10 +357,18 @@ void design_point_of_helix_route(struct route_point *s_route,int direction,int p
 			{
 				radius = min_radius;
 			}
-			s_route->x[i] = radius * cos(theta);
-			s_route->y[i] = radius * sin(theta) + 2200;
 			s_route->angle[i] = 180-360/(point_num/circle_num)*(i-point_num/24) -90;
-		}	
+			if(i >= point_num - 5)
+			{
+				s_route->x[i] = desti_radius * cos(theta);
+				s_route->y[i] = desti_radius * sin(theta) + 2200;
+			}
+			else
+			{
+				s_route->x[i] = radius * cos(theta);
+				s_route->y[i] = radius * sin(theta) + 2200;
+			}
+		}
 	}
 	else if(direction==1)
 	{
@@ -376,9 +384,17 @@ void design_point_of_helix_route(struct route_point *s_route,int direction,int p
 			{
 				radius = min_radius;
 			}
-			s_route->x[i] = radius * cos(theta);
-			s_route->y[i] = radius * sin(theta) + 2200;
 			s_route->angle[i] = 360/(point_num/circle_num)*(i-point_num/24) +90;
+			if(i >= point_num - 5)
+			{
+				s_route->x[i] = desti_radius * cos(theta);
+				s_route->y[i] = desti_radius * sin(theta) + 2200;
+			}
+			else
+			{
+				s_route->x[i] = radius * cos(theta);
+				s_route->y[i] = radius * sin(theta) + 2200;
+			}
 		}
 	}
 	for(int j=0;j<=(point_num-1);j++)

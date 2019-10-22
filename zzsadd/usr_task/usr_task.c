@@ -33,6 +33,7 @@ int start_next_step = 0;
 int calculate_path = 0;
  float circle_num = 0;
  int ball_color=0;
+ int finish_run_cnt=0;
 /**
 * @brief Function implementing the myTask02 thread.
 * @param argument: Not used
@@ -52,6 +53,7 @@ void StartTask02(void const * argument)
 				calculate_init = 0;
 				now_point = 0;
 				s_send_data.finish_run = 0;
+				finish_run_cnt = 0;
 				ramp_init(&s_left_ramp);
 				ramp_init(&s_right_ramp);
 			}
@@ -65,23 +67,44 @@ void StartTask02(void const * argument)
 								{
 									case 0 :
 									{
-										circle_num = choose_detination_by_circle(s_receive_data.start_run,s_receive_data.black_or_white,s_receive_data.bucket_num)-1.1 ;
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,25,circle_num,1200,900);
+										circle_num = choose_detination_by_circle(s_receive_data.start_run,s_receive_data.black_or_white,s_receive_data.bucket_num)-1.2 ;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,10,circle_num,1300,800,1300);
 										calculate_path++;
 										break;
 									}
 									case 1:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1800,0,circle_num,2000,900);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1500,0,circle_num,2000,900,1300);
 										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
 									}
 									case 2:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,900,0,circle_num,1900,900);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1800,0,circle_num,1900,800,1300);
 										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
-										calculate_path--;
+										calculate_path++;
+										break;
+									}
+									case 3:
+									{
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1000,0,circle_num,1900,800,1300);
+										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
+										calculate_path++;
+										break;
+									}
+									case 4:
+									{
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1200,0,circle_num,1900,800,1300);
+										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
+										calculate_path++;
+										break;
+									}
+									case 5:
+									{
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1500,-20,circle_num,1900,800,1300);
+										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
+										calculate_path = 1;
 										break;
 									}
 									default:
@@ -91,9 +114,9 @@ void StartTask02(void const * argument)
 							}
 							else
 							{
-								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,400,2000/2,point_num);
+								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,400,1400/2,point_num);
 								calculate_motor_current(&s_leftmotor_pid,&s_rightmotor_pid,&s_angle_pid,s_route.x[now_point],
-									s_route.y[now_point],s_route.angle[now_point],s_posture.pos_x,s_posture.pos_y,s_posture.zangle,6000,500/2,&s_leftmotor,&s_rightmotor);
+									s_route.y[now_point],s_route.angle[now_point],s_posture.pos_x,s_posture.pos_y,s_posture.zangle,6000,400/2,&s_leftmotor,&s_rightmotor);
 							}
 							if(now_point>=point_num)
 							{
@@ -103,7 +126,11 @@ void StartTask02(void const * argument)
 					}
 					case 2:
 					{
-							s_send_data.finish_run = 1;
+							if(finish_run_cnt++>=400)
+							{
+								s_send_data.finish_run = 1;
+								finish_run_cnt = 0;
+							}
 							s_leftmotor.target_speed = 0;
 							s_rightmotor.target_speed = 0;
 							s_leftmotor.out_current = (int)(pid_calculate(&s_leftmotor_pid,s_leftmotor.back_speed,s_leftmotor.target_speed));
@@ -125,6 +152,8 @@ void StartTask02(void const * argument)
 void StartTask03(void const * argument)
 {
   static int shoot_count=0;
+	static int black_cnt = 0;
+	static int white_cnt = 0;
   for(;;)
   {
 	  if(init_ok)
@@ -134,9 +163,8 @@ void StartTask03(void const * argument)
 			ball_color = detect_the_color(&s_color_data);
 			gimbal_data_state = JudgeDeviceState(gimbal_data_fps,4);
 			
-			if((abs(s_trans_motor.target_pos - s_trans_motor.tol_pos)<=2000)&&(step1_finish==0))
-			{	
-				transmit_a_ball_by_step_b(&s_trans_motor,0.5,1000/5,1);
+			if((abs(s_trans_motor.target_pos - s_trans_motor.tol_pos)<=2000))
+			{
 				s_send_data.colorsensor_ready = 1;
 				
 				switch(ball_color)
@@ -144,35 +172,55 @@ void StartTask03(void const * argument)
 					case BLACK:
 					{
 						shoot_count = 0;
+						white_cnt = 0;
 						s_send_data.ball_color = BLACK;
 						if(s_receive_data.black_or_white == WHITE && s_send_data.finish_run==0)
 						{
-							//transmit_a_ball_by_step_a(&s_trans_motor,0.3,600/5,0);
-							transmit_a_ball(-1,&s_trans_motor);
+							if(black_cnt++ >= 5)
+							{
+								transmit_a_ball(-1,&s_trans_motor);
+								black_cnt = 0;
+							}
 						}
 						else if	(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
 						{
+							black_cnt = 0;
 							transmit_a_ball(-1,&s_trans_motor);
+						}
+						else
+						{
+							black_cnt = 0;
 						}
 						break;
 					}
 					case WHITE:
 					{
+						black_cnt = 0;
 						shoot_count = 0;
 						s_send_data.ball_color = WHITE;
 						if(s_receive_data.black_or_white == BLACK && s_send_data.finish_run==0)
 						{
-							//transmit_a_ball_by_step_a(&s_trans_motor,0.3,600/5,0);
-							transmit_a_ball(-1,&s_trans_motor);
+							if(white_cnt++ >= 5)
+							{
+								transmit_a_ball(-1,&s_trans_motor);
+								white_cnt = 0;
+							}
 						}
 						else if	(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1&&s_receive_data.ready_to_shoot_last==0)
 						{
+							white_cnt = 0;
 							transmit_a_ball(-1,&s_trans_motor);
+						}
+						else
+						{
+							white_cnt = 0;
 						}
 						break;
 					}
 					case PINK:
 					{
+						black_cnt = 0;
+						white_cnt = 0;
 						shoot_count = 0;
 						s_send_data.ball_color = PINK;
 						if(gimbal_data_state==ONLINE&&s_receive_data.ready_to_shoot==1 && s_receive_data.ready_to_shoot_last==0)
@@ -183,8 +231,10 @@ void StartTask03(void const * argument)
 					}
 					case ENVIRONMENT:
 					{
+						black_cnt = 0;
+						white_cnt = 0;
 						s_send_data.ball_color = ENVIRONMENT;
-						if(shoot_count++>=200)
+						if(shoot_count++>=60)
 						{
 							shoot_count = 0;
 							if(s_send_data.finish_run==1)
@@ -211,17 +261,11 @@ void StartTask03(void const * argument)
 			else
 			{
 				//对标志位进行重置
-				transmit_a_ball_by_step_a(&s_trans_motor,0.5,1000/5,1);
-				
-				if(step1_finish==1)
-				{
-					transmit_a_ball_by_step_b(&s_trans_motor,0.7,1000/5,0);
-				}
 				s_send_data.colorsensor_ready = 0;
 			}
 
 	}
-    osDelay(5);
+    osDelay(10);
   }
 }
 
@@ -293,11 +337,16 @@ void StartTask07(void const * argument)
 		{
 			chassis_para_init();
 			route_init();
-			if(init_counter++ >= 500)
+			if(init_counter++ >= 400)
+			{	
+				PWM1 = 1220;
+				PWM2 = 1220;
+			}
+			if(init_counter>=700)
 			{
 				init_ok = 1;
-				PWM1 = 1280;
-				PWM2 = 1280;
+				PWM1 = 1300;
+				PWM2 = 1300;
 			}
 		}
 
@@ -334,7 +383,7 @@ void StartTask06(void const * argument)
 //			printf("rightpos %d spd %d\r\n",s_rightmotor.back_position,s_rightmotor.back_speed);
 //			printf("leftpos %d spd %d\r\n",s_leftmotor.back_position,s_leftmotor.back_speed);
 			printf("trans spd %d pos %lld target %lld\r\n",s_trans_motor.back_speed,s_trans_motor.tol_pos,s_trans_motor.target_pos);
-//			printf("pospid err %.2f out %.2f spdpid err %.2f out %.2f\r\n",s_trans_pos_pid.err,s_trans_pos_pid.out,s_trans_spd_pid.err,s_trans_spd_pid.out);
+			printf("pospid err %.2f out %.2f spdpid err %.2f out %.2f\r\n",s_trans_pos_pid.err,s_trans_pos_pid.out,s_trans_spd_pid.err,s_trans_spd_pid.out);
 //			printf("targetspad %d %d\r\n",s_leftmotor.target_speed,s_rightmotor.target_speed);
 //			printf("circle_num %.2f\r\n",circle_num);
 //			printf("now_point %d\r\n",now_point);
@@ -343,7 +392,7 @@ void StartTask06(void const * argument)
 			printf("ang %.2f x %.2f y %.2f \r\n",s_posture.zangle,s_posture.pos_x,s_posture.pos_y);
 			printf("ang_board %.2f\r\n",s_send_data.angle.f);
 //			printf("current %d %d \r\n",s_leftmotor.out_current,s_rightmotor.out_current);
-//		    transmit_a_ball(1,&s_trans_motor);
+//		    transmit_a_ball(-1,&s_trans_motor);
 //			transmit_a_ball_by_step_a(&s_trans_motor,0.6,1000/200);
 //			calibrate_yaw_angle(s_posture.zangle);
 		}
