@@ -68,7 +68,7 @@ void StartTask02(void const * argument)
 									case 0 :
 									{
 										circle_num = choose_detination_by_circle(s_receive_data.start_run,s_receive_data.black_or_white,s_receive_data.bucket_num)-1.2 ;
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,10,circle_num,1300,800,1300);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,20,circle_num,1300,800,1300);
 										calculate_path++;
 										break;
 									}
@@ -88,7 +88,7 @@ void StartTask02(void const * argument)
 									}
 									case 3:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1000,0,circle_num,1900,800,1300);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,800,0,circle_num,1900,800,1300);
 										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
@@ -345,12 +345,12 @@ void StartTask07(void const * argument)
 			if(init_counter>=700)
 			{
 				init_ok = 1;
-				PWM1 = 1300;
-				PWM2 = 1300;
+				PWM1 = 1280;
+				PWM2 = 1280;
 			}
 		}
 
-		ANO_DT_Data_Exchange();
+//		ANO_DT_Data_Exchange();
     osDelay(5);
   }
 }
@@ -382,12 +382,12 @@ void StartTask06(void const * argument)
 //			printf("atan %.2f\r\n",atan2f(P,I)*180/3.14);
 //			printf("rightpos %d spd %d\r\n",s_rightmotor.back_position,s_rightmotor.back_speed);
 //			printf("leftpos %d spd %d\r\n",s_leftmotor.back_position,s_leftmotor.back_speed);
-			printf("trans spd %d pos %lld target %lld\r\n",s_trans_motor.back_speed,s_trans_motor.tol_pos,s_trans_motor.target_pos);
-			printf("pospid err %.2f out %.2f spdpid err %.2f out %.2f\r\n",s_trans_pos_pid.err,s_trans_pos_pid.out,s_trans_spd_pid.err,s_trans_spd_pid.out);
+//			printf("trans spd %d pos %lld target %lld\r\n",s_trans_motor.back_speed,s_trans_motor.tol_pos,s_trans_motor.target_pos);
+//			printf("pospid err %.2f out %.2f spdpid err %.2f out %.2f\r\n",s_trans_pos_pid.err,s_trans_pos_pid.out,s_trans_spd_pid.err,s_trans_spd_pid.out);
 //			printf("targetspad %d %d\r\n",s_leftmotor.target_speed,s_rightmotor.target_speed);
 //			printf("circle_num %.2f\r\n",circle_num);
-//			printf("now_point %d\r\n",now_point);
-//			printf("step %d\r\n",step);
+			printf("now_point %d\r\n",now_point);
+			printf("step %d\r\n",step);
 			printf("receive B_W %d ready %d last %d start %d bucket %d\r\n",s_receive_data.black_or_white,s_receive_data.ready_to_shoot,s_receive_data.ready_to_shoot_last,s_receive_data.start_run,s_receive_data.bucket_num);
 			printf("ang %.2f x %.2f y %.2f \r\n",s_posture.zangle,s_posture.pos_x,s_posture.pos_y);
 			printf("ang_board %.2f\r\n",s_send_data.angle.f);
