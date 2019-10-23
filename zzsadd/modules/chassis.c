@@ -28,8 +28,8 @@ void chassis_para_init(void)
 {
 	pid_struct_init(&s_leftmotor_pid,8000,2000,6,0.15,0);
 	pid_struct_init(&s_rightmotor_pid,8000,2000,6,0.15,0);
-	pid_struct_init(&s_trans_pos_pid,500,100,20,0.1,0);
-	pid_struct_init(&s_trans_spd_pid,10000,3000,20,0,0);
+	pid_struct_init(&s_trans_pos_pid,500,100,15,0.1,0);
+	pid_struct_init(&s_trans_spd_pid,8000,3000,20,0,0);
 	s_trans_motor.target_pos = s_trans_motor.back_position;
 }
 /**

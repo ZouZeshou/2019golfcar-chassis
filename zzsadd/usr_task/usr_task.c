@@ -68,20 +68,20 @@ void StartTask02(void const * argument)
 									case 0 :
 									{
 										circle_num = choose_detination_by_circle(s_receive_data.start_run,s_receive_data.black_or_white,s_receive_data.bucket_num)-0.2 ;
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,40,circle_num,1500,800,1300);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,40,circle_num-1,1500,800,1300);
 										calculate_path++;
 										break;
 									}
 									case 1:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1400,40,circle_num,1850,800,1300);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1500,40,circle_num,1850,800,1300);
 										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
 									}
 									case 2:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1800,-40,circle_num,1850,800,1300);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1200,-40,circle_num,1850,800,1300);
 										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
@@ -95,15 +95,15 @@ void StartTask02(void const * argument)
 									}
 									case 4:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1300,40,circle_num,1850,800,1300);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1200,40,circle_num,1850,800,1300);
 										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
 									}
 									case 5:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1700,-40,circle_num,1900,800,1300);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1000,-40,circle_num,1900,800,1300);
+										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
 										calculate_path = 1;
 										break;
 									}
@@ -126,7 +126,7 @@ void StartTask02(void const * argument)
 					}
 					case 2:
 					{
-							if(finish_run_cnt++>=400)
+							if(finish_run_cnt++>=300)
 							{
 								s_send_data.finish_run = 1;
 								finish_run_cnt = 0;
@@ -176,7 +176,7 @@ void StartTask03(void const * argument)
 						s_send_data.ball_color = BLACK;
 						if(s_receive_data.black_or_white == WHITE && s_send_data.finish_run==0)
 						{
-							if(black_cnt++ >= 50)
+							if(black_cnt++ >= 80)
 							{
 								transmit_a_ball(-1,&s_trans_motor);
 								black_cnt = 0;
@@ -200,7 +200,7 @@ void StartTask03(void const * argument)
 						s_send_data.ball_color = WHITE;
 						if(s_receive_data.black_or_white == BLACK && s_send_data.finish_run==0)
 						{
-							if(white_cnt++ >= 50)
+							if(white_cnt++ >= 80)
 							{
 								transmit_a_ball(-1,&s_trans_motor);
 								white_cnt = 0;
@@ -234,7 +234,7 @@ void StartTask03(void const * argument)
 						black_cnt = 0;
 						white_cnt = 0;
 						s_send_data.ball_color = ENVIRONMENT;
-						if(shoot_count++>=120)
+						if(shoot_count++>=60)
 						{
 							shoot_count = 0;
 							if(s_send_data.finish_run==1)
@@ -350,7 +350,7 @@ void StartTask07(void const * argument)
 			}
 		}
 
-//		ANO_DT_Data_Exchange();
+		ANO_DT_Data_Exchange();
     osDelay(5);
   }
 }
