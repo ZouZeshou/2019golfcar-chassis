@@ -68,41 +68,41 @@ void StartTask02(void const * argument)
 									case 0 :
 									{
 										circle_num = choose_detination_by_circle(s_receive_data.start_run,s_receive_data.black_or_white,s_receive_data.bucket_num)-0.2 ;
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,30,circle_num,1500,800,1300);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,40,circle_num,1500,800,1300);
 										calculate_path++;
 										break;
 									}
 									case 1:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1400,30,circle_num,1850,800,1300);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1400,40,circle_num,1850,800,1300);
+										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
 									}
 									case 2:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1800,-30,circle_num,1850,800,1300);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1800,-40,circle_num,1850,800,1300);
+										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
 									}
 									case 3:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,750,30,circle_num,1850,800,1300);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,750,40,circle_num,1850,800,1300);
+										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
 									}
 									case 4:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1300,30,circle_num,1850,800,1300);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1300,40,circle_num,1850,800,1300);
+										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
 									}
 									case 5:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1700,-30,circle_num,1900,800,1300);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1700,-40,circle_num,1900,800,1300);
 										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
 										calculate_path = 1;
 										break;
