@@ -31,9 +31,9 @@ int trans_motor_off = 0;
 int start_next_path_count = 0;
 int start_next_step = 0;
 int calculate_path = 0;
- float circle_num = 0;
- int ball_color=0;
- int finish_run_cnt=0;
+float circle_num = 0;
+int ball_color=0;
+int finish_run_cnt=0;
 /**
 * @brief Function implementing the myTask02 thread.
 * @param argument: Not used
@@ -67,43 +67,43 @@ void StartTask02(void const * argument)
 								{
 									case 0 :
 									{
-										circle_num = choose_detination_by_circle(s_receive_data.start_run,s_receive_data.black_or_white,s_receive_data.bucket_num)-1.2 ;
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,20,circle_num,1300,800,1300);
+										circle_num = choose_detination_by_circle(s_receive_data.start_run,s_receive_data.black_or_white,s_receive_data.bucket_num)-0.2 ;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,30,circle_num,1500,800,1300);
 										calculate_path++;
 										break;
 									}
 									case 1:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1500,0,circle_num,2000,900,1300);
-										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1400,30,circle_num,1850,800,1300);
+										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
 										calculate_path++;
 										break;
 									}
 									case 2:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1800,0,circle_num,1900,800,1300);
-										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1800,-30,circle_num,1850,800,1300);
+										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
 										calculate_path++;
 										break;
 									}
 									case 3:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,800,0,circle_num,1900,800,1300);
-										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,750,30,circle_num,1850,800,1300);
+										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
 										calculate_path++;
 										break;
 									}
 									case 4:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1200,0,circle_num,1900,800,1300);
-										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1300,30,circle_num,1850,800,1300);
+										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
 										calculate_path++;
 										break;
 									}
 									case 5:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1500,-20,circle_num,1900,800,1300);
-										now_point = (circle_num - 1) * point_num/circle_num + point_num/12;
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1700,-30,circle_num,1900,800,1300);
+										now_point = (circle_num - 2) * point_num/circle_num + point_num/24;
 										calculate_path = 1;
 										break;
 									}
@@ -114,9 +114,9 @@ void StartTask02(void const * argument)
 							}
 							else
 							{
-								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,400,1400/2,point_num);
+								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,400,1500/2,point_num);
 								calculate_motor_current(&s_leftmotor_pid,&s_rightmotor_pid,&s_angle_pid,s_route.x[now_point],
-									s_route.y[now_point],s_route.angle[now_point],s_posture.pos_x,s_posture.pos_y,s_posture.zangle,6000,400/2,&s_leftmotor,&s_rightmotor);
+									s_route.y[now_point],s_route.angle[now_point],s_posture.pos_x,s_posture.pos_y,s_posture.zangle,6000,600/2,&s_leftmotor,&s_rightmotor);
 							}
 							if(now_point>=point_num)
 							{
@@ -371,8 +371,9 @@ void StartTask06(void const * argument)
 				HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_7);
 				HAL_GPIO_TogglePin(GPIOF,GPIO_PIN_14);
 			}
+			printf("/***********************************************/");
 			printf("type %d lux %d ct%d color %d\r\n",s_color_data.Start,s_color_data.Lux,s_color_data.CT,s_color_data.color);
-			printf("ballcolor %d\r\n",s_send_data.ball_color);
+			printf("ballcolor %d\r\n",ball_color);
 //			printf("back_count %d \r\n",back_count);
 //			printf("Offline a %d b %d c %d\r\n",Offline[0],Offline[1],Offline[2]);
 //			for(int i=0;i<48;i++)
@@ -385,17 +386,17 @@ void StartTask06(void const * argument)
 //			printf("trans spd %d pos %lld target %lld\r\n",s_trans_motor.back_speed,s_trans_motor.tol_pos,s_trans_motor.target_pos);
 //			printf("pospid err %.2f out %.2f spdpid err %.2f out %.2f\r\n",s_trans_pos_pid.err,s_trans_pos_pid.out,s_trans_spd_pid.err,s_trans_spd_pid.out);
 //			printf("targetspad %d %d\r\n",s_leftmotor.target_speed,s_rightmotor.target_speed);
-//			printf("circle_num %.2f\r\n",circle_num);
+			printf("circle_num %.2f\r\n",circle_num);
 			printf("now_point %d\r\n",now_point);
 			printf("step %d\r\n",step);
 			printf("receive B_W %d ready %d last %d start %d bucket %d\r\n",s_receive_data.black_or_white,s_receive_data.ready_to_shoot,s_receive_data.ready_to_shoot_last,s_receive_data.start_run,s_receive_data.bucket_num);
 			printf("ang %.2f x %.2f y %.2f \r\n",s_posture.zangle,s_posture.pos_x,s_posture.pos_y);
-			printf("ang_board %.2f\r\n",s_send_data.angle.f);
+//			printf("ang_board %.2f\r\n",s_send_data.angle.f);
 //			printf("current %d %d \r\n",s_leftmotor.out_current,s_rightmotor.out_current);
 //		    transmit_a_ball(-1,&s_trans_motor);
 //			transmit_a_ball_by_step_a(&s_trans_motor,0.6,1000/200);
 //			calibrate_yaw_angle(s_posture.zangle);
 		}
-    osDelay(200);
+    osDelay(20);
   }
 }

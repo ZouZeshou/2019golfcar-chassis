@@ -426,10 +426,14 @@ void update_point(struct route_point *s_route,int *point_addr,int pos_x,int pos_
 	}
 	else
 	{
-		if(jam_counter++ >= jam_time)
+		if(jam_back == 1)
+		{
+			jam_counter = 0;
+		}
+		else if(jam_counter++ >= jam_time)
 		{
 			jam_back = 1;
-			for(int i=*point_addr-5;i<=*point_addr+5;i++)
+			for(int i=*point_addr-10;i<=*point_addr+10;i++)
 			{
 				jam_distance_now = sqrt((s_route->x[i]-pos_x)*(s_route->x[i]-pos_x)
 								+(s_route->y[i]-pos_y)*(s_route->y[i]-pos_y));
