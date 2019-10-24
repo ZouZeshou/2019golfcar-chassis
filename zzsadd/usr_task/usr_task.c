@@ -234,13 +234,13 @@ void StartTask03(void const * argument)
 						black_cnt = 0;
 						white_cnt = 0;
 						s_send_data.ball_color = ENVIRONMENT;
-						if(shoot_count++>=60)
+						if(shoot_count++>=50)
 						{
 							shoot_count = 0;
 							if(s_send_data.finish_run==1)
 							{
 								transmit_a_ball(-1,&s_trans_motor);
-								if(start_next_path_count++ > 2)
+								if(start_next_path_count++ > 4)
 								{
 									start_next_step = 1;
 									start_next_path_count = 0;
@@ -318,6 +318,15 @@ void StartTask07(void const * argument)
 	static float zang_buff;
   for(;;)
   {
+		GetDeviceState(); 
+		Offline_last[2] = Offline[2]; 
+		DeviceDetect(Devicestate,Offline,20/5); 
+		if(Offline_last[2]==OFFLINE && Offline[2]==ONLINE) 
+		{ 
+			s_trans_motor.target_pos = s_trans_motor.tol_pos - 2500; 
+//			printf("jam_work\r\n"); 
+		} 
+	  
 		s_send_data.pos_x.f = s_posture.pos_x;
 		s_send_data.pos_y.f = s_posture.pos_y;
 		yaw_angle_buff -= (yaw_angle_buff - ((int)(yaw_angle_buff)%(360)));
