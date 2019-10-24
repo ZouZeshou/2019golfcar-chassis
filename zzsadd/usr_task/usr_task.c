@@ -74,14 +74,14 @@ void StartTask02(void const * argument)
 									}
 									case 1:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1500,40,circle_num,1850,800,1300);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1400,40,circle_num,1850,800,1300);
 										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
 									}
 									case 2:
 									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1200,-40,circle_num,1850,800,1300);
+										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1300,-40,circle_num,1850,800,1300);
 										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
 										calculate_path++;
 										break;
@@ -234,13 +234,13 @@ void StartTask03(void const * argument)
 						black_cnt = 0;
 						white_cnt = 0;
 						s_send_data.ball_color = ENVIRONMENT;
-						if(shoot_count++>=50)
+						if(shoot_count++>=60)
 						{
 							shoot_count = 0;
 							if(s_send_data.finish_run==1)
 							{
 								transmit_a_ball(-1,&s_trans_motor);
-								if(start_next_path_count++ > 4)
+								if(start_next_path_count++ > 2)
 								{
 									start_next_step = 1;
 									start_next_path_count = 0;
@@ -354,8 +354,8 @@ void StartTask07(void const * argument)
 			if(init_counter>=700)
 			{
 				init_ok = 1;
-				PWM1 = 1280;
-				PWM2 = 1280;
+				PWM1 = 1320;
+				PWM2 = 1320;
 			}
 		}
 
