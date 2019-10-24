@@ -2,6 +2,7 @@
 
 uint8_t Devicestate[13] = {0};
 uint8_t Offline[13] = {0};
+uint8_t Offline_last[13] = {0};
 /*
 	 Wheel_1;   0
 	 Wheel_2;   1

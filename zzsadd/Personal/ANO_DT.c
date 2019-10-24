@@ -12,6 +12,7 @@
 #include "protocol.h"
 #include "chassis.h"
 #include "drv_locationsystem.h"
+#include "detect.h"
 /////////////////////////////////////////////////////////////////////////////////////
 //数据拆分宏定义，在发送大于1字节的数据类型时，比如int16、float等，需要把数据拆分成单独字节进行发送
 #define BYTE0(dwTemp)       ( *( (char *)(&dwTemp)		) )
@@ -69,7 +70,7 @@ void ANO_DT_Data_Exchange(void)
 	{
 		f.send_senser = 0;
 		ANO_DT_Send_Senser(s_posture.xangle,s_posture.pos_x,s_posture.pos_y,
-		s_posture.zangle,s_send_data.finish_run,s_send_data.ball_color,s_send_data.colorsensor_ready,s_receive_data.ready_to_shoot,0,0);
+		s_posture.zangle,s_send_data.finish_run,s_send_data.ball_color,s_send_data.colorsensor_ready,s_receive_data.ready_to_shoot,Offline[2],0);
 	}	
 /////////////////////////////////////////////////////////////////////////////////////
 	else if(f.send_rcdata)

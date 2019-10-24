@@ -7,6 +7,7 @@
 
 extern uint8_t Devicestate[13];
 extern uint8_t Offline[13];
+extern uint8_t Offline_last[13];
 void GetDeviceState(void);
 void DeviceDetect(uint8_t *state,uint8_t *result,uint8_t time_out);
 int JudgeDeviceState(int fps,int i);
