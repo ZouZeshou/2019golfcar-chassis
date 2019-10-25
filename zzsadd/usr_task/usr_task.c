@@ -346,12 +346,12 @@ void StartTask07(void const * argument)
 		{
 			chassis_para_init();
 			route_init();
-			if(init_counter++ >= 400)
+			if(init_counter++ >= 800)
 			{	
 				PWM1 = 1220;
 				PWM2 = 1220;
 			}
-			if(init_counter>=700)
+			if(init_counter>=1200)
 			{
 				init_ok = 1;
 				PWM1 = 1320;
