@@ -40,3 +40,5 @@
 2019-golfcar-chassis\drv_can.o: ..\zzsadd\bsp\drv_uart.h
 2019-golfcar-chassis\drv_can.o: D:\program files\ARM\ARMCC\Bin\..\include\stdio.h
 2019-golfcar-chassis\drv_can.o: D:\program files\ARM\ARMCC\Bin\..\include\math.h
+2019-golfcar-chassis\drv_can.o: ..\zzsadd\modules\ShootControl.h
+2019-golfcar-chassis\drv_can.o: ../Inc/tim.h

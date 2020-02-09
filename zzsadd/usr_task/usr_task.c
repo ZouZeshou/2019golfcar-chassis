@@ -21,6 +21,7 @@
 #include "detect.h"
 #include "ANO_DT.h"
 #include "drv_imu.h"
+#include "ShootControl.h"
 static int init_ok;
 //static int start_signal = 1;
 static int calculate_init;
@@ -44,104 +45,9 @@ void StartTask02(void const * argument)
 
   for(;;)
   {
-		if(init_ok)
-		{		
-//			if(((s_receive_data.start_run==1||s_receive_data.start_run==2)&&(step==0))||start_next_step==1)
-//			{
-//				step = 1;
-//				start_next_step = 0;
-//				calculate_init = 0;
-//				now_point = 0;
-//				s_send_data.finish_run = 0;
-//				finish_run_cnt = 0;
-//				ramp_init(&s_left_ramp);
-//				ramp_init(&s_right_ramp);
-//			}
-			switch(step)
-			{
-					case 1://ÅÜÈ¦
-					{
-							if(calculate_init==0)
-							{
-								switch(calculate_path)
-								{
-									case 0 :
-									{
-										circle_num = choose_detination_by_circle(s_receive_data.start_run,s_receive_data.black_or_white,s_receive_data.bucket_num)-0.2 ;
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,850,40,circle_num-1,1500,800,1300);
-										calculate_path++;
-										break;
-									}
-									case 1:
-									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1500,40,circle_num,1850,800,1300);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
-										calculate_path++;
-										break;
-									}
-									case 2:
-									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1200,-40,circle_num,1850,800,1300);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
-										calculate_path++;
-										break;
-									}
-									case 3:
-									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,750,40,circle_num,1850,800,1300);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
-										calculate_path++;
-										break;
-									}
-									case 4:
-									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1200,40,circle_num,1850,800,1300);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
-										calculate_path++;
-										break;
-									}
-									case 5:
-									{
-										design_point_of_helix_route(&s_route,s_receive_data.start_run,point_num,1000,-40,circle_num,1900,800,1300);
-										now_point = (circle_num - 2) * point_num/circle_num + point_num/12;
-										calculate_path = 1;
-										break;
-									}
-									default:
-										break;
-								}
-								calculate_init = 1;
-							}
-							else
-							{
-								update_point(&s_route,&now_point,s_posture.pos_x,s_posture.pos_y,400,1500/2,point_num);
-								calculate_motor_current(&s_leftmotor_pid,&s_rightmotor_pid,&s_angle_pid,s_route.x[now_point],
-									s_route.y[now_point],s_route.angle[now_point],s_posture.pos_x,s_posture.pos_y,s_posture.zangle,6000,600/2,&s_leftmotor,&s_rightmotor);
-							}
-							if(now_point>=point_num)
-							{
-								step++;
-							}
-							break;
-					}
-					case 2:
-					{
-							if(finish_run_cnt++>=300)
-							{
-								s_send_data.finish_run = 1;
-								finish_run_cnt = 0;
-							}
-							s_leftmotor.target_speed = 0;
-							s_rightmotor.target_speed = 0;
-							s_leftmotor.out_current = (int)(pid_calculate(&s_leftmotor_pid,s_leftmotor.back_speed,s_leftmotor.target_speed));
-							s_rightmotor.out_current = (int)(pid_calculate(&s_rightmotor_pid,s_rightmotor.back_speed,s_rightmotor.target_speed));					
-							break;
-					}
-					default:
-						break;
-			}
-		}
-    osDelay(2);
+	Switchshoot();
+	StirPID (StirMotorData.TargetPosition,StirMotorData.BackSpeed,StirMotorData.BackPositionNew);
+    osDelay(5);
   }
 }
 /**
@@ -303,7 +209,7 @@ void StartTask04(void const * argument)
 //	  {
 //			Can_SendMsg(&hcan1,0x200,s_leftmotor.out_current,s_rightmotor.out_current,s_trans_motor.out_current,0);
 //	  }
-		Can_SendMsg(&hcan1,0x200,0,0,s_trans_motor.out_current,0);
+		Can_SendMsg(&hcan1,0x200,0,0,StirMotorData.Current,0);
     osDelay(2);
   }
 }

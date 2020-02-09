@@ -3,6 +3,7 @@
 #include "chassis.h"
 #include "drv_uart.h"
 #include "math.h"
+#include "ShootControl.h"
 struct s_FPS s_fps;
 /**
  * @brief Enable Can1 and Can2(对can1和can2进行初始化)
@@ -59,10 +60,9 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 			}
 			case 0x203:
 			{
-				s_trans_motor.back_pos_last = s_trans_motor.back_position;
-				s_trans_motor.back_position = RxData1[0]<<8|RxData1[1];
-				s_trans_motor.back_speed = RxData1[2]<<8|RxData1[3];
-				continue_motor_pos(&s_trans_motor);
+				StirMotorData.BackPositionNew = RxData1[0]<<8|RxData1[1];
+				StirMotorData.BackSpeed = RxData1[2]<<8|RxData1[3];
+				DealStirMotorPosition ();
 				s_fps.trans++;
 				break;
 			}

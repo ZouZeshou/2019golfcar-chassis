@@ -72,3 +72,4 @@
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\Imu\ahrs.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\Imu\AHRS_MiddleWare.h
 2019-golfcar-chassis\usr_task.o: ..\zzsadd\Personal\delay.h
+2019-golfcar-chassis\usr_task.o: ..\zzsadd\modules\ShootControl.h
